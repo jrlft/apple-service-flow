@@ -7,6 +7,29 @@ import { SectionTitle } from "@/components/ui/section-title";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
+// Define tipos para os dados da tabela
+type DeviceRepairPrice = {
+  model: string;
+  screenRepair: string;
+  batteryReplacement: string;
+}
+
+type IPhoneRepair = DeviceRepairPrice & {
+  backGlassRepair: string;
+}
+
+type IPadRepair = DeviceRepairPrice & {
+  connectorRepair: string;
+}
+
+type MacRepair = DeviceRepairPrice & {
+  keyboardRepair: string;
+}
+
+type WatchRepair = DeviceRepairPrice & {
+  buttonRepair: string;
+}
+
 // Dados simulados para tabela de preços
 const PRICE_DATA = {
   iphone: [
@@ -16,27 +39,27 @@ const PRICE_DATA = {
     { model: "iPhone 13", screenRepair: "R$ 1299", batteryReplacement: "R$ 599", backGlassRepair: "R$ 699" },
     { model: "iPhone 14", screenRepair: "R$ 1599", batteryReplacement: "R$ 699", backGlassRepair: "R$ 799" },
     { model: "iPhone 15", screenRepair: "R$ 1899", batteryReplacement: "R$ 799", backGlassRepair: "R$ 999" }
-  ],
+  ] as IPhoneRepair[],
   ipad: [
     { model: "iPad 9ª geração", screenRepair: "R$ 999", batteryReplacement: "R$ 599", connectorRepair: "R$ 499" },
     { model: "iPad Air", screenRepair: "R$ 1399", batteryReplacement: "R$ 699", connectorRepair: "R$ 599" },
     { model: "iPad Pro 11\"", screenRepair: "R$ 1899", batteryReplacement: "R$ 799", connectorRepair: "R$ 699" },
     { model: "iPad Pro 12.9\"", screenRepair: "R$ 2399", batteryReplacement: "R$ 899", connectorRepair: "R$ 799" }
-  ],
+  ] as IPadRepair[],
   mac: [
     { model: "MacBook Air", screenRepair: "R$ 2499", batteryReplacement: "R$ 1299", keyboardRepair: "R$ 1499" },
     { model: "MacBook Pro 13\"", screenRepair: "R$ 2999", batteryReplacement: "R$ 1399", keyboardRepair: "R$ 1699" },
     { model: "MacBook Pro 14\"", screenRepair: "R$ 3499", batteryReplacement: "R$ 1499", keyboardRepair: "R$ 1899" },
     { model: "MacBook Pro 16\"", screenRepair: "R$ 4499", batteryReplacement: "R$ 1699", keyboardRepair: "R$ 2099" },
     { model: "iMac 24\"", screenRepair: "R$ 3999", batteryReplacement: "N/A", keyboardRepair: "R$ 999" }
-  ],
+  ] as MacRepair[],
   watch: [
     { model: "Apple Watch SE", screenRepair: "R$ 599", batteryReplacement: "R$ 399", buttonRepair: "R$ 299" },
     { model: "Apple Watch Series 6", screenRepair: "R$ 799", batteryReplacement: "R$ 499", buttonRepair: "R$ 399" },
     { model: "Apple Watch Series 7", screenRepair: "R$ 899", batteryReplacement: "R$ 549", buttonRepair: "R$ 449" },
     { model: "Apple Watch Series 8", screenRepair: "R$ 999", batteryReplacement: "R$ 599", buttonRepair: "R$ 499" },
     { model: "Apple Watch Ultra", screenRepair: "R$ 1599", batteryReplacement: "R$ 799", buttonRepair: "R$ 699" }
-  ]
+  ] as WatchRepair[],
 };
 
 // Tipos de dispositivos
@@ -143,10 +166,10 @@ const Precos = () => {
                           <td className="py-3 px-4">{item.screenRepair}</td>
                           <td className="py-3 px-4">{item.batteryReplacement}</td>
                           <td className="py-3 px-4">
-                            {selectedDevice === 'iphone' && item.backGlassRepair}
-                            {selectedDevice === 'ipad' && item.connectorRepair}
-                            {selectedDevice === 'mac' && item.keyboardRepair}
-                            {selectedDevice === 'watch' && item.buttonRepair}
+                            {selectedDevice === 'iphone' && (item as IPhoneRepair).backGlassRepair}
+                            {selectedDevice === 'ipad' && (item as IPadRepair).connectorRepair}
+                            {selectedDevice === 'mac' && (item as MacRepair).keyboardRepair}
+                            {selectedDevice === 'watch' && (item as WatchRepair).buttonRepair}
                           </td>
                         </tr>
                       ))}

@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -14,6 +15,8 @@ import Precos from "./pages/Precos";
 import Contato from "./pages/Contato";
 import Cookies from "./pages/Cookies";
 import Privacidade from "./pages/Privacidade";
+import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
 import { CookieConsent } from "./components/shared/cookie-consent";
 
 const queryClient = new QueryClient();
@@ -35,6 +38,8 @@ const App = () => (
           <Route path="/contato" element={<Contato />} />
           <Route path="/cookies" element={<Cookies />} />
           <Route path="/privacidade" element={<Privacidade />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:postId" element={<BlogPost />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
