@@ -5,7 +5,7 @@ import { Footer } from "@/components/layout/footer";
 import { AnimatedElement } from "@/components/animations/animated-element";
 import { Button } from "@/components/ui/button";
 import { LazyImage } from "@/components/shared/lazy-image";
-import { Facebook, Twitter, Linkedin, Clock, Calendar, ChevronLeft } from "lucide-react";
+import { Facebook, Twitter, Linkedin, Clock, Calendar, ChevronLeft, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
 // Posts simulados para o blog (mesmo array usado na página Blog)
