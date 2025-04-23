@@ -1,14 +1,16 @@
-
 import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { AnimatedElement } from "@/components/animations/animated-element";
 import { Button } from "@/components/ui/button";
 import { LazyImage } from "@/components/shared/lazy-image";
-import { Facebook, Twitter, Linkedin, Clock, Calendar, ChevronLeft, ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import { ChevronLeft } from "lucide-react";
+import { BlogPostHeader } from "@/components/blog/blog-post-header";
+import { BlogPostShare } from "@/components/blog/blog-post-share";
+import { BlogPostAuthor } from "@/components/blog/blog-post-author";
+import { BlogPostRelated } from "@/components/blog/blog-post-related";
 
-// Posts simulados para o blog (mesmo array usado na página Blog)
 const BLOG_POSTS = [
   {
     id: "1",
@@ -105,43 +107,15 @@ const BlogPost = () => {
     <div className="min-h-screen flex flex-col">
       <Navbar />
       <main className="flex-grow pt-24 pb-16">
-        {/* Hero Section */}
-        <section className="bg-secondary py-16">
-          <div className="container">
-            <AnimatedElement>
-              <div className="max-w-3xl mx-auto">
-                <Link to="/blog" className="inline-flex items-center text-primary hover:underline mb-6">
-                  <ChevronLeft className="mr-1 h-4 w-4" />
-                  Voltar para o Blog
-                </Link>
-                <h1 className="text-3xl md:text-4xl font-bold mb-4">{post.title}</h1>
-                <p className="text-xl text-muted-foreground mb-6">{post.excerpt}</p>
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-full overflow-hidden">
-                    <LazyImage
-                      src={post.authorImage}
-                      alt={post.author}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div>
-                    <div className="font-semibold">{post.author}</div>
-                    <div className="text-sm text-muted-foreground flex items-center gap-4">
-                      <span className="flex items-center gap-1">
-                        <Calendar className="h-3 w-3" /> {post.date}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <Clock className="h-3 w-3" /> {post.readTime} de leitura
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </AnimatedElement>
-          </div>
-        </section>
+        <BlogPostHeader
+          title={post.title}
+          excerpt={post.excerpt}
+          author={post.author}
+          authorImage={post.authorImage}
+          date={post.date}
+          readTime={post.readTime}
+        />
 
-        {/* Content Section */}
         <section className="py-12">
           <div className="container">
             <div className="max-w-4xl mx-auto">
@@ -154,75 +128,24 @@ const BlogPost = () => {
                   />
                 </div>
                 <div className="bg-white rounded-lg shadow-md p-8 mb-8">
-                  <div className="prose prose-blue max-w-none" dangerouslySetInnerHTML={{ __html: post.content }} />
-
-                  {/* Share Buttons */}
-                  <div className="mt-12 pt-6 border-t flex items-center justify-between flex-wrap gap-4">
-                    <div className="font-semibold">Compartilhe este artigo:</div>
-                    <div className="flex gap-2">
-                      <Button variant="outline" size="icon" className="rounded-full">
-                        <Facebook className="h-5 w-5" />
-                      </Button>
-                      <Button variant="outline" size="icon" className="rounded-full">
-                        <Twitter className="h-5 w-5" />
-                      </Button>
-                      <Button variant="outline" size="icon" className="rounded-full">
-                        <Linkedin className="h-5 w-5" />
-                      </Button>
-                    </div>
-                  </div>
+                  <div 
+                    className="prose prose-blue max-w-none" 
+                    dangerouslySetInnerHTML={{ __html: post.content }} 
+                  />
+                  <BlogPostShare />
                 </div>
 
-                {/* Author Bio */}
-                <div className="bg-white rounded-lg shadow-md p-8">
-                  <h2 className="text-xl font-bold mb-4">Sobre o Autor</h2>
-                  <div className="flex items-center gap-4">
-                    <div className="w-16 h-16 rounded-full overflow-hidden">
-                      <LazyImage
-                        src={post.authorImage}
-                        alt={post.author}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-lg">{post.author}</h3>
-                      <p className="text-muted-foreground">{post.authorBio}</p>
-                    </div>
-                  </div>
-                </div>
+                <BlogPostAuthor
+                  author={post.author}
+                  authorImage={post.authorImage}
+                  authorBio={post.authorBio}
+                />
               </AnimatedElement>
             </div>
           </div>
         </section>
 
-        {/* Related Posts Section */}
-        <section className="py-12 bg-secondary/30">
-          <div className="container">
-            <AnimatedElement>
-              <h2 className="text-2xl font-bold mb-8 text-center">Artigos Relacionados</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {BLOG_POSTS.filter(p => p.id !== postId).slice(0, 3).map((relatedPost) => (
-                  <div key={relatedPost.id} className="bg-white rounded-lg shadow-md overflow-hidden">
-                    <div className="h-48 relative">
-                      <LazyImage 
-                        src={relatedPost.image} 
-                        alt={relatedPost.title}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div className="p-6">
-                      <h3 className="font-bold mb-2">{relatedPost.title}</h3>
-                      <p className="text-muted-foreground text-sm mb-4">{relatedPost.excerpt.substring(0, 100)}...</p>
-                      <Link to={`/blog/${relatedPost.id}`} className="text-primary font-medium inline-flex items-center gap-1 hover:gap-2 transition-all">
-                        Ler artigo <ArrowRight className="w-4 h-4" />
-                      </Link>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </AnimatedElement>
-          </div>
-        </section>
+        <BlogPostRelated currentPostId={post.id} posts={BLOG_POSTS} />
       </main>
       <Footer />
     </div>
