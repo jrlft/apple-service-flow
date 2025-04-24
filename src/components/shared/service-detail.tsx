@@ -1,10 +1,9 @@
-
 import { AnimatedElement } from "@/components/animations/animated-element";
 import { SectionTitle } from "@/components/ui/section-title";
 import { Button } from "@/components/ui/button";
+import { WhatsAppButton } from "@/components/ui/whatsapp-button";
 import { Link } from "react-router-dom";
 import { Check } from "lucide-react";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 
 interface ServiceFeature {
   title: string;
@@ -18,6 +17,8 @@ interface ServiceDetailProps {
   imagePlaceholder: string;
   features: ServiceFeature[];
   commonProblems: string[];
+  whatsappNumber: string;
+  whatsappMessage: string;
 }
 
 export function ServiceDetail({
@@ -27,6 +28,8 @@ export function ServiceDetail({
   imagePlaceholder,
   features,
   commonProblems,
+  whatsappNumber,
+  whatsappMessage
 }: ServiceDetailProps) {
   return (
     <div className="pt-32">
@@ -37,9 +40,18 @@ export function ServiceDetail({
             <AnimatedElement direction="left">
               <SectionTitle title={title} subtitle={subtitle} />
               <p className="text-muted-foreground mb-6">{description}</p>
-              <Button asChild size="lg">
-                <Link to="/contato">Solicitar Orçamento</Link>
-              </Button>
+              <div className="flex flex-wrap gap-4">
+                <Button asChild size="lg">
+                  <Link to="/contato">Solicitar Orçamento</Link>
+                </Button>
+                <WhatsAppButton 
+                  phoneNumber={whatsappNumber}
+                  message={whatsappMessage}
+                  size="lg"
+                >
+                  Orçamento via WhatsApp
+                </WhatsAppButton>
+              </div>
             </AnimatedElement>
 
             <AnimatedElement direction="right">
@@ -122,13 +134,19 @@ export function ServiceDetail({
                 Entre em contato conosco hoje mesmo para um orçamento sem compromisso.
                 Nossos especialistas estão prontos para ajudar.
               </p>
-              <div className="flex justify-center space-x-4">
+              <div className="flex flex-wrap justify-center gap-4">
                 <Button asChild size="lg" variant="secondary">
                   <Link to="/contato">Entre em Contato</Link>
                 </Button>
-                <Button asChild size="lg" variant="outline" className="bg-transparent hover:bg-white/10">
-                  <Link to="/precos">Ver Tabela de Preços</Link>
-                </Button>
+                <WhatsAppButton 
+                  phoneNumber={whatsappNumber}
+                  message={whatsappMessage}
+                  size="lg"
+                  variant="outline"
+                  className="bg-transparent hover:bg-white/10"
+                >
+                  Orçamento via WhatsApp
+                </WhatsAppButton>
               </div>
             </AnimatedElement>
           </div>

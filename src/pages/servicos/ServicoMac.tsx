@@ -1,7 +1,7 @@
-
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { ServiceDetail } from "@/components/shared/service-detail";
+import { WhatsAppButton } from "@/components/ui/whatsapp-button";
 
 const macFeatures = [
   {
@@ -54,6 +54,8 @@ const ServicoMac = () => {
           imagePlaceholder="Imagem Mac Placeholder"
           features={macFeatures}
           commonProblems={commonProblems}
+          whatsappNumber="+556536216000"
+          whatsappMessage="Olá, gostaria de solicitar um orçamento para reparo do meu Mac."
         />
       </main>
       <Footer />

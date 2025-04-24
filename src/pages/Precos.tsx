@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
@@ -6,6 +5,8 @@ import { AnimatedElement } from "@/components/animations/animated-element";
 import { SectionTitle } from "@/components/ui/section-title";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Link } from "react-router-dom";
+import { WhatsAppButton } from "@/components/ui/whatsapp-button";
 
 // Define tipos para os dados da tabela
 type DeviceRepairPrice = {
@@ -30,16 +31,36 @@ type WatchRepair = DeviceRepairPrice & {
   buttonRepair: string;
 }
 
-// Dados simulados para tabela de preços
+// Update types for new price structure
+type RepairPrice = {
+  model: string;
+  repairType: string;
+  pixPrice: string;
+  cashPrice: string;
+  installments2to5: string;
+  installments6to10: string;
+}
+
+// Sample data structure for iPhone prices (you can edit these later)
 const PRICE_DATA = {
   iphone: [
-    { model: "iPhone SE", screenRepair: "R$ 499", batteryReplacement: "R$ 299", backGlassRepair: "R$ 399" },
-    { model: "iPhone 11", screenRepair: "R$ 799", batteryReplacement: "R$ 399", backGlassRepair: "R$ 499" },
-    { model: "iPhone 12", screenRepair: "R$ 999", batteryReplacement: "R$ 499", backGlassRepair: "R$ 599" },
-    { model: "iPhone 13", screenRepair: "R$ 1299", batteryReplacement: "R$ 599", backGlassRepair: "R$ 699" },
-    { model: "iPhone 14", screenRepair: "R$ 1599", batteryReplacement: "R$ 699", backGlassRepair: "R$ 799" },
-    { model: "iPhone 15", screenRepair: "R$ 1899", batteryReplacement: "R$ 799", backGlassRepair: "R$ 999" }
-  ] as IPhoneRepair[],
+    { 
+      model: "iPhone 15 Pro Max",
+      repairType: "Troca de Tela",
+      pixPrice: "R$ 2899",
+      cashPrice: "R$ 2999",
+      installments2to5: "R$ 3199",
+      installments6to10: "R$ 3499"
+    },
+    {
+      model: "iPhone 15 Pro Max",
+      repairType: "Troca de Bateria",
+      pixPrice: "R$ 799",
+      cashPrice: "R$ 899",
+      installments2to5: "R$ 999",
+      installments6to10: "R$ 1099"
+    }
+  ] as RepairPrice[],
   ipad: [
     { model: "iPad 9ª geração", screenRepair: "R$ 999", batteryReplacement: "R$ 599", connectorRepair: "R$ 499" },
     { model: "iPad Air", screenRepair: "R$ 1399", batteryReplacement: "R$ 699", connectorRepair: "R$ 599" },
@@ -82,20 +103,19 @@ const Precos = () => {
     item.model.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // Colunas de cabeçalho com base no tipo de dispositivo
+  // Get table headers based on device type
   const getTableHeaders = () => {
-    switch (selectedDevice) {
-      case 'iphone':
-        return ['Modelo', 'Reparo de Tela', 'Troca de Bateria', 'Reparo de Tampa Traseira'];
-      case 'ipad':
-        return ['Modelo', 'Reparo de Tela', 'Troca de Bateria', 'Reparo de Conector'];
-      case 'mac':
-        return ['Modelo', 'Reparo de Tela', 'Troca de Bateria', 'Reparo de Teclado'];
-      case 'watch':
-        return ['Modelo', 'Reparo de Tela', 'Troca de Bateria', 'Reparo de Botões'];
-      default:
-        return ['Modelo', 'Reparo de Tela', 'Troca de Bateria', 'Outro Reparo'];
+    if (selectedDevice === 'mac') {
+      return ['Informação de Preços'];
     }
+    return [
+      'Modelo',
+      'Tipo de Reparo',
+      'PIX c/ Desconto',
+      'À Vista/3x',
+      '2-5x Cartão',
+      '6-10x Cartão'
+    ];
   };
 
   return (
@@ -146,35 +166,60 @@ const Precos = () => {
                 </div>
 
                 <div className="overflow-x-auto">
-                  <table className="w-full border-collapse">
-                    <thead>
-                      <tr className="bg-secondary border-b">
-                        {getTableHeaders().map((header, index) => (
-                          <th key={index} className="py-3 px-4 text-left font-medium">
-                            {header}
-                          </th>
-                        ))}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {filteredData.map((item, index) => (
-                        <tr 
-                          key={index} 
-                          className={`border-b ${index % 2 === 0 ? 'bg-white' : 'bg-secondary/30'} hover:bg-secondary/50 transition-colors`}
+                  {selectedDevice === 'mac' ? (
+                    <div className="text-center py-8">
+                      <h3 className="text-xl font-semibold mb-4">Orçamento Personalizado para Mac</h3>
+                      <p className="text-muted-foreground mb-6">
+                        Os valores para reparo de Mac dependem de análise técnica do aparelho e 
+                        consulta dos valores das peças de acordo com o modelo específico.
+                      </p>
+                      <div className="flex justify-center gap-4">
+                        <Button asChild>
+                          <Link to="/contato">Entre em Contato</Link>
+                        </Button>
+                        <WhatsAppButton 
+                          phoneNumber="+556536216000"
+                          message="Olá, gostaria de solicitar um orçamento para reparo do meu Mac."
                         >
-                          <td className="py-3 px-4 font-medium">{item.model}</td>
-                          <td className="py-3 px-4">{item.screenRepair}</td>
-                          <td className="py-3 px-4">{item.batteryReplacement}</td>
-                          <td className="py-3 px-4">
-                            {selectedDevice === 'iphone' && (item as IPhoneRepair).backGlassRepair}
-                            {selectedDevice === 'ipad' && (item as IPadRepair).connectorRepair}
-                            {selectedDevice === 'mac' && (item as MacRepair).keyboardRepair}
-                            {selectedDevice === 'watch' && (item as WatchRepair).buttonRepair}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                          Orçamento via WhatsApp
+                        </WhatsAppButton>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="overflow-x-auto">
+                      <table className="w-full border-collapse min-w-[800px]">
+                        <thead>
+                          <tr className="bg-secondary border-b">
+                            {getTableHeaders().map((header, index) => (
+                              <th key={index} className="py-3 px-4 text-left font-medium">
+                                {header}
+                              </th>
+                            ))}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {selectedDevice === 'iphone' && PRICE_DATA.iphone
+                            .filter(item => 
+                              item.model.toLowerCase().includes(searchTerm.toLowerCase())
+                            )
+                            .map((item, index) => (
+                              <tr key={index} className={`border-b ${
+                                index % 2 === 0 ? 'bg-white' : 'bg-secondary/30'
+                              } hover:bg-secondary/50 transition-colors`}>
+                                <td className="py-3 px-4">{item.model}</td>
+                                <td className="py-3 px-4">{item.repairType}</td>
+                                <td className="py-3 px-4 font-medium text-primary">
+                                  {item.pixPrice}
+                                </td>
+                                <td className="py-3 px-4">{item.cashPrice}</td>
+                                <td className="py-3 px-4">{item.installments2to5}</td>
+                                <td className="py-3 px-4">{item.installments6to10}</td>
+                              </tr>
+                            ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
                 </div>
 
                 <div className="mt-6 text-sm text-muted-foreground">

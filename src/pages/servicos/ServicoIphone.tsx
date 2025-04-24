@@ -1,7 +1,7 @@
-
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { ServiceDetail } from "@/components/shared/service-detail";
+import { WhatsAppButton } from "@/components/ui/whatsapp-button";
 
 const iPhoneFeatures = [
   {
@@ -53,6 +53,8 @@ const ServicoIphone = () => {
           imagePlaceholder="Imagem iPhone Placeholder"
           features={iPhoneFeatures}
           commonProblems={commonProblems}
+          whatsappNumber="+556536216000"
+          whatsappMessage="Olá, gostaria de solicitar um orçamento para reparo do meu iPhone."
         />
       </main>
       <Footer />
