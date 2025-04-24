@@ -1,6 +1,7 @@
 
 import { AnimatedElement } from "@/components/animations/animated-element";
 import { Button } from "@/components/ui/button";
+import { WhatsAppButton } from "@/components/ui/whatsapp-button";
 import { Link } from "react-router-dom";
 
 export function HeroSection() {
@@ -22,9 +23,13 @@ export function HeroSection() {
                 <Button asChild size="lg">
                   <Link to="/servicos">Nossos Serviços</Link>
                 </Button>
-                <Button asChild variant="outline" size="lg">
-                  <Link to="/contato">Entre em Contato</Link>
-                </Button>
+                <WhatsAppButton 
+                  phoneNumber="+556536216000" 
+                  message="Olá, gostaria de informações sobre assistência técnica para dispositivos Apple."
+                  size="lg"
+                >
+                  Atendimento via WhatsApp
+                </WhatsAppButton>
               </div>
             </div>
           </AnimatedElement>

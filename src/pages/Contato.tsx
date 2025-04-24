@@ -6,6 +6,7 @@ import { SectionTitle } from "@/components/ui/section-title";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { WhatsAppButton } from "@/components/ui/whatsapp-button";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
 
 const Contato = () => {
@@ -32,6 +33,16 @@ const Contato = () => {
                   Precisa de assistência técnica para seu dispositivo Apple? Entre em contato conosco 
                   através de um dos nossos canais de atendimento ou preencha o formulário abaixo.
                 </p>
+                <div className="mt-6">
+                  <WhatsAppButton 
+                    phoneNumber="+556536216000" 
+                    message="Olá, gostaria de informações sobre assistência técnica para dispositivos Apple."
+                    size="lg"
+                    className="mx-auto"
+                  >
+                    Falar com um Técnico via WhatsApp
+                  </WhatsAppButton>
+                </div>
               </div>
             </AnimatedElement>
           </div>
@@ -130,8 +141,14 @@ const Contato = () => {
                       </div>
                       <div>
                         <h4 className="font-semibold mb-1">Telefone</h4>
-                        <p className="text-muted-foreground">(00) 0000-0000</p>
-                        <p className="text-muted-foreground">(00) 0000-0000</p>
+                        <p className="text-muted-foreground">(65) 3621-6000</p>
+                        <div className="mt-2">
+                          <WhatsAppButton 
+                            phoneNumber="+556536216000" 
+                            message="Olá, gostaria de falar sobre assistência técnica."
+                            size="sm"
+                          />
+                        </div>
                       </div>
                     </div>
                     
@@ -141,8 +158,8 @@ const Contato = () => {
                       </div>
                       <div>
                         <h4 className="font-semibold mb-1">Email</h4>
-                        <p className="text-muted-foreground">contato@exemplo.com</p>
-                        <p className="text-muted-foreground">suporte@exemplo.com</p>
+                        <p className="text-muted-foreground">contato@linkti.info</p>
+                        <p className="text-muted-foreground">suporte@linkti.info</p>
                       </div>
                     </div>
                     
@@ -153,8 +170,8 @@ const Contato = () => {
                       <div>
                         <h4 className="font-semibold mb-1">Endereço</h4>
                         <p className="text-muted-foreground">
-                          Av. Exemplo, 123 - Bairro<br />
-                          Cidade - Estado, 00000-000
+                          Av. Historiador Rubens de Mendonça<br />
+                          Cuiabá - MT
                         </p>
                       </div>
                     </div>

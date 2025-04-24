@@ -1,6 +1,7 @@
 
 import { AnimatedElement } from "@/components/animations/animated-element";
 import { Button } from "@/components/ui/button";
+import { WhatsAppButton } from "@/components/ui/whatsapp-button";
 import { Link } from "react-router-dom";
 
 export function CtaSection() {
@@ -20,9 +21,13 @@ export function CtaSection() {
               <Button asChild size="lg" variant="secondary">
                 <Link to="/contato">Entre em Contato</Link>
               </Button>
-              <Button asChild size="lg" variant="outline" className="bg-transparent hover:bg-white/10">
-                <Link to="/precos">Ver Preços</Link>
-              </Button>
+              <WhatsAppButton 
+                phoneNumber="+556536216000" 
+                message="Olá, gostaria de solicitar um orçamento para reparo do meu dispositivo Apple."
+                size="lg"
+              >
+                Orçamento via WhatsApp
+              </WhatsAppButton>
             </div>
           </AnimatedElement>
         </div>

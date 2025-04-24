@@ -15,8 +15,11 @@ import Precos from "./pages/Precos";
 import Contato from "./pages/Contato";
 import Cookies from "./pages/Cookies";
 import Privacidade from "./pages/Privacidade";
+import Termos from "./pages/Termos";
+import Garantia from "./pages/Garantia";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
+import Admin from "./pages/Admin";
 import { CookieConsent } from "./components/shared/cookie-consent";
 
 const queryClient = new QueryClient();
@@ -38,8 +41,11 @@ const App = () => (
           <Route path="/contato" element={<Contato />} />
           <Route path="/cookies" element={<Cookies />} />
           <Route path="/privacidade" element={<Privacidade />} />
+          <Route path="/termos" element={<Termos />} />
+          <Route path="/garantia" element={<Garantia />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:postId" element={<BlogPost />} />
+          <Route path="/admin" element={<Admin />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
