@@ -21,6 +21,16 @@ import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import Admin from "./pages/Admin";
 import { CookieConsent } from "./components/shared/cookie-consent";
+import CursoIphonePage from "./pages/page-cursoiphone";
+import IniciantePage from "./pages/page-cursoiphone/iniciante";
+import InicianteConteudos from "./pages/page-cursoiphone/iniciante/conteudos";
+import InicianteQuiz from "./pages/page-cursoiphone/iniciante/quiz";
+import IntermediarioPage from "./pages/page-cursoiphone/intermediario";
+import IntermediarioConteudos from "./pages/page-cursoiphone/intermediario/conteudos";
+import IntermediarioQuiz from "./pages/page-cursoiphone/intermediario/quiz";
+import AvancadoPage from "./pages/page-cursoiphone/avancado";
+import AvancadoConteudos from "./pages/page-cursoiphone/avancado/conteudos";
+import AvancadoQuiz from "./pages/page-cursoiphone/avancado/quiz";
 
 const queryClient = new QueryClient();
 
@@ -46,6 +56,17 @@ const App = () => (
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:postId" element={<BlogPost />} />
           <Route path="/admin" element={<Admin />} />
+          {/* Rotas do Curso de iPhone */}
+          <Route path="/curso-iphone" element={<CursoIphonePage />} />
+          <Route path="/curso-iphone/iniciante" element={<IniciantePage />} />
+          <Route path="/curso-iphone/iniciante/conteudos" element={<InicianteConteudos />} />
+          <Route path="/curso-iphone/iniciante/quiz" element={<InicianteQuiz />} />
+          <Route path="/curso-iphone/intermediario" element={<IntermediarioPage />} />
+          <Route path="/curso-iphone/intermediario/conteudos" element={<IntermediarioConteudos />} />
+          <Route path="/curso-iphone/intermediario/quiz" element={<IntermediarioQuiz />} />
+          <Route path="/curso-iphone/avancado" element={<AvancadoPage />} />
+          <Route path="/curso-iphone/avancado/conteudos" element={<AvancadoConteudos />} />
+          <Route path="/curso-iphone/avancado/quiz" element={<AvancadoQuiz />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
