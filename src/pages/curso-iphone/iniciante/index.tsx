@@ -8,8 +8,8 @@ export default function IniciantePage() {
       <p className="mb-6 max-w-xl text-center">
         Aprenda os fundamentos do desenvolvimento iOS, desde a configuração do ambiente até a criação do seu primeiro app.
       </p>
-      <Link to="/page-cursoiphone/iniciante/conteudos" className="btn btn-primary mb-4">Começar Conteúdo</Link>
-      <Link to="/page-cursoiphone/iniciante/quiz" className="btn btn-secondary">Fazer Quiz</Link>
+      <Link to="/curso-iphone/iniciante/conteudos" className="btn btn-primary mb-4">Começar Conteúdo</Link>
+      <Link to="/curso-iphone/iniciante/quiz" className="btn btn-secondary">Fazer Quiz</Link>
     </div>
   );
 }

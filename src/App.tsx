@@ -25,15 +25,15 @@ import BlogPost from "./pages/BlogPost";
 import Admin from "./pages/Admin";
 import { CookieConsent } from "./components/shared/cookie-consent";
 import CursoIphonePage from "./pages/page-cursoiphone";
-import IniciantePage from "./pages/page-cursoiphone/iniciante";
-import InicianteConteudos from "./pages/page-cursoiphone/iniciante/conteudos";
-import InicianteQuiz from "./pages/page-cursoiphone/iniciante/quiz";
-import IntermediarioPage from "./pages/page-cursoiphone/intermediario";
-import IntermediarioConteudos from "./pages/page-cursoiphone/intermediario/conteudos";
-import IntermediarioQuiz from "./pages/page-cursoiphone/intermediario/quiz";
-import AvancadoPage from "./pages/page-cursoiphone/avancado";
-import AvancadoConteudos from "./pages/page-cursoiphone/avancado/conteudos";
-import AvancadoQuiz from "./pages/page-cursoiphone/avancado/quiz";
+import IniciantePage from "./pages/curso-iphone/iniciante";
+import InicianteConteudos from "./pages/curso-iphone/iniciante/conteudos";
+import InicianteQuiz from "./pages/curso-iphone/iniciante/quiz";
+import IntermediarioPage from "./pages/curso-iphone/intermediario";
+import IntermediarioConteudos from "./pages/curso-iphone/intermediario/conteudos";
+import IntermediarioQuiz from "./pages/curso-iphone/intermediario/quiz";
+import AvancadoPage from "./pages/curso-iphone/avancado";
+import AvancadoConteudos from "./pages/curso-iphone/avancado/conteudos";
+import AvancadoQuiz from "./pages/curso-iphone/avancado/quiz";
 
 const queryClient = new QueryClient();
 

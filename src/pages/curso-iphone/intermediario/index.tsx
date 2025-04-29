@@ -8,8 +8,8 @@ export default function IntermediarioPage() {
       <p className="mb-6 max-w-xl text-center">
         Aprofunde seus conhecimentos em iOS, aprendendo sobre APIs, navegação avançada, persistência de dados e animações.
       </p>
-      <Link to="/page-cursoiphone/intermediario/conteudos" className="btn btn-primary mb-4">Começar Conteúdo</Link>
-      <Link to="/page-cursoiphone/intermediario/quiz" className="btn btn-secondary">Fazer Quiz</Link>
+      <Link to="/curso-iphone/intermediario/conteudos" className="btn btn-primary mb-4">Começar Conteúdo</Link>
+      <Link to="/curso-iphone/intermediario/quiz" className="btn btn-secondary">Fazer Quiz</Link>
     </div>
   );
 }

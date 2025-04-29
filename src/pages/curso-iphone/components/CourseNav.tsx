@@ -4,18 +4,18 @@ import { Link } from "react-router-dom";
 const levels = [
   {
     name: "Iniciante",
-    path: "/page-cursoiphone/iniciante",
+    path: "/curso-iphone/iniciante",
     description: "Comece do zero e aprenda o básico do desenvolvimento iOS."
   },
   {
     name: "Intermediário",
-    path: "/page-cursoiphone/intermediario",
+    path: "/curso-iphone/intermediario",
     description: "Aprofunde seus conhecimentos e crie apps mais completos.",
     locked: true
   },
   {
     name: "Avançado",
-    path: "/page-cursoiphone/avancado",
+    path: "/curso-iphone/avancado",
     description: "Domine técnicas avançadas e publique seu app.",
     locked: true
   }

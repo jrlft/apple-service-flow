@@ -8,8 +8,8 @@ export default function AvancadoPage() {
       <p className="mb-6 max-w-xl text-center">
         Domine técnicas avançadas de arquitetura, testes, integração com serviços externos e publicação na App Store.
       </p>
-      <Link to="/page-cursoiphone/avancado/conteudos" className="btn btn-primary mb-4">Começar Conteúdo</Link>
-      <Link to="/page-cursoiphone/avancado/quiz" className="btn btn-secondary">Fazer Quiz</Link>
+      <Link to="/curso-iphone/avancado/conteudos" className="btn btn-primary mb-4">Começar Conteúdo</Link>
+      <Link to="/curso-iphone/avancado/quiz" className="btn btn-secondary">Fazer Quiz</Link>
     </div>
   );
 }
