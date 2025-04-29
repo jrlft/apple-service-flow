@@ -24,7 +24,7 @@ import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import Admin from "./pages/Admin";
 import { CookieConsent } from "./components/shared/cookie-consent";
-import CursoIphonePage from "./pages/page-cursoiphone";
+import CursoIphonePage from "./pages/curso-iphone";
 import IniciantePage from "./pages/curso-iphone/iniciante";
 import InicianteConteudos from "./pages/curso-iphone/iniciante/conteudos";
 import InicianteQuiz from "./pages/curso-iphone/iniciante/quiz";
