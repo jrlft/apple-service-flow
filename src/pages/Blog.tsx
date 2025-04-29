@@ -89,6 +89,8 @@ const BLOG_POSTS = [
   },
 ];
 
+// AVISO: Esta página foi migrada para /blog (dinâmico via Strapi)
+// Remover ou redirecionar para evitar duplicidade.
 const Blog = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
@@ -236,4 +238,5 @@ const Blog = () => {
   );
 };
 
+// AVISO: Use a rota /blog para o novo blog dinâmico
 export default Blog;

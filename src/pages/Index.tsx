@@ -21,6 +21,10 @@ const Index = () => {
         <ProcessSection />
         <TestimonialsSection />
         <BlogSection />
+        {/* Link para o blog completo */}
+        <div className="text-center mt-8">
+          <a href="/blog" className="btn btn-primary">Ver todos os artigos do Blog</a>
+        </div>
         <ContactSection />
         <CtaSection />
       </main>

@@ -15,6 +15,7 @@ const NAV_ITEMS = [
   { label: "Preços", href: "/precos" },
   { label: "Contato", href: "/contato" },
   { label: "Curso de iPhone", href: "/curso-iphone", highlight: true },
+  { label: "Blog", href: "/blog" },
 ];
 
 export function Navbar() {

@@ -6,6 +6,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import Blog from "./pages/blog";
+import BlogPost from "./pages/blog/BlogPost";
+import ContatoWhats from "./pages/contato-whats";
 import Servicos from "./pages/Servicos";
 import ServicoIphone from "./pages/servicos/ServicoIphone";
 import ServicoIpad from "./pages/servicos/ServicoIpad";
@@ -67,6 +70,9 @@ const App = () => (
           <Route path="/curso-iphone/avancado" element={<AvancadoPage />} />
           <Route path="/curso-iphone/avancado/conteudos" element={<AvancadoConteudos />} />
           <Route path="/curso-iphone/avancado/quiz" element={<AvancadoQuiz />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
+          <Route path="/contato-whats" element={<ContatoWhats />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
