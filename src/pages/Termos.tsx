@@ -2,16 +2,34 @@
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 
+import { useEffect, useState } from "react";
+import { fetchPage } from "@/lib/strapi";
+
 const Termos = () => {
+  const [page, setPage] = useState<any>(null);
+  useEffect(() => { fetchPage("termos").then(setPage); }, []);
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
       <main className="flex-grow pt-24 pb-16">
         <div className="container">
           <div className="max-w-3xl mx-auto">
-            <h1 className="text-3xl font-bold mb-6">Termos de Uso</h1>
-            
+            <h1 className="text-3xl font-bold mb-6">{page?.attributes?.title || "Termos de Uso"}</h1>
             <div className="prose max-w-none">
+              {page?.attributes?.content ? (
+                <div dangerouslySetInnerHTML={{ __html: page.attributes.content }} />
+              ) : (
+                <div>Carregando...</div>
+              )}
+            </div>
+          </div>
+        </div>
+      </main>
+      <Footer />
+    </div>
+  );
+};
               <p className="text-muted-foreground italic mb-8">
                 Este é um modelo de página para seus Termos de Uso. Substitua este texto pelo conteúdo real dos seus termos.
               </p>

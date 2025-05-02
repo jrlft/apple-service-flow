@@ -4,7 +4,13 @@ import { Footer } from "@/components/layout/footer";
 import { AnimatedElement } from "@/components/animations/animated-element";
 import { SectionTitle } from "@/components/ui/section-title";
 
+import { useEffect, useState } from "react";
+import { fetchPage } from "@/lib/strapi";
+
 const Cookies = () => {
+  const [page, setPage] = useState<any>(null);
+  useEffect(() => { fetchPage("cookies").then(setPage); }, []);
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
@@ -13,8 +19,8 @@ const Cookies = () => {
           <div className="container">
             <AnimatedElement>
               <SectionTitle 
-                title="Política de Cookies" 
-                subtitle="Saiba como utilizamos cookies em nosso site"
+                title={page?.attributes?.title || "Política de Cookies"} 
+                subtitle={page?.attributes?.subtitle || "Saiba como utilizamos cookies em nosso site"}
                 centered
               />
             </AnimatedElement>
@@ -25,7 +31,20 @@ const Cookies = () => {
           <div className="container">
             <AnimatedElement>
               <div className="bg-white rounded-lg shadow-md p-8 prose prose-blue max-w-none">
-                <h2>1. O que são cookies?</h2>
+                {page?.attributes?.content ? (
+                  <div dangerouslySetInnerHTML={{ __html: page.attributes.content }} />
+                ) : (
+                  <div>Carregando...</div>
+                )}
+              </div>
+            </AnimatedElement>
+          </div>
+        </section>
+      </main>
+      <Footer />
+    </div>
+  );
+};
                 <p>
                   Cookies são pequenos arquivos de texto que os sites colocam no seu dispositivo quando você os visita. 
                   Esses arquivos armazenam informações sobre suas preferências e outras informações que ajudam a melhorar 

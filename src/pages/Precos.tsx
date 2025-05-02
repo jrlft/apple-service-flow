@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { fetchPage } from "@/lib/strapi";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { AnimatedElement } from "@/components/animations/animated-element";
@@ -42,46 +43,7 @@ type RepairPrice = {
 }
 
 // Sample data structure for iPhone prices (you can edit these later)
-const PRICE_DATA = {
-  iphone: [
-    { 
-      model: "iPhone 15 Pro Max",
-      repairType: "Troca de Tela",
-      pixPrice: "R$ 2899",
-      cashPrice: "R$ 2999",
-      installments2to5: "R$ 3199",
-      installments6to10: "R$ 3499"
-    },
-    {
-      model: "iPhone 15 Pro Max",
-      repairType: "Troca de Bateria",
-      pixPrice: "R$ 799",
-      cashPrice: "R$ 899",
-      installments2to5: "R$ 999",
-      installments6to10: "R$ 1099"
-    }
-  ] as RepairPrice[],
-  ipad: [
-    { model: "iPad 9ª geração", screenRepair: "R$ 999", batteryReplacement: "R$ 599", connectorRepair: "R$ 499" },
-    { model: "iPad Air", screenRepair: "R$ 1399", batteryReplacement: "R$ 699", connectorRepair: "R$ 599" },
-    { model: "iPad Pro 11\"", screenRepair: "R$ 1899", batteryReplacement: "R$ 799", connectorRepair: "R$ 699" },
-    { model: "iPad Pro 12.9\"", screenRepair: "R$ 2399", batteryReplacement: "R$ 899", connectorRepair: "R$ 799" }
-  ] as IPadRepair[],
-  mac: [
-    { model: "MacBook Air", screenRepair: "R$ 2499", batteryReplacement: "R$ 1299", keyboardRepair: "R$ 1499" },
-    { model: "MacBook Pro 13\"", screenRepair: "R$ 2999", batteryReplacement: "R$ 1399", keyboardRepair: "R$ 1699" },
-    { model: "MacBook Pro 14\"", screenRepair: "R$ 3499", batteryReplacement: "R$ 1499", keyboardRepair: "R$ 1899" },
-    { model: "MacBook Pro 16\"", screenRepair: "R$ 4499", batteryReplacement: "R$ 1699", keyboardRepair: "R$ 2099" },
-    { model: "iMac 24\"", screenRepair: "R$ 3999", batteryReplacement: "N/A", keyboardRepair: "R$ 999" }
-  ] as MacRepair[],
-  watch: [
-    { model: "Apple Watch SE", screenRepair: "R$ 599", batteryReplacement: "R$ 399", buttonRepair: "R$ 299" },
-    { model: "Apple Watch Series 6", screenRepair: "R$ 799", batteryReplacement: "R$ 499", buttonRepair: "R$ 399" },
-    { model: "Apple Watch Series 7", screenRepair: "R$ 899", batteryReplacement: "R$ 549", buttonRepair: "R$ 449" },
-    { model: "Apple Watch Series 8", screenRepair: "R$ 999", batteryReplacement: "R$ 599", buttonRepair: "R$ 499" },
-    { model: "Apple Watch Ultra", screenRepair: "R$ 1599", batteryReplacement: "R$ 799", buttonRepair: "R$ 699" }
-  ] as WatchRepair[],
-};
+// Os dados de preços virão do Strapi via CMS, não mais hardcoded.
 
 // Tipos de dispositivos
 const DEVICE_TYPES = [
@@ -94,12 +56,18 @@ const DEVICE_TYPES = [
 const Precos = () => {
   const [selectedDevice, setSelectedDevice] = useState("iphone");
   const [searchTerm, setSearchTerm] = useState("");
+  const [priceData, setPriceData] = useState<any>({});
+  const [page, setPage] = useState<any>(null);
 
-  // Obter dados para o dispositivo selecionado
-  const priceData = PRICE_DATA[selectedDevice as keyof typeof PRICE_DATA];
+  useEffect(() => {
+    fetchPage("precos").then((data) => {
+      setPage(data);
+      setPriceData(data?.attributes?.prices || {});
+    });
+  }, []);
 
   // Filtrar dados com base na pesquisa
-  const filteredData = priceData.filter(item => 
+  const filteredData = (priceData[selectedDevice] || []).filter((item: any) => 
     item.model.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -127,8 +95,8 @@ const Precos = () => {
             <AnimatedElement>
               <div className="max-w-3xl mx-auto text-center">
                 <SectionTitle 
-                  title="Tabela de Preços" 
-                  subtitle="Valores de referência para os serviços mais comuns" 
+                  title={page?.attributes?.title || "Tabela de Preços"} 
+                  subtitle={page?.attributes?.subtitle || "Confira os valores de reparo para cada dispositivo Apple"} 
                   centered
                 />
                 <p className="text-muted-foreground">
@@ -198,24 +166,20 @@ const Precos = () => {
                           </tr>
                         </thead>
                         <tbody>
-                          {selectedDevice === 'iphone' && PRICE_DATA.iphone
-                            .filter(item => 
-                              item.model.toLowerCase().includes(searchTerm.toLowerCase())
-                            )
-                            .map((item, index) => (
-                              <tr key={index} className={`border-b ${
-                                index % 2 === 0 ? 'bg-white' : 'bg-secondary/30'
-                              } hover:bg-secondary/50 transition-colors`}>
-                                <td className="py-3 px-4">{item.model}</td>
-                                <td className="py-3 px-4">{item.repairType}</td>
-                                <td className="py-3 px-4 font-medium text-primary">
-                                  {item.pixPrice}
-                                </td>
-                                <td className="py-3 px-4">{item.cashPrice}</td>
-                                <td className="py-3 px-4">{item.installments2to5}</td>
-                                <td className="py-3 px-4">{item.installments6to10}</td>
-                              </tr>
-                            ))}
+                          {filteredData.map((item, index) => (
+                            <tr key={index} className={`border-b ${
+                              index % 2 === 0 ? 'bg-white' : 'bg-secondary/30'
+                            } hover:bg-secondary/50 transition-colors`}>
+                              <td className="py-3 px-4">{item.model}</td>
+                              <td className="py-3 px-4">{item.repairType}</td>
+                              <td className="py-3 px-4 font-medium text-primary">
+                                {item.pixPrice}
+                              </td>
+                              <td className="py-3 px-4">{item.cashPrice}</td>
+                              <td className="py-3 px-4">{item.installments2to5}</td>
+                              <td className="py-3 px-4">{item.installments6to10}</td>
+                            </tr>
+                          ))}
                         </tbody>
                       </table>
                     </div>
@@ -225,7 +189,7 @@ const Precos = () => {
                 <div className="mt-6 text-sm text-muted-foreground">
                   <p>* Os preços podem variar de acordo com o modelo específico e condição do dispositivo.</p>
                   <p>* Esta tabela é apenas uma referência. Para um orçamento preciso, entre em contato conosco.</p>
-                  <p>* Valores atualizados em {new Date().toLocaleDateString()}</p>
+                  <p>* Valores atualizados em {page?.attributes?.updatedAt ? new Date(page.attributes.updatedAt).toLocaleDateString() : new Date().toLocaleDateString()}</p>
                 </div>
 
                 <div className="mt-8 bg-secondary/50 p-4 rounded-md">

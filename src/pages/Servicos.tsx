@@ -7,42 +7,22 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Smartphone, Tablet, Laptop, Watch } from "lucide-react";
 
-const SERVICES = [
-  {
-    title: "iPhone",
-    description: "Consertos especializados para todos os modelos de iPhone, incluindo substituição de tela, bateria, câmera e outros componentes com peças originais.",
-    icon: <Smartphone className="h-12 w-12" />,
-    link: "/servicos/iphone",
-    image: "Imagem iPhone Placeholder",
-    delay: 0,
-  },
-  {
-    title: "iPad",
-    description: "Serviços completos para iPad, desde substituição de tela e bateria até diagnóstico e reparo de problemas de software e hardware.",
-    icon: <Tablet className="h-12 w-12" />,
-    link: "/servicos/ipad",
-    image: "Imagem iPad Placeholder",
-    delay: 0.1,
-  },
-  {
-    title: "Mac",
-    description: "Manutenção e reparo para toda linha Mac, incluindo MacBook, iMac e Mac Mini. Serviços que vão desde upgrades até reparos de placa lógica.",
-    icon: <Laptop className="h-12 w-12" />,
-    link: "/servicos/mac",
-    image: "Imagem Mac Placeholder",
-    delay: 0.2,
-  },
-  {
-    title: "Apple Watch",
-    description: "Serviços especializados para Apple Watch, incluindo substituição de tela, bateria e diagnóstico de problemas de conectividade e sensores.",
-    icon: <Watch className="h-12 w-12" />,
-    link: "/servicos/watch",
-    image: "Imagem Watch Placeholder",
-    delay: 0.3,
-  },
-];
+// Removido SERVICES hardcoded. Os serviços virão do Strapi.
+
+import { useEffect, useState } from "react";
+import { fetchServices } from "@/lib/strapi";
+
+const iconMap: Record<string, any> = {
+  iphone: Smartphone,
+  ipad: Tablet,
+  mac: Laptop,
+  watch: Watch,
+};
 
 const Servicos = () => {
+  const [services, setServices] = useState<any[]>([]);
+  useEffect(() => { fetchServices().then(setServices); }, []);
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
@@ -68,25 +48,30 @@ const Servicos = () => {
         <section className="py-16">
           <div className="container">
             <div className="space-y-16">
-              {SERVICES.map((service, index) => (
-                <AnimatedElement key={index} delay={service.delay}>
-                  <div className={`grid grid-cols-1 lg:grid-cols-2 gap-8 items-center ${index % 2 !== 0 ? 'lg:flex-row-reverse' : ''}`}>
-                    <div>
-                      <div className="bg-primary bg-opacity-10 p-4 rounded-full w-fit mb-4 text-primary">
-                        {service.icon}
+              {services.map((service, index) => {
+                const Icon = iconMap[service.attributes.slug] || Smartphone;
+                return (
+                  <AnimatedElement key={service.id} delay={index * 0.1}>
+                    <div className={`grid grid-cols-1 lg:grid-cols-2 gap-8 items-center ${index % 2 !== 0 ? 'lg:flex-row-reverse' : ''}`}>
+                      <div>
+                        <div className="bg-primary bg-opacity-10 p-4 rounded-full w-fit mb-4 text-primary">
+                          <Icon className="h-12 w-12" />
+                        </div>
+                        <h3 className="text-3xl font-bold mb-4">{service.attributes.title}</h3>
+                        <p className="text-muted-foreground mb-6">{service.attributes.description}</p>
+                        <Button asChild>
+                          <Link to={"/servicos/" + service.attributes.slug}>Ver Detalhes</Link>
+                        </Button>
                       </div>
-                      <h3 className="text-3xl font-bold mb-4">{service.title}</h3>
-                      <p className="text-muted-foreground mb-6">{service.description}</p>
-                      <Button asChild>
-                        <Link to={service.link}>Ver Detalhes</Link>
-                      </Button>
+                      <div className="bg-white rounded-lg shadow-md p-6 h-[300px] flex items-center justify-center">
+                        {service.attributes.image && (
+                          <img src={service.attributes.image.data?.attributes?.url} alt={service.attributes.title} className="max-h-60" />
+                        )}
+                      </div>
                     </div>
-                    <div className="bg-white rounded-lg shadow-md p-6 h-[300px] flex items-center justify-center">
-                      <div className="text-gray-400">{service.image}</div>
-                    </div>
-                  </div>
-                </AnimatedElement>
-              ))}
+                  </AnimatedElement>
+                );
+              })}
             </div>
           </div>
         </section>

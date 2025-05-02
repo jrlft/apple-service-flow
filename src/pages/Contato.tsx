@@ -9,7 +9,13 @@ import { Button } from "@/components/ui/button";
 import { WhatsAppButton } from "@/components/ui/whatsapp-button";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
 
+import { useEffect, useState } from "react";
+import { fetchPage } from "@/lib/strapi";
+
 const Contato = () => {
+  const [contact, setContact] = useState<any>(null);
+  useEffect(() => { fetchPage("contato").then(setContact); }, []);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Form submission logic would go here
@@ -25,24 +31,25 @@ const Contato = () => {
             <AnimatedElement>
               <div className="max-w-3xl mx-auto text-center">
                 <SectionTitle 
-                  title="Entre em Contato" 
-                  subtitle="Estamos aqui para ajudar com seu dispositivo Apple" 
+                  title={contact?.attributes?.title || "Entre em Contato"} 
+                  subtitle={contact?.attributes?.subtitle || "Estamos aqui para ajudar com seu dispositivo Apple"}
                   centered
                 />
                 <p className="text-muted-foreground">
-                  Precisa de assistência técnica para seu dispositivo Apple? Entre em contato conosco 
-                  através de um dos nossos canais de atendimento ou preencha o formulário abaixo.
+                  {contact?.attributes?.description || "Precisa de assistência técnica para seu dispositivo Apple? Entre em contato conosco através de um dos nossos canais de atendimento ou preencha o formulário abaixo."}
                 </p>
-                <div className="mt-6">
-                  <WhatsAppButton 
-                    phoneNumber="+556536216000" 
-                    message="Olá, gostaria de informações sobre assistência técnica para dispositivos Apple."
-                    size="lg"
-                    className="mx-auto"
-                  >
-                    Falar com um Técnico via WhatsApp
-                  </WhatsAppButton>
-                </div>
+                {contact?.attributes?.whatsapp && (
+                  <div className="mt-6">
+                    <WhatsAppButton
+                      phoneNumber={contact.attributes.whatsapp}
+                      message={contact.attributes.whatsappMessage || "Olá, gostaria de informações sobre assistência técnica para dispositivos Apple."}
+                      size="lg"
+                      className="mx-auto"
+                    >
+                      Falar com um Técnico via WhatsApp
+                    </WhatsAppButton>
+                  </div>
+                )}
               </div>
             </AnimatedElement>
           </div>
@@ -141,14 +148,16 @@ const Contato = () => {
                       </div>
                       <div>
                         <h4 className="font-semibold mb-1">Telefone</h4>
-                        <p className="text-muted-foreground">(65) 3621-6000</p>
-                        <div className="mt-2">
-                          <WhatsAppButton 
-                            phoneNumber="+556536216000" 
-                            message="Olá, gostaria de falar sobre assistência técnica."
-                            size="sm"
-                          />
-                        </div>
+                        <p className="text-muted-foreground">{contact?.attributes?.phone || "(65) 3621-6000"}</p>
+                        {contact?.attributes?.whatsapp && (
+                          <div className="mt-2">
+                            <WhatsAppButton
+                              phoneNumber={contact.attributes.whatsapp}
+                              message={contact.attributes.whatsappMessage || "Olá, gostaria de falar sobre assistência técnica."}
+                              size="sm"
+                            />
+                          </div>
+                        )}
                       </div>
                     </div>
                     
@@ -158,8 +167,9 @@ const Contato = () => {
                       </div>
                       <div>
                         <h4 className="font-semibold mb-1">Email</h4>
-                        <p className="text-muted-foreground">contato@linkti.info</p>
-                        <p className="text-muted-foreground">suporte@linkti.info</p>
+                        {contact?.attributes?.emails?.map((email: string, idx: number) => (
+                          <p className="text-muted-foreground" key={idx}>{email}</p>
+                        ))}
                       </div>
                     </div>
                     
@@ -170,8 +180,9 @@ const Contato = () => {
                       <div>
                         <h4 className="font-semibold mb-1">Endereço</h4>
                         <p className="text-muted-foreground">
-                          Av. Historiador Rubens de Mendonça<br />
-                          Cuiabá - MT
+                          {contact?.attributes?.address?.split('\n').map((line: string, idx: number) => (
+                            <span key={idx}>{line}<br /></span>
+                          ))}
                         </p>
                       </div>
                     </div>
@@ -182,8 +193,9 @@ const Contato = () => {
                       </div>
                       <div>
                         <h4 className="font-semibold mb-1">Horário de Funcionamento</h4>
-                        <p className="text-muted-foreground">Segunda a Sexta: 9h às 18h</p>
-                        <p className="text-muted-foreground">Sábado: 9h às 13h</p>
+                        {contact?.attributes?.hours?.map((h: string, idx: number) => (
+                          <p className="text-muted-foreground" key={idx}>{h}</p>
+                        ))}
                       </div>
                     </div>
                   </div>

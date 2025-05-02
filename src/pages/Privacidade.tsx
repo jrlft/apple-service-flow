@@ -4,7 +4,13 @@ import { Footer } from "@/components/layout/footer";
 import { AnimatedElement } from "@/components/animations/animated-element";
 import { SectionTitle } from "@/components/ui/section-title";
 
+import { useEffect, useState } from "react";
+import { fetchPage } from "@/lib/strapi";
+
 const Privacidade = () => {
+  const [page, setPage] = useState<any>(null);
+  useEffect(() => { fetchPage("privacidade").then(setPage); }, []);
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
@@ -13,8 +19,8 @@ const Privacidade = () => {
           <div className="container">
             <AnimatedElement>
               <SectionTitle 
-                title="Política de Privacidade" 
-                subtitle="Saiba como coletamos e utilizamos suas informações"
+                title={page?.attributes?.title || "Política de Privacidade"} 
+                subtitle={page?.attributes?.subtitle || "Saiba como coletamos e utilizamos suas informações"}
                 centered
               />
             </AnimatedElement>
@@ -25,7 +31,20 @@ const Privacidade = () => {
           <div className="container">
             <AnimatedElement>
               <div className="bg-white rounded-lg shadow-md p-8 prose prose-blue max-w-none">
-                <h2>1. Introdução</h2>
+                {page?.attributes?.content ? (
+                  <div dangerouslySetInnerHTML={{ __html: page.attributes.content }} />
+                ) : (
+                  <div>Carregando...</div>
+                )}
+              </div>
+            </AnimatedElement>
+          </div>
+        </section>
+      </main>
+      <Footer />
+    </div>
+  );
+};
                 <p>
                   Esta Política de Privacidade descreve como coletamos, usamos, processamos e compartilhamos suas informações, incluindo dados pessoais, 
                   relacionados ao uso dos nossos serviços. Valorizamos a privacidade dos nossos clientes e nos comprometemos a proteger seus dados pessoais.
