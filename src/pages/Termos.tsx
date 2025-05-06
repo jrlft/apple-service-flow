@@ -20,65 +20,58 @@ const Termos = () => {
               {page?.attributes?.content ? (
                 <div dangerouslySetInnerHTML={{ __html: page.attributes.content }} />
               ) : (
-                <div>Carregando...</div>
+                <>
+                  <p className="text-muted-foreground italic mb-8">
+                    Este é um modelo de página para seus Termos de Uso. Substitua este texto pelo conteúdo real dos seus termos.
+                  </p>
+                  
+                  <h2 className="text-xl font-semibold mt-8 mb-4">1. Aceitação dos Termos</h2>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vitae elit libero, a pharetra augue. 
+                    Nullam id dolor id nibh ultricies vehicula ut id elit.
+                  </p>
+                  
+                  <h2 className="text-xl font-semibold mt-8 mb-4">2. Descrição dos Serviços</h2>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vitae elit libero, a pharetra augue. 
+                    Nullam id dolor id nibh ultricies vehicula ut id elit.
+                  </p>
+                  
+                  <h2 className="text-xl font-semibold mt-8 mb-4">3. Responsabilidades do Usuário</h2>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vitae elit libero, a pharetra augue. 
+                    Nullam id dolor id nibh ultricies vehicula ut id elit.
+                  </p>
+                  
+                  <h2 className="text-xl font-semibold mt-8 mb-4">4. Limitação de Responsabilidade</h2>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vitae elit libero, a pharetra augue. 
+                    Nullam id dolor id nibh ultricies vehicula ut id elit.
+                  </p>
+                  
+                  <h2 className="text-xl font-semibold mt-8 mb-4">5. Direitos de Propriedade Intelectual</h2>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vitae elit libero, a pharetra augue. 
+                    Nullam id dolor id nibh ultricies vehicula ut id elit.
+                  </p>
+                  
+                  <h2 className="text-xl font-semibold mt-8 mb-4">6. Modificações nos Termos</h2>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vitae elit libero, a pharetra augue. 
+                    Nullam id dolor id nibh ultricies vehicula ut id elit.
+                  </p>
+                  
+                  <h2 className="text-xl font-semibold mt-8 mb-4">7. Lei Aplicável</h2>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vitae elit libero, a pharetra augue. 
+                    Nullam id dolor id nibh ultricies vehicula ut id elit.
+                  </p>
+                  
+                  <p className="mt-8">
+                    Última atualização: {new Date().toLocaleDateString()}
+                  </p>
+                </>
               )}
-            </div>
-          </div>
-        </div>
-      </main>
-      <Footer />
-    </div>
-  );
-};
-              <p className="text-muted-foreground italic mb-8">
-                Este é um modelo de página para seus Termos de Uso. Substitua este texto pelo conteúdo real dos seus termos.
-              </p>
-              
-              <h2 className="text-xl font-semibold mt-8 mb-4">1. Aceitação dos Termos</h2>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vitae elit libero, a pharetra augue. 
-                Nullam id dolor id nibh ultricies vehicula ut id elit.
-              </p>
-              
-              <h2 className="text-xl font-semibold mt-8 mb-4">2. Descrição dos Serviços</h2>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vitae elit libero, a pharetra augue. 
-                Nullam id dolor id nibh ultricies vehicula ut id elit.
-              </p>
-              
-              <h2 className="text-xl font-semibold mt-8 mb-4">3. Responsabilidades do Usuário</h2>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vitae elit libero, a pharetra augue. 
-                Nullam id dolor id nibh ultricies vehicula ut id elit.
-              </p>
-              
-              <h2 className="text-xl font-semibold mt-8 mb-4">4. Limitação de Responsabilidade</h2>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vitae elit libero, a pharetra augue. 
-                Nullam id dolor id nibh ultricies vehicula ut id elit.
-              </p>
-              
-              <h2 className="text-xl font-semibold mt-8 mb-4">5. Direitos de Propriedade Intelectual</h2>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vitae elit libero, a pharetra augue. 
-                Nullam id dolor id nibh ultricies vehicula ut id elit.
-              </p>
-              
-              <h2 className="text-xl font-semibold mt-8 mb-4">6. Modificações nos Termos</h2>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vitae elit libero, a pharetra augue. 
-                Nullam id dolor id nibh ultricies vehicula ut id elit.
-              </p>
-              
-              <h2 className="text-xl font-semibold mt-8 mb-4">7. Lei Aplicável</h2>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vitae elit libero, a pharetra augue. 
-                Nullam id dolor id nibh ultricies vehicula ut id elit.
-              </p>
-              
-              <p className="mt-8">
-                Última atualização: [DATA]
-              </p>
             </div>
           </div>
         </div>
