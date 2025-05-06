@@ -20,8 +20,6 @@ import Cookies from "./pages/Cookies";
 import Privacidade from "./pages/Privacidade";
 import Termos from "./pages/Termos";
 import Garantia from "./pages/Garantia";
-import Blog from "./pages/Blog";
-import BlogPost from "./pages/BlogPost";
 import Admin from "./pages/Admin";
 import { CookieConsent } from "./components/shared/cookie-consent";
 import CursoIphonePage from "./pages/curso-iphone";
@@ -34,6 +32,8 @@ import IntermediarioQuiz from "./pages/curso-iphone/intermediario/quiz";
 import AvancadoPage from "./pages/curso-iphone/avancado";
 import AvancadoConteudos from "./pages/curso-iphone/avancado/conteudos";
 import AvancadoQuiz from "./pages/curso-iphone/avancado/quiz";
+import Faq from "./pages/Faq";
+import Agendamento from "./pages/Agendamento";
 
 const queryClient = new QueryClient();
 
@@ -56,8 +56,11 @@ const App = () => (
           <Route path="/privacidade" element={<Privacidade />} />
           <Route path="/termos" element={<Termos />} />
           <Route path="/garantia" element={<Garantia />} />
+          <Route path="/faq" element={<Faq />} />
+          <Route path="/agendamento" element={<Agendamento />} />
           <Route path="/blog" element={<Blog />} />
-          <Route path="/blog/:postId" element={<BlogPost />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
+          <Route path="/contato-whats" element={<ContatoWhats />} />
           <Route path="/admin" element={<Admin />} />
           {/* Rotas do Curso de iPhone */}
           <Route path="/curso-iphone" element={<CursoIphonePage />} />
@@ -70,9 +73,6 @@ const App = () => (
           <Route path="/curso-iphone/avancado" element={<AvancadoPage />} />
           <Route path="/curso-iphone/avancado/conteudos" element={<AvancadoConteudos />} />
           <Route path="/curso-iphone/avancado/quiz" element={<AvancadoQuiz />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/blog/:slug" element={<BlogPost />} />
-          <Route path="/contato-whats" element={<ContatoWhats />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -13,6 +13,8 @@ const NAV_ITEMS = [
   { label: "Mac", href: "/servicos/mac" },
   { label: "Watch", href: "/servicos/watch" },
   { label: "Preços", href: "/precos" },
+  { label: "Dúvidas", href: "/faq" },
+  { label: "Agendamento", href: "/agendamento" },
   { label: "Contato", href: "/contato" },
   { label: "Curso de iPhone", href: "/curso-iphone", highlight: true },
   { label: "Blog", href: "/blog" },
@@ -70,9 +72,6 @@ export function Navbar() {
               )}
             >
               {item.label}
-              {item.highlight && (
-                <span className="ml-2 text-xs bg-yellow-400 text-black px-2 py-0.5 rounded uppercase font-bold animate-pulse">Novo</span>
-              )}
             </Link>
           ))}
         </nav>
@@ -97,16 +96,13 @@ export function Navbar() {
                   key={item.href}
                   to={item.href}
                   className={cn(
-                "text-sm font-medium transition-colors hover:text-primary flex items-center gap-1",
-                location.pathname === item.href ? "text-primary" : "text-foreground",
-                item.highlight ? "px-3 py-1 rounded bg-primary text-white shadow font-bold border border-primary" : ""
-              )}
-            >
-              {item.label}
-              {item.highlight && (
-                <span className="ml-2 text-xs bg-yellow-400 text-black px-2 py-0.5 rounded uppercase font-bold animate-pulse">Novo</span>
-              )}
-            </Link>
+                    "text-lg py-3 font-medium transition-colors hover:text-primary",
+                    location.pathname === item.href ? "text-primary" : "text-foreground",
+                    item.highlight ? "my-2 px-3 py-2 rounded bg-primary text-white shadow font-bold border border-primary text-center" : ""
+                  )}
+                >
+                  {item.label}
+                </Link>
               ))}
             </nav>
           </div>
