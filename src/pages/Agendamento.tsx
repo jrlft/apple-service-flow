@@ -8,6 +8,8 @@ import { Check, ExternalLink } from "lucide-react";
 import { fetchAppointmentPageContent, fetchMetadata } from "@/lib/strapi";
 import { Helmet } from "react-helmet";
 import { WhatsAppButton } from "@/components/ui/whatsapp-button";
+import { AnimatedElement } from "@/components/animations/animated-element";
+import { SectionTitle } from "@/components/ui/section-title";
 
 const Agendamento = () => {
   const [pageContent, setPageContent] = useState<any>(null);
@@ -39,6 +41,7 @@ const Agendamento = () => {
   // Default content if Strapi data is not available
   const defaultContent = {
     title: "Agendamento",
+    subtitle: "Reserve seu horário e prepare seu dispositivo para o reparo",
     introduction: "Agende seu reparo com facilidade e prepare seu dispositivo seguindo as orientações da Apple.",
     appointmentButtonText: "Clique aqui para agendar seu horário conosco",
     appointmentUrl: "https://getsupport.apple.com/repair-locations?storeId=442491",
@@ -87,6 +90,18 @@ const Agendamento = () => {
       
       <Navbar />
       <main className="flex-grow py-16 md:py-24">
+        <section className="bg-secondary py-12 mb-12">
+          <div className="container">
+            <AnimatedElement>
+              <SectionTitle 
+                title={content.title}
+                subtitle={content.subtitle || "Reserve seu horário e prepare seu dispositivo para o reparo"}
+                centered
+              />
+            </AnimatedElement>
+          </div>
+        </section>
+
         <div className="container max-w-4xl">
           {isLoading ? (
             <div className="flex justify-center py-12">
@@ -103,70 +118,70 @@ const Agendamento = () => {
               </button>
             </div>
           ) : (
-            <>
-              <h1 className="text-3xl md:text-4xl font-bold text-center mb-6">{content.title}</h1>
-              
-              <p className="text-lg text-center mb-10 text-muted-foreground max-w-2xl mx-auto">
-                {content.introduction}
-              </p>
-              
-              <div className="flex flex-col items-center mb-16">
-                <Button 
-                  size="lg" 
-                  className="text-lg py-6 px-8"
-                  onClick={() => window.open(content.appointmentUrl, "_blank")}
-                >
-                  {content.appointmentButtonText}
-                  <ExternalLink className="ml-2 h-5 w-5" />
-                </Button>
+            <AnimatedElement>
+              <div className="bg-white rounded-lg shadow-md p-8 mb-12">
+                <p className="text-lg text-center mb-10 text-muted-foreground">
+                  {content.introduction}
+                </p>
                 
-                <div className="mt-6">
-                  <WhatsAppButton 
-                    phoneNumber="+556536216000" 
-                    message="Olá, gostaria de agendar um horário para reparo do meu dispositivo Apple."
-                    size="lg"
+                <div className="flex flex-col items-center mb-16">
+                  <Button 
+                    size="lg" 
+                    className="text-lg py-6 px-8"
+                    onClick={() => window.open(content.appointmentUrl, "_blank")}
                   >
-                    Ou agende pelo WhatsApp
-                  </WhatsAppButton>
+                    {content.appointmentButtonText}
+                    <ExternalLink className="ml-2 h-5 w-5" />
+                  </Button>
+                  
+                  <div className="mt-6">
+                    <WhatsAppButton 
+                      phoneNumber="+556536216000" 
+                      message="Olá, gostaria de agendar um horário para reparo do meu dispositivo Apple."
+                      size="lg"
+                    >
+                      Ou agende pelo WhatsApp
+                    </WhatsAppButton>
+                  </div>
                 </div>
-              </div>
-              
-              <section className="mb-16">
-                <h2 className="text-2xl font-bold text-center mb-8">{content.prepareSectionTitle}</h2>
                 
-                <div className="grid md:grid-cols-3 gap-6">
-                  {(content.guideCards || defaultContent.guideCards).map((card: any, index: number) => (
-                    <Card key={index} className="h-full">
-                      <CardHeader>
-                        <CardTitle className="text-lg">{card.title}</CardTitle>
-                        <CardDescription>{card.description}</CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        <Button 
-                          variant="outline" 
-                          className="w-full"
-                          onClick={() => window.open(card.url, "_blank")}
-                        >
-                          Ver Guia <ExternalLink className="ml-2 h-4 w-4" />
-                        </Button>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-              </section>
-              
-              <section className="bg-muted p-8 rounded-lg">
-                <h2 className="text-2xl font-bold mb-6">{content.checklistTitle}</h2>
-                <ul className="space-y-3">
-                  {(content.checklistItems || defaultContent.checklistItems).map((item: string, index: number) => (
-                    <li key={index} className="flex items-start">
-                      <Check className="h-5 w-5 text-primary mr-2 mt-0.5" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            </>
+                <section className="mb-16">
+                  <h2 className="text-2xl font-bold text-center mb-8">{content.prepareSectionTitle}</h2>
+                  
+                  <div className="grid md:grid-cols-3 gap-6">
+                    {(content.guideCards || defaultContent.guideCards).map((card: any, index: number) => (
+                      <Card key={index} className="h-full">
+                        <CardHeader>
+                          <CardTitle className="text-lg">{card.title}</CardTitle>
+                          <CardDescription>{card.description}</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                          <Button 
+                            variant="outline" 
+                            className="w-full"
+                            onClick={() => window.open(card.url, "_blank")}
+                          >
+                            Ver Guia <ExternalLink className="ml-2 h-4 w-4" />
+                          </Button>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                </section>
+                
+                <section className="bg-muted p-8 rounded-lg">
+                  <h2 className="text-2xl font-bold mb-6">{content.checklistTitle}</h2>
+                  <ul className="space-y-3">
+                    {(content.checklistItems || defaultContent.checklistItems).map((item: string, index: number) => (
+                      <li key={index} className="flex items-start">
+                        <Check className="h-5 w-5 text-primary mr-2 mt-0.5" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              </div>
+            </AnimatedElement>
           )}
         </div>
       </main>

@@ -2,7 +2,7 @@
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { useEffect, useState } from "react";
-import { fetchPage } from "@/lib/strapi";
+import { fetchPage, fetchMetadata } from "@/lib/strapi";
 import { HeroSection } from "@/components/home/hero-section";
 import { ServicesSection } from "@/components/home/services-section";
 import { AboutSection } from "@/components/home/about-section";
@@ -11,6 +11,7 @@ import { TestimonialsSection } from "@/components/home/testimonials-section";
 import { ContactSection } from "@/components/home/contact-section";
 import { CtaSection } from "@/components/home/cta-section";
 import { BlogSection } from "@/components/home/blog-section";
+import { Helmet } from "react-helmet";
 
 const sectionMap: Record<string, any> = {
   "section.hero": HeroSection,
@@ -27,6 +28,7 @@ const Index = () => {
   const [page, setPage] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [metadata, setMetadata] = useState<any>(null);
 
   useEffect(() => {
     const loadPage = async () => {
@@ -34,7 +36,10 @@ const Index = () => {
         setIsLoading(true);
         const pageData = await fetchPage("home");
         setPage(pageData);
-        setError(null);
+        
+        // Fetch SEO metadata
+        const metaData = await fetchMetadata("home");
+        setMetadata(metaData);
       } catch (err) {
         console.error("Error loading home page:", err);
         setError("Erro ao carregar a página inicial. Por favor, tente novamente mais tarde.");
@@ -48,6 +53,15 @@ const Index = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      {metadata && (
+        <Helmet>
+          <title>{metadata.title || "Link TI - Assistência Técnica Apple Especializada"}</title>
+          <meta name="description" content={metadata.description || "Assistência técnica especializada em produtos Apple em Cuiabá. Conserto de iPhone, iPad, MacBook e Apple Watch com qualidade e garantia."} />
+          <meta property="og:title" content={metadata.ogTitle || metadata.title || "Link TI"} />
+          <meta property="og:description" content={metadata.ogDescription || metadata.description || "Assistência técnica Apple"} />
+          {metadata.ogImage && <meta property="og:image" content={metadata.ogImage.data?.attributes?.url} />}
+        </Helmet>
+      )}
       <Navbar />
       <main className="flex-grow">
         {isLoading && (
