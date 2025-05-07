@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -22,11 +23,12 @@ const Admin = () => {
     }
   }, []);
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const password = (e.target.elements.namedItem('password') as HTMLInputElement)?.value;
-
-    if (password === process.env.REACT_APP_ADMIN_PASSWORD) {
+    const formElement = e.currentTarget;
+    const passwordInput = formElement.elements.namedItem('password') as HTMLInputElement;
+    
+    if (passwordInput && passwordInput.value === process.env.REACT_APP_ADMIN_PASSWORD) {
       // Store token in localStorage
       localStorage.setItem('adminToken', 'adminTokenValue');
       setToken('adminTokenValue');

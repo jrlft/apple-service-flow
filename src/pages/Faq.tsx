@@ -151,33 +151,33 @@ const FaqPage = () => {
             {!isLoading && !error && faqs.length === 0 && (
               <AnimatedElement>
                 <div className="bg-white rounded-lg shadow-md p-8">
-                  {categories.length > 1 ? (
+                  {Object.keys(defaultFaqs.reduce<Record<string, boolean>>((acc, faq) => {
+                    const category = faq.attributes.category || "Geral";
+                    acc[category] = true;
+                    return acc;
+                  }, {})).length > 1 ? (
                     // Render default FAQs grouped by category
-                    defaultFaqs.reduce((acc: Record<string, typeof defaultFaqs>, faq) => {
+                    Object.entries(defaultFaqs.reduce<Record<string, typeof defaultFaqs>>((acc, faq) => {
                       const category = faq.attributes.category || "Geral";
                       if (!acc[category]) {
                         acc[category] = [];
                       }
                       acc[category].push(faq);
                       return acc;
-                    }, {})
-                    .map((category: string, index: number) => (
+                    }, {})).map(([category, faqs], index) => (
                       <div key={index} className="mb-8">
                         <h2 className="text-2xl font-semibold mb-4">{category}</h2>
                         <Accordion type="single" collapsible className="w-full">
-                          {defaultFaqs
-                            .filter(faq => (faq.attributes.category || "Geral") === category)
-                            .map((faq) => (
-                              <AccordionItem key={faq.id} value={`faq-${faq.id}`}>
-                                <AccordionTrigger className="text-lg font-medium text-left">
-                                  {faq.attributes.question}
-                                </AccordionTrigger>
-                                <AccordionContent className="text-muted-foreground">
-                                  <div dangerouslySetInnerHTML={{ __html: faq.attributes.answer }} />
-                                </AccordionContent>
-                              </AccordionItem>
-                            ))
-                          }
+                          {faqs.map((faq) => (
+                            <AccordionItem key={faq.id} value={`faq-${faq.id}`}>
+                              <AccordionTrigger className="text-lg font-medium text-left">
+                                {faq.attributes.question}
+                              </AccordionTrigger>
+                              <AccordionContent className="text-muted-foreground">
+                                <div dangerouslySetInnerHTML={{ __html: faq.attributes.answer }} />
+                              </AccordionContent>
+                            </AccordionItem>
+                          ))}
                         </Accordion>
                       </div>
                     ))
