@@ -29,6 +29,7 @@ const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [metadata, setMetadata] = useState<any>(null);
+  const [useFallback, setUseFallback] = useState(false);
 
   useEffect(() => {
     const loadPage = async () => {
@@ -40,9 +41,11 @@ const Index = () => {
         // Fetch SEO metadata
         const metaData = await fetchMetadata("home");
         setMetadata(metaData);
+        setUseFallback(false);
       } catch (err) {
         console.error("Error loading home page:", err);
-        setError("Erro ao carregar a página inicial. Por favor, tente novamente mais tarde.");
+        setError("Erro ao carregar a página inicial via Strapi. Carregando conteúdo estático.");
+        setUseFallback(true);
       } finally {
         setIsLoading(false);
       }
@@ -50,6 +53,22 @@ const Index = () => {
     
     loadPage();
   }, []);
+
+  // Renderize os componentes estáticos se não conseguir conectar ao Strapi
+  const renderStaticContent = () => {
+    return (
+      <>
+        <HeroSection />
+        <ServicesSection />
+        <AboutSection />
+        <ProcessSection />
+        <TestimonialsSection />
+        <ContactSection />
+        <CtaSection />
+        <BlogSection />
+      </>
+    );
+  };
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -70,25 +89,19 @@ const Index = () => {
           </div>
         )}
         
-        {error && (
-          <div className="text-center py-24">
-            <p className="text-destructive">{error}</p>
-            <button 
-              onClick={() => window.location.reload()}
-              className="mt-4 px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90"
-            >
-              Tentar novamente
-            </button>
+        {!isLoading && error && useFallback && (
+          <div className="text-center py-6 mb-4">
+            <p className="text-amber-600 bg-amber-50 py-2 px-4 rounded-md inline-block">{error}</p>
           </div>
         )}
         
-        {!isLoading && !error && !page && (
+        {!isLoading && !error && !page && !useFallback && (
           <div className="text-center py-24">
             <p>Nenhum conteúdo encontrado para a página inicial.</p>
           </div>
         )}
         
-        {!isLoading && !error && page && page.attributes.sections && page.attributes.sections.map((section: any, idx: number) => {
+        {!isLoading && !useFallback && page && page.attributes.sections && page.attributes.sections.map((section: any, idx: number) => {
           const SectionComponent = sectionMap[section.__component];
           return SectionComponent ? (
             <SectionComponent key={idx} data={section} />
@@ -98,6 +111,8 @@ const Index = () => {
             </div>
           );
         })}
+
+        {!isLoading && useFallback && renderStaticContent()}
       </main>
       <Footer />
     </div>

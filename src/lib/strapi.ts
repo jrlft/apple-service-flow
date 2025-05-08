@@ -1,4 +1,3 @@
-
 import axios from "axios";
 
 const API_URL = import.meta.env.VITE_STRAPI_URL || "http://localhost:1337/api";
@@ -7,7 +6,7 @@ const API_URL = import.meta.env.VITE_STRAPI_URL || "http://localhost:1337/api";
 async function fetchAPI(endpoint: string, params = "") {
   try {
     const url = `${API_URL}/${endpoint}${params ? params : ""}`;
-    const res = await axios.get(url);
+    const res = await axios.get(url, { timeout: 5000 }); // 5 segundo timeout
     return res.data;
   } catch (error) {
     console.error(`Error fetching ${endpoint}:`, error);
@@ -15,9 +14,25 @@ async function fetchAPI(endpoint: string, params = "") {
   }
 }
 
+// Check if Strapi is available
+export async function checkStrapiConnection() {
+  try {
+    await axios.get(`${API_URL}`, { timeout: 3000 });
+    return true;
+  } catch (error) {
+    console.warn("Strapi connection failed:", error);
+    return false;
+  }
+}
+
 export async function fetchPage(slug: string) {
-  const data = await fetchAPI(`pages`, `?filters[slug][$eq]=${slug}&populate=deep`);
-  return data.data[0];
+  try {
+    const data = await fetchAPI(`pages`, `?filters[slug][$eq]=${slug}&populate=deep`);
+    return data.data[0];
+  } catch (error) {
+    console.error(`Error fetching page ${slug}:`, error);
+    throw error;
+  }
 }
 
 export async function fetchServices() {
