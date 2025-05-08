@@ -28,7 +28,7 @@ const Admin = () => {
     const formElement = e.currentTarget;
     const passwordInput = formElement.elements.namedItem('password') as HTMLInputElement;
     
-    if (passwordInput && passwordInput.value === process.env.REACT_APP_ADMIN_PASSWORD) {
+    if (passwordInput && passwordInput.value === import.meta.env.VITE_ADMIN_PASSWORD) {
       // Store token in localStorage
       localStorage.setItem('adminToken', 'adminTokenValue');
       setToken('adminTokenValue');

@@ -1,7 +1,7 @@
 
 import axios from "axios";
 
-const API_URL = process.env.REACT_APP_STRAPI_URL || "http://localhost:1337/api";
+const API_URL = import.meta.env.VITE_STRAPI_URL || "http://localhost:1337/api";
 
 // Helper function to handle API requests with error handling
 async function fetchAPI(endpoint: string, params = "") {
