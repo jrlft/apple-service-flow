@@ -1,3 +1,4 @@
+
 import axios from "axios";
 
 const API_URL = import.meta.env.VITE_STRAPI_URL || "http://localhost:1337/api";
@@ -6,7 +7,7 @@ const API_URL = import.meta.env.VITE_STRAPI_URL || "http://localhost:1337/api";
 async function fetchAPI(endpoint: string, params = "") {
   try {
     const url = `${API_URL}/${endpoint}${params ? params : ""}`;
-    const res = await axios.get(url, { timeout: 5000 }); // 5 segundo timeout
+    const res = await axios.get(url, { timeout: 5000 }); // 5 second timeout
     return res.data;
   } catch (error) {
     console.error(`Error fetching ${endpoint}:`, error);
@@ -36,28 +37,53 @@ export async function fetchPage(slug: string) {
 }
 
 export async function fetchServices() {
-  const data = await fetchAPI(`services`, `?populate=deep`);
-  return data.data;
+  try {
+    const data = await fetchAPI(`services`, `?populate=deep`);
+    return data.data;
+  } catch (error) {
+    console.error(`Error fetching services:`, error);
+    return [];
+  }
 }
 
 export async function fetchBlogPosts() {
-  const data = await fetchAPI(`blog-posts`, `?populate=deep`);
-  return data.data;
+  try {
+    const data = await fetchAPI(`blog-posts`, `?populate=deep`);
+    return data.data;
+  } catch (error) {
+    console.error(`Error fetching blog posts:`, error);
+    return [];
+  }
 }
 
 export async function fetchBlogPost(slug: string) {
-  const data = await fetchAPI(`blog-posts`, `?filters[slug][$eq]=${slug}&populate=deep`);
-  return data.data[0];
+  try {
+    const data = await fetchAPI(`blog-posts`, `?filters[slug][$eq]=${slug}&populate=deep`);
+    return data.data[0];
+  } catch (error) {
+    console.error(`Error fetching blog post ${slug}:`, error);
+    throw error;
+  }
 }
 
 export async function fetchFaqs() {
-  const data = await fetchAPI(`faqs`, `?populate=deep&sort=order:asc`);
-  return data.data;
+  try {
+    const data = await fetchAPI(`faqs`, `?populate=deep&sort=order:asc`);
+    return data.data;
+  } catch (error) {
+    console.error(`Error fetching FAQs:`, error);
+    return [];
+  }
 }
 
 export async function fetchAppointmentPageContent() {
-  const data = await fetchAPI(`appointment-page`, `?populate=deep`);
-  return data.data;
+  try {
+    const data = await fetchAPI(`appointment-page`, `?populate=deep`);
+    return data.data;
+  } catch (error) {
+    console.error(`Error fetching appointment page content:`, error);
+    return null;
+  }
 }
 
 // For SEO data
@@ -140,6 +166,88 @@ export async function uploadMedia(file: File, token: string) {
 
 // Course content functions
 export async function fetchCourse(slug: string) {
-  const data = await fetchAPI(`courses`, `?filters[slug][$eq]=${slug}&populate=deep`);
-  return data.data[0];
+  try {
+    const data = await fetchAPI(`courses`, `?filters[slug][$eq]=${slug}&populate=deep`);
+    return data.data[0];
+  } catch (error) {
+    console.error(`Error fetching course ${slug}:`, error);
+    throw error;
+  }
+}
+
+// Google Sheets integration for pricing
+export async function fetchGoogleSheetPrices() {
+  try {
+    // Google Sheets published to the web as CSV
+    const sheetId = "1QD_ZgaC5-pDjTpryvlW-AmOoQXbjI8SLl9heWnx3rwU";
+    const sheetUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv`;
+    
+    const response = await axios.get(sheetUrl, { timeout: 5000 });
+    return processSheetData(response.data);
+  } catch (error) {
+    console.error("Error fetching Google Sheet prices:", error);
+    return null;
+  }
+}
+
+// Process CSV data from Google Sheets
+function processSheetData(csvData: string) {
+  try {
+    // Simple CSV parsing (could use a more robust library in production)
+    const rows = csvData.split('\n');
+    const headers = parseCSVRow(rows[0]);
+    
+    const result: Record<string, any[]> = {
+      iphone: [],
+      ipad: [],
+      mac: [],
+      watch: []
+    };
+    
+    for (let i = 1; i < rows.length; i++) {
+      if (!rows[i].trim()) continue;
+      
+      const rowData = parseCSVRow(rows[i]);
+      const device = rowData[0]?.toLowerCase() || 'other';
+      
+      if (device && result[device]) {
+        result[device].push({
+          model: rowData[1] || '',
+          repairType: rowData[2] || '',
+          pixPrice: rowData[3] || '',
+          cashPrice: rowData[4] || '',
+          installments2to5: rowData[5] || '',
+          installments6to10: rowData[6] || ''
+        });
+      }
+    }
+    
+    return result;
+  } catch (error) {
+    console.error("Error processing sheet data:", error);
+    return null;
+  }
+}
+
+// Parse a CSV row handling quoted values
+function parseCSVRow(row: string): string[] {
+  const result: string[] = [];
+  let inQuote = false;
+  let currentValue = '';
+  
+  for (let i = 0; i < row.length; i++) {
+    const char = row[i];
+    
+    if (char === '"') {
+      inQuote = !inQuote;
+    } else if (char === ',' && !inQuote) {
+      result.push(currentValue);
+      currentValue = '';
+    } else {
+      currentValue += char;
+    }
+  }
+  
+  result.push(currentValue); // Add the last value
+  return result;
 }

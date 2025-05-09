@@ -1,7 +1,10 @@
+
+import { useEffect, useState } from "react";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { ServiceDetail } from "@/components/shared/service-detail";
 import { WhatsAppButton } from "@/components/ui/whatsapp-button";
+import { fetchPage, checkStrapiConnection } from "@/lib/strapi";
 
 const watchFeatures = [
   {
@@ -42,20 +45,84 @@ const commonProblems = [
 ];
 
 const ServicoWatch = () => {
+  const [serviceData, setServiceData] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [useFallback, setUseFallback] = useState(false);
+
+  useEffect(() => {
+    const loadServiceData = async () => {
+      try {
+        setIsLoading(true);
+        
+        // Check if Strapi is available
+        const strapiAvailable = await checkStrapiConnection();
+        
+        if (strapiAvailable) {
+          try {
+            // Try to fetch service data
+            const data = await fetchPage("servico-watch");
+            if (data) {
+              setServiceData(data);
+              setUseFallback(false);
+            } else {
+              setUseFallback(true);
+            }
+          } catch (error) {
+            console.error("Error loading Apple Watch service page:", error);
+            setUseFallback(true);
+          }
+        } else {
+          setUseFallback(true);
+        }
+      } catch (error) {
+        console.error("Error in service data loading process:", error);
+        setUseFallback(true);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    
+    loadServiceData();
+  }, []);
+
+  // Use dynamic data if available, otherwise use static data
+  const title = serviceData?.attributes?.title || "Reparo de Apple Watch";
+  const subtitle = serviceData?.attributes?.subtitle || "Serviços especializados para todos os modelos de Apple Watch";
+  const description = serviceData?.attributes?.description || 
+    "Nosso centro autorizado oferece reparos completos para todos os modelos de Apple Watch, desde a Série 1 até os modelos mais recentes. Utilizamos peças originais e técnicos certificados para garantir o funcionamento perfeito do seu dispositivo.";
+  const imageUrl = serviceData?.attributes?.image?.data?.attributes?.url || null;
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
       <main className="flex-grow">
-        <ServiceDetail 
-          title="Reparo de Apple Watch" 
-          subtitle="Serviços especializados para todos os modelos de Apple Watch"
-          description="Nosso centro autorizado oferece reparos completos para todos os modelos de Apple Watch, desde a Série 1 até os modelos mais recentes. Utilizamos peças originais e técnicos certificados para garantir o funcionamento perfeito do seu dispositivo."
-          imagePlaceholder="Imagem Apple Watch Placeholder"
-          features={watchFeatures}
-          commonProblems={commonProblems}
-          whatsappNumber="+556536216000"
-          whatsappMessage="Olá, gostaria de solicitar um orçamento para reparo do meu Apple Watch."
-        />
+        {isLoading ? (
+          <div className="flex items-center justify-center py-24">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-primary"></div>
+          </div>
+        ) : (
+          <>
+            {useFallback && (
+              <div className="text-center py-3 mt-24 mb-4">
+                <p className="text-amber-600 bg-amber-50 py-2 px-4 rounded-md inline-block">
+                  Carregando dados estáticos. A conexão com o Strapi não está disponível.
+                </p>
+              </div>
+            )}
+            
+            <ServiceDetail 
+              title={title}
+              subtitle={subtitle}
+              description={description}
+              imagePlaceholder="Imagem Apple Watch Placeholder"
+              imageUrl={imageUrl}
+              features={serviceData?.attributes?.features || watchFeatures}
+              commonProblems={serviceData?.attributes?.commonProblems || commonProblems}
+              whatsappNumber="+556536216000"
+              whatsappMessage="Olá, gostaria de solicitar um orçamento para reparo do meu Apple Watch."
+            />
+          </>
+        )}
       </main>
       <Footer />
     </div>

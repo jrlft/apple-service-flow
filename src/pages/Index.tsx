@@ -2,7 +2,7 @@
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { useEffect, useState } from "react";
-import { fetchPage, fetchMetadata } from "@/lib/strapi";
+import { fetchPage, fetchMetadata, checkStrapiConnection } from "@/lib/strapi";
 import { HeroSection } from "@/components/home/hero-section";
 import { ServicesSection } from "@/components/home/services-section";
 import { AboutSection } from "@/components/home/about-section";
@@ -24,27 +24,56 @@ const sectionMap: Record<string, any> = {
   "section.blog": BlogSection,
 };
 
+// Default metadata when Strapi is unavailable
+const DEFAULT_METADATA = {
+  title: "Link TI - Assistência Técnica Apple Especializada",
+  description: "Assistência técnica especializada em produtos Apple em Cuiabá. Conserto de iPhone, iPad, MacBook e Apple Watch com qualidade e garantia.",
+  ogTitle: "Link TI - Assistência Técnica Apple",
+  ogDescription: "Assistência técnica especializada em produtos Apple em Cuiabá"
+};
+
 const Index = () => {
   const [page, setPage] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [metadata, setMetadata] = useState<any>(null);
+  const [metadata, setMetadata] = useState<any>(DEFAULT_METADATA);
   const [useFallback, setUseFallback] = useState(false);
 
   useEffect(() => {
     const loadPage = async () => {
       try {
         setIsLoading(true);
-        const pageData = await fetchPage("home");
-        setPage(pageData);
         
-        // Fetch SEO metadata
-        const metaData = await fetchMetadata("home");
-        setMetadata(metaData);
-        setUseFallback(false);
+        // First check if Strapi is available
+        const strapiAvailable = await checkStrapiConnection();
+        
+        if (strapiAvailable) {
+          try {
+            // Try to load page content from Strapi
+            const pageData = await fetchPage("home");
+            setPage(pageData);
+            
+            // Try to fetch SEO metadata
+            const metaData = await fetchMetadata("home");
+            if (metaData) {
+              setMetadata(metaData);
+            }
+            
+            setUseFallback(false);
+            setError(null);
+          } catch (err) {
+            console.error("Error loading home page from Strapi:", err);
+            setError("Erro ao carregar a página inicial via Strapi. Carregando conteúdo estático.");
+            setUseFallback(true);
+          }
+        } else {
+          console.warn("Strapi is not available, using fallback content.");
+          setError("Conexão com o Strapi não está disponível. Carregando conteúdo estático.");
+          setUseFallback(true);
+        }
       } catch (err) {
-        console.error("Error loading home page:", err);
-        setError("Erro ao carregar a página inicial via Strapi. Carregando conteúdo estático.");
+        console.error("Error in page load process:", err);
+        setError("Erro ao carregar a página inicial. Carregando conteúdo estático.");
         setUseFallback(true);
       } finally {
         setIsLoading(false);
@@ -72,15 +101,16 @@ const Index = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      {metadata && (
-        <Helmet>
-          <title>{metadata.title || "Link TI - Assistência Técnica Apple Especializada"}</title>
-          <meta name="description" content={metadata.description || "Assistência técnica especializada em produtos Apple em Cuiabá. Conserto de iPhone, iPad, MacBook e Apple Watch com qualidade e garantia."} />
-          <meta property="og:title" content={metadata.ogTitle || metadata.title || "Link TI"} />
-          <meta property="og:description" content={metadata.ogDescription || metadata.description || "Assistência técnica Apple"} />
-          {metadata.ogImage && <meta property="og:image" content={metadata.ogImage.data?.attributes?.url} />}
-        </Helmet>
-      )}
+      <Helmet>
+        <title>{metadata?.title || DEFAULT_METADATA.title}</title>
+        <meta name="description" content={metadata?.description || DEFAULT_METADATA.description} />
+        <meta property="og:title" content={metadata?.ogTitle || metadata?.title || DEFAULT_METADATA.ogTitle} />
+        <meta property="og:description" content={metadata?.ogDescription || metadata?.description || DEFAULT_METADATA.ogDescription} />
+        {metadata?.ogImage && metadata.ogImage.data?.attributes?.url && 
+          <meta property="og:image" content={metadata.ogImage.data?.attributes?.url} />
+        }
+      </Helmet>
+      
       <Navbar />
       <main className="flex-grow">
         {isLoading && (
@@ -89,7 +119,7 @@ const Index = () => {
           </div>
         )}
         
-        {!isLoading && error && useFallback && (
+        {!isLoading && error && (
           <div className="text-center py-6 mb-4">
             <p className="text-amber-600 bg-amber-50 py-2 px-4 rounded-md inline-block">{error}</p>
           </div>
