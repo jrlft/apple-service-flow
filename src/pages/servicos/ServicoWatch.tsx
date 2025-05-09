@@ -115,7 +115,7 @@ const ServicoWatch = () => {
               subtitle={subtitle}
               description={description}
               imagePlaceholder="Imagem Apple Watch Placeholder"
-              imageUrl={imageUrl}
+              image={imageUrl}
               features={serviceData?.attributes?.features || watchFeatures}
               commonProblems={serviceData?.attributes?.commonProblems || commonProblems}
               whatsappNumber="+556536216000"

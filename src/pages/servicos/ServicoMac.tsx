@@ -116,7 +116,7 @@ const ServicoMac = () => {
               subtitle={subtitle}
               description={description}
               imagePlaceholder="Imagem Mac Placeholder"
-              imageUrl={imageUrl}
+              image={imageUrl}
               features={serviceData?.attributes?.features || macFeatures}
               commonProblems={serviceData?.attributes?.commonProblems || commonProblems}
               whatsappNumber="+556536216000"

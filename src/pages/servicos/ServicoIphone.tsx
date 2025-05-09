@@ -115,7 +115,7 @@ const ServicoIphone = () => {
               subtitle={subtitle}
               description={description}
               imagePlaceholder="Imagem iPhone Placeholder"
-              imageUrl={imageUrl}
+              image={imageUrl}
               features={serviceData?.attributes?.features || iPhoneFeatures}
               commonProblems={serviceData?.attributes?.commonProblems || commonProblems}
               whatsappNumber="+556536216000"
