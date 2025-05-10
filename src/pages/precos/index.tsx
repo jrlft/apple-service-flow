@@ -22,6 +22,10 @@ const Precos = () => {
     item.model.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  console.log("Current price data:", priceData);
+  console.log("Selected device data:", priceData[selectedDevice]);
+  console.log("Filtered data:", filteredData);
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />

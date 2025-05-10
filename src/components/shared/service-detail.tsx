@@ -1,3 +1,4 @@
+
 import { AnimatedElement } from "@/components/animations/animated-element";
 import { SectionTitle } from "@/components/ui/section-title";
 import { Button } from "@/components/ui/button";
@@ -15,6 +16,7 @@ interface ServiceDetailProps {
   subtitle: string;
   description: string;
   imagePlaceholder: string;
+  image?: string | null;
   features: ServiceFeature[];
   commonProblems: string[];
   whatsappNumber: string;
@@ -26,6 +28,7 @@ export function ServiceDetail({
   subtitle,
   description,
   imagePlaceholder,
+  image,
   features,
   commonProblems,
   whatsappNumber,
@@ -56,7 +59,11 @@ export function ServiceDetail({
 
             <AnimatedElement direction="right">
               <div className="bg-white rounded-lg shadow-md p-4 h-[300px] flex items-center justify-center overflow-hidden">
-                <div className="text-gray-400">{imagePlaceholder}</div>
+                {image ? (
+                  <img src={image} alt={title} className="max-w-full max-h-full object-contain" />
+                ) : (
+                  <div className="text-gray-400">{imagePlaceholder}</div>
+                )}
               </div>
             </AnimatedElement>
           </div>

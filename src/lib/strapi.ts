@@ -178,12 +178,31 @@ export async function fetchCourse(slug: string) {
 // Google Sheets integration for pricing
 export async function fetchGoogleSheetPrices() {
   try {
+    console.log("Fetching Google Sheet prices...");
+    
     // Google Sheets published to the web as CSV
     const sheetId = "1QD_ZgaC5-pDjTpryvlW-AmOoQXbjI8SLl9heWnx3rwU";
     const sheetUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv`;
     
-    const response = await axios.get(sheetUrl, { timeout: 5000 });
-    return processSheetData(response.data);
+    const response = await axios.get(sheetUrl, { 
+      timeout: 10000,
+      headers: {
+        'Cache-Control': 'no-cache',
+        'Pragma': 'no-cache',
+        'Expires': '0',
+      }
+    });
+    
+    console.log("Google Sheet response received:", response.status);
+    
+    if (response.data) {
+      const processedData = processSheetData(response.data);
+      console.log("Processed data:", processedData);
+      return processedData;
+    } else {
+      console.error("No data returned from Google Sheets");
+      return null;
+    }
   } catch (error) {
     console.error("Error fetching Google Sheet prices:", error);
     return null;
@@ -193,9 +212,20 @@ export async function fetchGoogleSheetPrices() {
 // Process CSV data from Google Sheets
 function processSheetData(csvData: string) {
   try {
+    console.log("Processing CSV data...");
+    console.log("CSV Data sample:", csvData.substring(0, 200) + "...");
+    
     // Simple CSV parsing (could use a more robust library in production)
     const rows = csvData.split('\n');
+    console.log(`Found ${rows.length} rows in CSV`);
+    
+    if (rows.length < 2) {
+      console.error("Not enough rows in CSV data");
+      return null;
+    }
+    
     const headers = parseCSVRow(rows[0]);
+    console.log("CSV Headers:", headers);
     
     const result: Record<string, any[]> = {
       iphone: [],
@@ -208,9 +238,11 @@ function processSheetData(csvData: string) {
       if (!rows[i].trim()) continue;
       
       const rowData = parseCSVRow(rows[i]);
-      const device = rowData[0]?.toLowerCase() || 'other';
+      console.log(`Row ${i} data:`, rowData);
       
-      if (device && result[device]) {
+      const device = rowData[0]?.toLowerCase() || '';
+      
+      if (device && result.hasOwnProperty(device)) {
         result[device].push({
           model: rowData[1] || '',
           repairType: rowData[2] || '',
@@ -220,6 +252,11 @@ function processSheetData(csvData: string) {
           installments6to10: rowData[6] || ''
         });
       }
+    }
+    
+    // Log the number of items per device
+    for (const [device, items] of Object.entries(result)) {
+      console.log(`${device}: ${items.length} items`);
     }
     
     return result;

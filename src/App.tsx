@@ -14,7 +14,7 @@ import ServicoIphone from "./pages/servicos/ServicoIphone";
 import ServicoIpad from "./pages/servicos/ServicoIpad";
 import ServicoMac from "./pages/servicos/ServicoMac";
 import ServicoWatch from "./pages/servicos/ServicoWatch";
-import Precos from "./pages/Precos";
+import Precos from "./pages/precos";
 import Contato from "./pages/Contato";
 import Cookies from "./pages/Cookies";
 import Privacidade from "./pages/Privacidade";
