@@ -15,16 +15,19 @@ import { PriceInfo } from "./components/PriceInfo";
 const Precos = () => {
   const [selectedDevice, setSelectedDevice] = useState("iphone");
   const [searchTerm, setSearchTerm] = useState("");
-  const { priceData, page, isLoading, isSheetLoaded, lastUpdated } = usePriceData();
+  const { priceData, page, isLoading, isSheetLoaded } = usePriceData();
 
   // Filtrar dados com base na pesquisa
-  const filteredData = (priceData[selectedDevice] || []).filter((item: any) => 
-    item.model.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredData = (priceData[selectedDevice] || []).filter((item: any) => {
+    if (!searchTerm) return true;
+    return item.model.toLowerCase().includes(searchTerm.toLowerCase()) || 
+           item.repairType.toLowerCase().includes(searchTerm.toLowerCase());
+  });
 
   console.log("Current price data:", priceData);
   console.log("Selected device data:", priceData[selectedDevice]);
   console.log("Filtered data:", filteredData);
+  console.log("Search term:", searchTerm);
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -34,7 +37,6 @@ const Precos = () => {
           title={page?.attributes?.title || "Tabela de Preços"}
           subtitle={page?.attributes?.subtitle || "Confira os valores de reparo para cada dispositivo Apple"}
           isSheetLoaded={isSheetLoaded}
-          lastUpdated={lastUpdated}
         />
 
         <section className="py-12">
@@ -52,6 +54,7 @@ const Precos = () => {
                       placeholder="Buscar modelo..."
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
+                      className="w-full"
                     />
                   </div>
                 </div>
@@ -67,7 +70,6 @@ const Precos = () => {
                 </div>
 
                 <PriceInfo 
-                  lastUpdated={lastUpdated} 
                   googleSheetsInfo={page?.attributes?.googleSheetsInfo} 
                 />
               </div>

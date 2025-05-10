@@ -26,25 +26,27 @@ export const usePriceData = () => {
         }
         
         // Try to load price data from Google Sheets
-        const sheetData = await fetchGoogleSheetPrices();
-        if (sheetData) {
-          console.log("Sheet data loaded successfully:", sheetData);
-          setPriceData(sheetData);
-          setIsSheetLoaded(true);
-          // Set last updated time
-          setLastUpdated(new Date().toLocaleString('pt-BR'));
-          setRetryCount(0); // Reset retry count on success
-        } else {
-          console.warn("Failed to load Google Sheet data, using fallback data");
-          if (retryCount < 3) {
-            // Retry after a short delay (exponential backoff)
-            const delay = Math.pow(2, retryCount) * 1000;
-            console.log(`Retrying in ${delay}ms (attempt ${retryCount + 1})`);
-            setTimeout(() => setRetryCount(prev => prev + 1), delay);
+        try {
+          const sheetData = await fetchGoogleSheetPrices();
+          if (sheetData && Object.keys(sheetData).length > 0) {
+            console.log("Sheet data loaded successfully:", sheetData);
+            setPriceData(sheetData);
+            setIsSheetLoaded(true);
+            // Set last updated time
+            setLastUpdated(new Date().toLocaleString('pt-BR'));
+            setRetryCount(0); // Reset retry count on success
+          } else {
+            console.warn("Failed to load Google Sheet data or empty data returned, using fallback data");
+            if (retryCount < 3) {
+              // Retry after a short delay (exponential backoff)
+              const delay = Math.pow(2, retryCount) * 1000;
+              console.log(`Retrying in ${delay}ms (attempt ${retryCount + 1})`);
+              setTimeout(() => setRetryCount(prev => prev + 1), delay);
+            }
           }
+        } catch (error) {
+          console.error("Error loading price data from Google Sheets:", error);
         }
-      } catch (error) {
-        console.error("Error loading price data:", error);
       } finally {
         setIsLoading(false);
       }
@@ -57,7 +59,7 @@ export const usePriceData = () => {
       console.log("Refreshing price data from Google Sheets");
       try {
         const sheetData = await fetchGoogleSheetPrices();
-        if (sheetData) {
+        if (sheetData && Object.keys(sheetData).length > 0) {
           console.log("Sheet data refreshed successfully");
           setPriceData(sheetData);
           setIsSheetLoaded(true);

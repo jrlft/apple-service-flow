@@ -64,13 +64,13 @@ export const PriceTable = ({
       <div className="overflow-x-auto -mx-4 sm:mx-0">
         <Table>
           <TableHeader>
-            <TableRow className="bg-primary text-white">
-              <TableHead className="py-3 font-semibold">Modelo</TableHead>
-              <TableHead className="py-3 font-semibold">Tipo de Reparo</TableHead>
-              <TableHead className="py-3 font-semibold">PIX c/ Desconto</TableHead>
-              <TableHead className="py-3 font-semibold hidden md:table-cell">À Vista/Boleto</TableHead>
-              <TableHead className="py-3 font-semibold hidden lg:table-cell">2-5x Cartão</TableHead>
-              <TableHead className="py-3 font-semibold hidden lg:table-cell">6-10x Cartão</TableHead>
+            <TableRow className="bg-primary">
+              <TableHead className="py-3 font-semibold text-white">Modelo</TableHead>
+              <TableHead className="py-3 font-semibold text-white">Tipo de Reparo</TableHead>
+              <TableHead className="py-3 font-semibold text-white">PIX c/ Desconto</TableHead>
+              <TableHead className="py-3 font-semibold text-white hidden md:table-cell">À Vista/Boleto</TableHead>
+              <TableHead className="py-3 font-semibold text-white hidden lg:table-cell">2-5x Cartão</TableHead>
+              <TableHead className="py-3 font-semibold text-white hidden lg:table-cell">6-10x Cartão</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
