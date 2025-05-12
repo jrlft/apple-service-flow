@@ -6,7 +6,7 @@ interface PageHeaderProps {
   title: string;
   subtitle: string;
   isSheetLoaded: boolean;
-  lastUpdated: string;
+  lastUpdated?: string; // Tornar opcional para evitar o erro
 }
 
 export const PageHeader = ({ 
@@ -29,7 +29,7 @@ export const PageHeader = ({
               Consulte abaixo os valores para os serviços mais solicitados em cada tipo de dispositivo Apple.
               Para outros serviços ou modelos não listados, entre em contato para um orçamento personalizado.
             </p>
-            {isSheetLoaded && (
+            {isSheetLoaded && lastUpdated && (
               <p className="text-xs mt-2 text-muted-foreground">
                 Dados sincronizados com Google Sheets • Última atualização: {lastUpdated}
               </p>

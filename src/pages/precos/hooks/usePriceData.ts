@@ -27,9 +27,22 @@ export const usePriceData = () => {
         
         // Try to load price data from Google Sheets
         try {
+          console.log("Fetching Google Sheets data, attempt:", retryCount + 1);
           const sheetData = await fetchGoogleSheetPrices();
+          
+          console.log("Received sheet data:", sheetData);
+          
           if (sheetData && Object.keys(sheetData).length > 0) {
             console.log("Sheet data loaded successfully:", sheetData);
+            
+            // Log device counts to diagnose data issues
+            Object.keys(sheetData).forEach(key => {
+              console.log(`Device ${key} has ${sheetData[key]?.length || 0} entries`);
+              if (sheetData[key]?.length > 0) {
+                console.log(`First entry example:`, sheetData[key][0]);
+              }
+            });
+            
             setPriceData(sheetData);
             setIsSheetLoaded(true);
             // Set last updated time

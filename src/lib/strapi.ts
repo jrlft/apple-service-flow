@@ -1,4 +1,3 @@
-
 import axios from "axios";
 
 const API_URL = import.meta.env.VITE_STRAPI_URL || "http://localhost:1337/api";
@@ -196,6 +195,9 @@ export async function fetchGoogleSheetPrices() {
     console.log("Google Sheet response received:", response.status);
     
     if (response.data) {
+      // Log exact raw data for debugging
+      console.log("Raw CSV data received:", response.data);
+      
       const processedData = processSheetData(response.data);
       console.log("Processed data:", processedData);
       return processedData;
@@ -213,7 +215,6 @@ export async function fetchGoogleSheetPrices() {
 function processSheetData(csvData: string) {
   try {
     console.log("Processing CSV data...");
-    console.log("CSV Data sample:", csvData.substring(0, 200) + "...");
     
     // Simple CSV parsing (could use a more robust library in production)
     const rows = csvData.split('\n');
@@ -238,11 +239,15 @@ function processSheetData(csvData: string) {
       if (!rows[i].trim()) continue;
       
       const rowData = parseCSVRow(rows[i]);
-      console.log(`Row ${i} data:`, rowData);
+      if (rowData.length < 7) {
+        console.log(`Skipping incomplete row ${i}:`, rowData);
+        continue;
+      }
       
-      const device = rowData[0]?.toLowerCase() || '';
+      const device = rowData[0]?.toLowerCase().trim();
       
-      if (device && result.hasOwnProperty(device)) {
+      if (device && (device === 'iphone' || device === 'ipad' || device === 'mac' || device === 'watch')) {
+        console.log(`Processing row for device ${device}:`, rowData);
         result[device].push({
           model: rowData[1] || '',
           repairType: rowData[2] || '',
@@ -251,6 +256,8 @@ function processSheetData(csvData: string) {
           installments2to5: rowData[5] || '',
           installments6to10: rowData[6] || ''
         });
+      } else {
+        console.log(`Skipping row with unknown device type: ${device}`, rowData);
       }
     }
     
@@ -276,15 +283,21 @@ function parseCSVRow(row: string): string[] {
     const char = row[i];
     
     if (char === '"') {
-      inQuote = !inQuote;
+      if (i + 1 < row.length && row[i + 1] === '"') {
+        // Handle escaped quotes (two double quotes in a row)
+        currentValue += '"';
+        i++; // Skip the next quote
+      } else {
+        inQuote = !inQuote;
+      }
     } else if (char === ',' && !inQuote) {
-      result.push(currentValue);
+      result.push(currentValue.trim());
       currentValue = '';
     } else {
       currentValue += char;
     }
   }
   
-  result.push(currentValue); // Add the last value
-  return result;
+  result.push(currentValue.trim()); // Add the last value
+  return result.map(val => val.trim()); // Trim all values
 }

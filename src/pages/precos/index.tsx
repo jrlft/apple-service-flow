@@ -15,7 +15,7 @@ import { PriceInfo } from "./components/PriceInfo";
 const Precos = () => {
   const [selectedDevice, setSelectedDevice] = useState("iphone");
   const [searchTerm, setSearchTerm] = useState("");
-  const { priceData, page, isLoading, isSheetLoaded } = usePriceData();
+  const { priceData, page, isLoading, isSheetLoaded, lastUpdated } = usePriceData();
 
   // Filtrar dados com base na pesquisa
   const filteredData = (priceData[selectedDevice] || []).filter((item: any) => {
@@ -28,6 +28,8 @@ const Precos = () => {
   console.log("Selected device data:", priceData[selectedDevice]);
   console.log("Filtered data:", filteredData);
   console.log("Search term:", searchTerm);
+  console.log("Is sheet loaded:", isSheetLoaded);
+  console.log("Last updated:", lastUpdated);
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -37,6 +39,7 @@ const Precos = () => {
           title={page?.attributes?.title || "Tabela de Preços"}
           subtitle={page?.attributes?.subtitle || "Confira os valores de reparo para cada dispositivo Apple"}
           isSheetLoaded={isSheetLoaded}
+          lastUpdated={lastUpdated}
         />
 
         <section className="py-12">
