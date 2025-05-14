@@ -63,17 +63,14 @@ const Index = () => {
             setError(null);
           } catch (err) {
             console.error("Error loading home page from Strapi:", err);
-            setError("Erro ao carregar a página inicial via Strapi. Carregando conteúdo estático.");
             setUseFallback(true);
           }
         } else {
           console.warn("Strapi is not available, using fallback content.");
-          setError("Conexão com o Strapi não está disponível. Carregando conteúdo estático.");
           setUseFallback(true);
         }
       } catch (err) {
         console.error("Error in page load process:", err);
-        setError("Erro ao carregar a página inicial. Carregando conteúdo estático.");
         setUseFallback(true);
       } finally {
         setIsLoading(false);
@@ -119,18 +116,6 @@ const Index = () => {
           </div>
         )}
         
-        {!isLoading && error && (
-          <div className="text-center py-6 mb-4">
-            <p className="text-amber-600 bg-amber-50 py-2 px-4 rounded-md inline-block">{error}</p>
-          </div>
-        )}
-        
-        {!isLoading && !error && !page && !useFallback && (
-          <div className="text-center py-24">
-            <p>Nenhum conteúdo encontrado para a página inicial.</p>
-          </div>
-        )}
-        
         {!isLoading && !useFallback && page && page.attributes.sections && page.attributes.sections.map((section: any, idx: number) => {
           const SectionComponent = sectionMap[section.__component];
           return SectionComponent ? (
@@ -145,6 +130,13 @@ const Index = () => {
         {!isLoading && useFallback && renderStaticContent()}
       </main>
       <Footer />
+      
+      {/* Nota discreta no rodapé */}
+      {useFallback && (
+        <div className="text-[6px] text-muted-foreground ml-4 mb-1">
+          Não foi possível estabelecer conexão com o Strapi CMS. Exibindo conteúdo estático.
+        </div>
+      )}
     </div>
   );
 };

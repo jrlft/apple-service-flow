@@ -1,6 +1,6 @@
 
 import { Link } from "react-router-dom";
-import { Phone, Mail, MapPin, Clock, Facebook, Instagram, Twitter } from "lucide-react";
+import { Phone, Mail, MapPin, Clock, Facebook, Instagram } from "lucide-react";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -17,14 +17,11 @@ export function Footer() {
               e peças originais para o melhor serviço.
             </p>
             <div className="flex space-x-4">
-              <a href="#" aria-label="Facebook" className="hover:text-accent transition-colors">
+              <a href="https://facebook.com/linkti" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="hover:text-accent transition-colors">
                 <Facebook size={20} />
               </a>
-              <a href="#" aria-label="Instagram" className="hover:text-accent transition-colors">
+              <a href="https://instagram.com/linkti" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="hover:text-accent transition-colors">
                 <Instagram size={20} />
-              </a>
-              <a href="#" aria-label="Twitter" className="hover:text-accent transition-colors">
-                <Twitter size={20} />
               </a>
             </div>
           </div>
@@ -58,19 +55,19 @@ export function Footer() {
             <ul className="space-y-3">
               <li className="flex items-center gap-2">
                 <Phone size={16} />
-                <span>(00) 0000-0000</span>
+                <span>(65) 3621-6000</span>
               </li>
               <li className="flex items-center gap-2">
                 <Mail size={16} />
-                <span>contato@exemplo.com</span>
+                <span>suporte@linkti.com.br</span>
               </li>
               <li className="flex items-center gap-2">
                 <MapPin size={16} />
-                <span>Av. Exemplo, 123 - Cidade</span>
+                <span>Av. Miguel Sutil, 8388 - Cuiabá/MT</span>
               </li>
               <li className="flex items-center gap-2">
                 <Clock size={16} />
-                <span>Seg - Sex: 9h às 18h</span>
+                <span>Seg - Sex: 8h às 18h</span>
               </li>
             </ul>
           </div>
@@ -78,7 +75,7 @@ export function Footer() {
 
         <div className="border-t border-white/20 mt-10 pt-6 text-sm">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p>© {currentYear} Centro Autorizado Apple. Todos os direitos reservados.</p>
+            <p>© {currentYear} Link TI - Centro de Serviço Autorizado da Apple. Todos os direitos reservados.</p>
             <p className="mt-2 md:mt-0">Apple é uma marca registrada da Apple Inc.</p>
           </div>
         </div>

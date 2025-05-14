@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { AnimatedElement } from "@/components/animations/animated-element";
 import { Navbar } from "@/components/layout/navbar";
@@ -19,9 +19,13 @@ const Precos = () => {
 
   // Filtrar dados com base na pesquisa
   const filteredData = (priceData[selectedDevice] || []).filter((item: any) => {
-    if (!searchTerm) return true;
-    return item.model.toLowerCase().includes(searchTerm.toLowerCase()) || 
-           item.repairType.toLowerCase().includes(searchTerm.toLowerCase());
+    if (!searchTerm.trim()) return true;
+    
+    const searchLower = searchTerm.toLowerCase().trim();
+    const modelLower = (item.model || "").toLowerCase();
+    const repairLower = (item.repairType || "").toLowerCase();
+    
+    return modelLower.includes(searchLower) || repairLower.includes(searchLower);
   });
 
   console.log("Current price data:", priceData);
@@ -83,6 +87,11 @@ const Precos = () => {
         <CallToAction />
       </main>
       <Footer />
+      {!isSheetLoaded && (
+        <div className="text-[6px] text-muted-foreground ml-4 mb-1">
+          Não foi possível estabelecer conexão com o Strapi CMS. Exibindo conteúdo estático.
+        </div>
+      )}
     </div>
   );
 };

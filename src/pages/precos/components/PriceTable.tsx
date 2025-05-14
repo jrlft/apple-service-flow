@@ -65,12 +65,12 @@ export const PriceTable = ({
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="bg-primary text-white font-semibold py-3">Modelo</TableHead>
-              <TableHead className="bg-primary text-white font-semibold py-3">Tipo de Reparo</TableHead>
-              <TableHead className="bg-primary text-white font-semibold py-3">PIX c/ Desconto</TableHead>
-              <TableHead className="bg-primary text-white font-semibold py-3 hidden md:table-cell">À Vista/Boleto</TableHead>
-              <TableHead className="bg-primary text-white font-semibold py-3 hidden lg:table-cell">2-5x Cartão</TableHead>
-              <TableHead className="bg-primary text-white font-semibold py-3 hidden lg:table-cell">6-10x Cartão</TableHead>
+              <TableHead className="bg-primary text-white font-semibold py-3 !hover:bg-primary">Modelo</TableHead>
+              <TableHead className="bg-primary text-white font-semibold py-3 !hover:bg-primary">Tipo de Reparo</TableHead>
+              <TableHead className="bg-primary text-white font-semibold py-3 !hover:bg-primary">PIX c/ Desconto</TableHead>
+              <TableHead className="bg-primary text-white font-semibold py-3 hidden md:table-cell !hover:bg-primary">À Vista/Boleto</TableHead>
+              <TableHead className="bg-primary text-white font-semibold py-3 hidden lg:table-cell !hover:bg-primary">2-5x Cartão</TableHead>
+              <TableHead className="bg-primary text-white font-semibold py-3 hidden lg:table-cell !hover:bg-primary">6-10x Cartão</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>

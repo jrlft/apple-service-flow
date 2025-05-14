@@ -6,7 +6,7 @@ interface PageHeaderProps {
   title: string;
   subtitle: string;
   isSheetLoaded: boolean;
-  lastUpdated?: string; // Tornar opcional para evitar o erro
+  lastUpdated?: string; // Mantendo como opcional
 }
 
 export const PageHeader = ({ 

@@ -43,6 +43,7 @@ export const usePriceData = () => {
               }
             });
             
+            // Se dados foram carregados com sucesso, use-os em vez dos dados fallback
             setPriceData(sheetData);
             setIsSheetLoaded(true);
             // Set last updated time
