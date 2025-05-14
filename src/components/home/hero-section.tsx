@@ -12,8 +12,8 @@ export function HeroSection() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <AnimatedElement direction="left">
             <div>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-primary">
-                Bem-vindo à Link TI - Centro de Serviço Autorizado da Apple
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-primary">
+                Bem-vindo à Link TI<br />Centro de Serviço Autorizado da Apple
               </h1>
               <p className="text-xl mb-8 text-muted-foreground">
                 Aqui, trazemos a excelência Apple para Mato Grosso! Como centro de serviços autorizado, 
@@ -38,8 +38,8 @@ export function HeroSection() {
           <AnimatedElement direction="right" delay={0.2}>
             <div className="relative h-[400px] bg-white rounded-lg shadow-lg flex items-center justify-center overflow-hidden">
               <img 
-                src="/lovable-uploads/8a8f5661-2b07-4aed-9cbc-251db76bfa37.png" 
-                alt="Técnico realizando reparo em dispositivo Apple" 
+                src="/lovable-uploads/857555c4-63d9-4d18-9305-9e188a8869ec.png" 
+                alt="Link TI - Centro de Serviço Autorizado da Apple" 
                 className="w-full h-full object-cover" 
               />
             </div>
