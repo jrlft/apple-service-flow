@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { fetchPage, fetchGoogleSheetPrices } from "@/lib/strapi";
+import { fetchPage } from "@/lib/strapi";
 import { FALLBACK_PRICES } from "../constants";
 
 export const usePriceData = () => {
@@ -29,83 +29,73 @@ export const usePriceData = () => {
         try {
           console.log("Fetching Google Sheets data directly, attempt:", retryCount + 1);
           
-          // Using a CORS proxy to access the Google Sheet
-          const sheetURL = "https://docs.google.com/spreadsheets/d/1QD_ZgaC5-pDjTpryvlW-AmOoQXbjI8SLl9heWnx3rwU/gviz/tq?tqx=out:json&sheet=";
+          // Using Google Sheets published data format
+          const sheetId = "1QD_ZgaC5-pDjTpryvlW-AmOoQXbjI8SLl9heWnx3rwU";
+          const sheetURL = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json`;
           
-          // Try to fetch iphone prices
-          const fetchDeviceData = async (deviceType: string) => {
-            try {
-              const response = await fetch(`${sheetURL}${deviceType}`);
-              const text = await response.text();
+          const response = await fetch(sheetURL);
+          const textData = await response.text();
+          
+          // Google Sheets returns data wrapped in a callback, remove that
+          const jsonText = textData.replace(/^.*\(([\s\S]*)\);?$/, '$1');
+          const data = JSON.parse(jsonText);
+          
+          console.log("Raw data:", data);
+          
+          if (data && data.table && data.table.rows) {
+            // Process the data
+            const processedData: Record<string, any[]> = {
+              iphone: [],
+              ipad: [],
+              mac: [],
+              watch: []
+            };
+            
+            const headers = data.table.cols.map((col: any) => col.label);
+            console.log("Headers:", headers);
+            
+            data.table.rows.forEach((row: any) => {
+              if (!row.c || row.c.length < 2) return;
               
-              // Google Sheets returns data wrapped in a callback, remove that
-              const jsonText = text.replace(/.*\((.*)\);?/s, '$1');
-              const data = JSON.parse(jsonText);
+              const product = row.c[0]?.v?.toString().toLowerCase() || '';
               
-              // Format the data
-              const formattedData = data.table.rows.map((row: any) => {
-                const rowData = row.c;
-                return {
-                  model: rowData[0]?.v || "",
-                  repairType: rowData[1]?.v || "",
-                  price: rowData[2]?.v || "",
-                  warranty: rowData[3]?.v || "",
-                  time: rowData[4]?.v || ""
+              if (product && (product.includes('iphone') || product.includes('ipad') || product.includes('mac') || product.includes('watch'))) {
+                let deviceType = 'iphone';
+                if (product.includes('ipad')) deviceType = 'ipad';
+                else if (product.includes('mac')) deviceType = 'mac';
+                else if (product.includes('watch')) deviceType = 'watch';
+                
+                const item = {
+                  model: row.c[0]?.v || '',
+                  repairType: row.c[1]?.v || '',
+                  pixPrice: formatCurrency(row.c[3]?.v || ''),
+                  cashPrice: formatCurrency(row.c[2]?.v || ''),
+                  installments2to5: formatCurrency(row.c[2]?.v || ''),
+                  installments6to10: formatCurrency(row.c[3]?.v || '')
                 };
-              });
-              
-              return formattedData.filter((d: any) => d.model && d.repairType);
-            } catch (error) {
-              console.error(`Error fetching ${deviceType} data:`, error);
-              return [];
+                
+                processedData[deviceType].push(item);
+              }
+            });
+            
+            // Log the number of items per device
+            for (const [device, items] of Object.entries(processedData)) {
+              console.log(`${device}: ${items.length} items`);
             }
-          };
-          
-          // Fetch all device types
-          const devices = ["iphone", "ipad", "mac", "watch"];
-          const devicePromises = devices.map(device => fetchDeviceData(device)
-            .then(data => ({ [device]: data }))
-          );
-          
-          const results = await Promise.all(devicePromises);
-          
-          // Combine all results
-          const combinedData = results.reduce((acc, curr) => ({ ...acc, ...curr }), {});
-          
-          console.log("Combined sheet data:", combinedData);
-          
-          if (combinedData && Object.values(combinedData).some((arr: any) => arr.length > 0)) {
-            setPriceData(combinedData);
+            
+            setPriceData(processedData);
             setIsSheetLoaded(true);
             setLastUpdated(new Date().toLocaleString('pt-BR'));
-            setRetryCount(0); // Reset retry count on success
           } else {
-            console.warn("Direct Google Sheet fetch returned empty data, trying Strapi as fallback");
-            const sheetData = await fetchGoogleSheetPrices();
-            
-            if (sheetData && Object.keys(sheetData).length > 0) {
-              setPriceData(sheetData);
-              setIsSheetLoaded(true);
-              setLastUpdated(new Date().toLocaleString('pt-BR'));
-            } else if (retryCount < 3) {
-              const delay = Math.pow(2, retryCount) * 1000;
-              console.log(`Retrying in ${delay}ms (attempt ${retryCount + 1})`);
-              setTimeout(() => setRetryCount(prev => prev + 1), delay);
-            }
+            throw new Error("Invalid data format from Google Sheets");
           }
         } catch (error) {
-          console.error("Error loading price data:", error);
+          console.error("Error loading price data from Google Sheets:", error);
           
-          // Fallback to Strapi fetch
-          try {
-            const sheetData = await fetchGoogleSheetPrices();
-            if (sheetData && Object.keys(sheetData).length > 0) {
-              setPriceData(sheetData);
-              setIsSheetLoaded(true);
-              setLastUpdated(new Date().toLocaleString('pt-BR'));
-            }
-          } catch (strApiError) {
-            console.error("Strapi fallback also failed:", strApiError);
+          if (retryCount < 2) {
+            const delay = Math.pow(2, retryCount) * 1000;
+            console.log(`Retrying in ${delay}ms (attempt ${retryCount + 1})`);
+            setTimeout(() => setRetryCount(prev => prev + 1), delay);
           }
         }
       } finally {
@@ -116,13 +106,38 @@ export const usePriceData = () => {
     loadData();
     
     // Set up a timer to refresh the sheet data periodically (every 5 minutes)
-    const intervalId = setInterval(async () => {
+    const intervalId = setInterval(() => {
       console.log("Refreshing price data");
       loadData();
     }, 5 * 60 * 1000); // 5 minutes
     
     return () => clearInterval(intervalId);
   }, [retryCount]);
+
+  // Helper function to format currency values
+  const formatCurrency = (value: any): string => {
+    if (value === undefined || value === null) return '';
+    
+    if (typeof value === 'number') {
+      return `R$ ${value.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    }
+    
+    // If it's already a string with formatting
+    if (typeof value === 'string') {
+      if (value.trim() === '') return '';
+      if (value.includes('R$')) return value;
+      
+      // Try to convert string to number and format
+      const numValue = Number(value.replace(/[^0-9.,]/g, '').replace(',', '.'));
+      if (!isNaN(numValue)) {
+        return `R$ ${numValue.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+      }
+      
+      return value;
+    }
+    
+    return String(value);
+  };
 
   return {
     priceData,

@@ -40,7 +40,7 @@ export const PriceTable = ({
     return (
       <div className="text-center py-8">
         <h3 className="text-xl font-semibold mb-4">Orçamento Personalizado para Mac</h3>
-        <p className="text-muted-foreground mb-6">
+        <p className="text-muted-foreground mb-6 text-justify">
           Os valores para reparo de Mac dependem de análise técnica do aparelho e 
           consulta dos valores das peças de acordo com o modelo específico.
         </p>
@@ -76,7 +76,7 @@ export const PriceTable = ({
           <TableBody>
             {filteredData.length > 0 ? (
               filteredData.map((item: any, index: number) => (
-                <TableRow key={index} className={index % 2 === 0 ? "bg-secondary/20" : "bg-white"}>
+                <TableRow key={index} className={index % 2 === 0 ? "bg-white" : "bg-pink-50"}>
                   <TableCell className="font-medium">{item.model}</TableCell>
                   <TableCell>{item.repairType}</TableCell>
                   <TableCell className="font-medium text-primary">{item.pixPrice}</TableCell>
