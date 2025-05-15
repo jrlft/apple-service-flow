@@ -11,6 +11,7 @@ import { PriceTable } from "./components/PriceTable";
 import { PageHeader } from "./components/PageHeader";
 import { CallToAction } from "./components/CallToAction";
 import { PriceInfo } from "./components/PriceInfo";
+import { Helmet } from "react-helmet";
 
 const Precos = () => {
   const [selectedDevice, setSelectedDevice] = useState("iphone");
@@ -35,8 +36,49 @@ const Precos = () => {
   console.log("Is sheet loaded:", isSheetLoaded);
   console.log("Last updated:", lastUpdated);
 
+  // Add Facebook Pixel and Google Ads Script
+  const MarketingScripts = () => {
+    return (
+      <Helmet>
+        <script>
+          {`
+            !function(f,b,e,v,n,t,s)
+            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+            n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t,s)}(window, document,'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', '581961359233767');
+            fbq('track', 'PageView');
+          `}
+        </script>
+        <noscript>
+          {`
+            <img height="1" width="1" style="display:none"
+            src="https://www.facebook.com/tr?id=581961359233767&ev=PageView&noscript=1"
+            />
+          `}
+        </noscript>
+        
+        {/* Google Ads Tag */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=AW-10888031582"></script>
+        <script>
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'AW-10888031582');
+          `}
+        </script>
+      </Helmet>
+    );
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
+      <MarketingScripts />
       <Navbar />
       <main className="flex-grow pt-24 pb-16">
         <PageHeader 

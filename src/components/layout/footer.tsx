@@ -55,19 +55,23 @@ export function Footer() {
             <ul className="space-y-3">
               <li className="flex items-center gap-2">
                 <Phone size={16} />
-                <span>(65) 3621-6000</span>
+                <span>65-3621-6000</span>
               </li>
               <li className="flex items-center gap-2">
                 <Mail size={16} />
-                <span>suporte@linkti.com.br</span>
+                <span>atendimento@linkti.info</span>
               </li>
               <li className="flex items-center gap-2">
                 <MapPin size={16} />
-                <span>Av. Miguel Sutil, 8388 - Cuiabá/MT</span>
+                <span>Rua Odorico Tocantins, nr 125 - Quilombo, Cuiabá-MT, 78045-170</span>
               </li>
               <li className="flex items-center gap-2">
                 <Clock size={16} />
-                <span>Seg - Sex: 8h às 18h</span>
+                <span>Seg - Sex: 9h às 18h</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <Clock size={16} />
+                <span>Sábado: 8h às 12h</span>
               </li>
             </ul>
           </div>

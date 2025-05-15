@@ -6,18 +6,56 @@ import { fetchPage, fetchMetadata, checkStrapiConnection } from "@/lib/strapi";
 import { HeroSection } from "@/components/home/hero-section";
 import { ServicesSection } from "@/components/home/services-section";
 import { AboutSection } from "@/components/home/about-section";
-import { ProcessSection } from "@/components/home/process-section";
 import { TestimonialsSection } from "@/components/home/testimonials-section";
 import { ContactSection } from "@/components/home/contact-section";
 import { CtaSection } from "@/components/home/cta-section";
 import { BlogSection } from "@/components/home/blog-section";
 import { Helmet } from "react-helmet";
 
+// Add Facebook Pixel Script
+const FacebookPixelScript = () => {
+  return (
+    <Helmet>
+      <script>
+        {`
+          !function(f,b,e,v,n,t,s)
+          {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+          n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+          if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+          n.queue=[];t=b.createElement(e);t.async=!0;
+          t.src=v;s=b.getElementsByTagName(e)[0];
+          s.parentNode.insertBefore(t,s)}(window, document,'script',
+          'https://connect.facebook.net/en_US/fbevents.js');
+          fbq('init', '581961359233767');
+          fbq('track', 'PageView');
+        `}
+      </script>
+      <noscript>
+        {`
+          <img height="1" width="1" style="display:none"
+          src="https://www.facebook.com/tr?id=581961359233767&ev=PageView&noscript=1"
+          />
+        `}
+      </noscript>
+      
+      {/* Google Ads Tag */}
+      <script async src="https://www.googletagmanager.com/gtag/js?id=AW-10888031582"></script>
+      <script>
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'AW-10888031582');
+        `}
+      </script>
+    </Helmet>
+  );
+};
+
 const sectionMap: Record<string, any> = {
   "section.hero": HeroSection,
   "section.services": ServicesSection,
   "section.about": AboutSection,
-  "section.process": ProcessSection,
   "section.testimonials": TestimonialsSection,
   "section.contact": ContactSection,
   "section.cta": CtaSection,
@@ -87,7 +125,6 @@ const Index = () => {
         <HeroSection />
         <ServicesSection />
         <AboutSection />
-        <ProcessSection />
         <TestimonialsSection />
         <ContactSection />
         <CtaSection />
@@ -107,6 +144,9 @@ const Index = () => {
           <meta property="og:image" content={metadata.ogImage.data?.attributes?.url} />
         }
       </Helmet>
+      
+      {/* Facebook Pixel and Google Ads Tag */}
+      <FacebookPixelScript />
       
       <Navbar />
       <main className="flex-grow">

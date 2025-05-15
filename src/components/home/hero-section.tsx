@@ -11,16 +11,18 @@ export function HeroSection() {
       <div className="container relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <AnimatedElement direction="left">
-            <div>
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-primary">
+            <div className="text-center lg:text-left">
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-primary text-center">
                 Bem-vindo à Link TI<br />Centro de Serviço Autorizado da Apple
               </h1>
-              <p className="text-xl mb-8 text-muted-foreground">
+              <p className="text-xl mb-8 text-muted-foreground text-justify">
                 Aqui, trazemos a excelência Apple para Mato Grosso! Como centro de serviços autorizado, 
                 usamos apenas peças originais e contamos com técnicos certificados para cuidar do seu iPhone, 
-                iPad, Mac, Apple Watch e mais. Nosso compromisso? Reparos rápidos, atendimento acolhedor e dispositivos como novos.
+                iPad, Mac, Apple Watch e mais. 
+                <br /><br />
+                Nosso compromisso? Reparos rápidos, atendimento acolhedor e dispositivos como novos.
               </p>
-              <div className="flex flex-wrap gap-4">
+              <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
                 <Button asChild size="lg">
                   <Link to="/servicos">Nossos Serviços</Link>
                 </Button>
@@ -38,7 +40,7 @@ export function HeroSection() {
           <AnimatedElement direction="right" delay={0.2}>
             <div className="relative h-[400px] bg-white rounded-lg shadow-lg flex items-center justify-center overflow-hidden">
               <img 
-                src="/lovable-uploads/857555c4-63d9-4d18-9305-9e188a8869ec.png" 
+                src="/lovable-uploads/be845e7c-d576-4144-b0aa-8adfe3274f08.png" 
                 alt="Link TI - Centro de Serviço Autorizado da Apple" 
                 className="w-full h-full object-cover" 
               />

@@ -16,7 +16,6 @@ const NAV_ITEMS = [
   { label: "Dúvidas", href: "/faq" },
   { label: "Agendamento", href: "/agendamento" },
   { label: "Contato", href: "/contato" },
-  { label: "Curso de iPhone", href: "/curso-iphone", highlight: true },
   { label: "Blog", href: "/blog" },
 ];
 
@@ -54,9 +53,11 @@ export function Navbar() {
     >
       <div className="container flex items-center justify-between">
         <Link to="/" className="flex items-center">
-          <div className="bg-gray-200 h-10 w-32 rounded-md flex items-center justify-center text-sm text-gray-500">
-            Logo Placeholder
-          </div>
+          <img 
+            src="/lovable-uploads/f5959fae-ff58-40c3-99cc-21d06e5fda60.png" 
+            alt="Link TI Logo" 
+            className="h-14"
+          />
         </Link>
 
         {/* Desktop Navigation */}
@@ -67,8 +68,7 @@ export function Navbar() {
               to={item.href}
               className={cn(
                 "text-sm font-medium transition-colors hover:text-primary flex items-center gap-1",
-                location.pathname === item.href ? "text-primary" : "text-foreground",
-                item.highlight ? "px-3 py-1 rounded bg-primary text-white shadow font-bold border border-primary" : ""
+                location.pathname === item.href ? "text-primary" : "text-foreground"
               )}
             >
               {item.label}
@@ -97,8 +97,7 @@ export function Navbar() {
                   to={item.href}
                   className={cn(
                     "text-lg py-3 font-medium transition-colors hover:text-primary",
-                    location.pathname === item.href ? "text-primary" : "text-foreground",
-                    item.highlight ? "my-2 px-3 py-2 rounded bg-primary text-white shadow font-bold border border-primary text-center" : ""
+                    location.pathname === item.href ? "text-primary" : "text-foreground"
                   )}
                 >
                   {item.label}

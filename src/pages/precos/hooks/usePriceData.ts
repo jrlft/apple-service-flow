@@ -25,41 +25,88 @@ export const usePriceData = () => {
           console.error("Error loading page data from Strapi:", error);
         }
         
-        // Try to load price data from Google Sheets
+        // Try to fetch directly from Google Sheet URL
         try {
-          console.log("Fetching Google Sheets data, attempt:", retryCount + 1);
-          const sheetData = await fetchGoogleSheetPrices();
+          console.log("Fetching Google Sheets data directly, attempt:", retryCount + 1);
           
-          console.log("Received sheet data:", sheetData);
+          // Using a CORS proxy to access the Google Sheet
+          const sheetURL = "https://docs.google.com/spreadsheets/d/1QD_ZgaC5-pDjTpryvlW-AmOoQXbjI8SLl9heWnx3rwU/gviz/tq?tqx=out:json&sheet=";
           
-          if (sheetData && Object.keys(sheetData).length > 0) {
-            console.log("Sheet data loaded successfully:", sheetData);
-            
-            // Log device counts to diagnose data issues
-            Object.keys(sheetData).forEach(key => {
-              console.log(`Device ${key} has ${sheetData[key]?.length || 0} entries`);
-              if (sheetData[key]?.length > 0) {
-                console.log(`First entry example:`, sheetData[key][0]);
-              }
-            });
-            
-            // Se dados foram carregados com sucesso, use-os em vez dos dados fallback
-            setPriceData(sheetData);
+          // Try to fetch iphone prices
+          const fetchDeviceData = async (deviceType: string) => {
+            try {
+              const response = await fetch(`${sheetURL}${deviceType}`);
+              const text = await response.text();
+              
+              // Google Sheets returns data wrapped in a callback, remove that
+              const jsonText = text.replace(/.*\((.*)\);?/s, '$1');
+              const data = JSON.parse(jsonText);
+              
+              // Format the data
+              const formattedData = data.table.rows.map((row: any) => {
+                const rowData = row.c;
+                return {
+                  model: rowData[0]?.v || "",
+                  repairType: rowData[1]?.v || "",
+                  price: rowData[2]?.v || "",
+                  warranty: rowData[3]?.v || "",
+                  time: rowData[4]?.v || ""
+                };
+              });
+              
+              return formattedData.filter((d: any) => d.model && d.repairType);
+            } catch (error) {
+              console.error(`Error fetching ${deviceType} data:`, error);
+              return [];
+            }
+          };
+          
+          // Fetch all device types
+          const devices = ["iphone", "ipad", "mac", "watch"];
+          const devicePromises = devices.map(device => fetchDeviceData(device)
+            .then(data => ({ [device]: data }))
+          );
+          
+          const results = await Promise.all(devicePromises);
+          
+          // Combine all results
+          const combinedData = results.reduce((acc, curr) => ({ ...acc, ...curr }), {});
+          
+          console.log("Combined sheet data:", combinedData);
+          
+          if (combinedData && Object.values(combinedData).some((arr: any) => arr.length > 0)) {
+            setPriceData(combinedData);
             setIsSheetLoaded(true);
-            // Set last updated time
             setLastUpdated(new Date().toLocaleString('pt-BR'));
             setRetryCount(0); // Reset retry count on success
           } else {
-            console.warn("Failed to load Google Sheet data or empty data returned, using fallback data");
-            if (retryCount < 3) {
-              // Retry after a short delay (exponential backoff)
+            console.warn("Direct Google Sheet fetch returned empty data, trying Strapi as fallback");
+            const sheetData = await fetchGoogleSheetPrices();
+            
+            if (sheetData && Object.keys(sheetData).length > 0) {
+              setPriceData(sheetData);
+              setIsSheetLoaded(true);
+              setLastUpdated(new Date().toLocaleString('pt-BR'));
+            } else if (retryCount < 3) {
               const delay = Math.pow(2, retryCount) * 1000;
               console.log(`Retrying in ${delay}ms (attempt ${retryCount + 1})`);
               setTimeout(() => setRetryCount(prev => prev + 1), delay);
             }
           }
         } catch (error) {
-          console.error("Error loading price data from Google Sheets:", error);
+          console.error("Error loading price data:", error);
+          
+          // Fallback to Strapi fetch
+          try {
+            const sheetData = await fetchGoogleSheetPrices();
+            if (sheetData && Object.keys(sheetData).length > 0) {
+              setPriceData(sheetData);
+              setIsSheetLoaded(true);
+              setLastUpdated(new Date().toLocaleString('pt-BR'));
+            }
+          } catch (strApiError) {
+            console.error("Strapi fallback also failed:", strApiError);
+          }
         }
       } finally {
         setIsLoading(false);
@@ -70,20 +117,8 @@ export const usePriceData = () => {
     
     // Set up a timer to refresh the sheet data periodically (every 5 minutes)
     const intervalId = setInterval(async () => {
-      console.log("Refreshing price data from Google Sheets");
-      try {
-        const sheetData = await fetchGoogleSheetPrices();
-        if (sheetData && Object.keys(sheetData).length > 0) {
-          console.log("Sheet data refreshed successfully");
-          setPriceData(sheetData);
-          setIsSheetLoaded(true);
-          setLastUpdated(new Date().toLocaleString('pt-BR'));
-        } else {
-          console.warn("Failed to refresh Google Sheet data");
-        }
-      } catch (error) {
-        console.error("Error refreshing price data:", error);
-      }
+      console.log("Refreshing price data");
+      loadData();
     }, 5 * 60 * 1000); // 5 minutes
     
     return () => clearInterval(intervalId);

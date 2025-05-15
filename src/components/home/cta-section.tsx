@@ -14,7 +14,7 @@ export function CtaSection() {
               Precisando de reparo para seu dispositivo Apple?
             </h2>
             <p className="text-lg mb-8 text-white/80">
-              Entre em contato conosco hoje mesmo para um orçamento sem compromisso.
+              Entre em contato conosco hoje mesmo.
               Nossos especialistas estão prontos para ajudar com qualquer problema no seu dispositivo.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
