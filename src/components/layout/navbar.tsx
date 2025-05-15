@@ -57,7 +57,7 @@ export function Navbar() {
   return <header className={cn("fixed top-0 w-full z-50 transition-all duration-300", isScrolled ? "bg-white bg-opacity-95 shadow-md py-3" : "bg-transparent py-5")}>
       <div className="container flex items-center justify-between">
         <Link to="/" className="flex items-center">
-          <img src="/lovable-uploads/f5959fae-ff58-40c3-99cc-21d06e5fda60.png" alt="Link TI Logo" className="h-14" />
+          <img alt="Link TI Logo" src="/lovable-uploads/27d0f32d-9804-4b98-a47a-f2c663bf247a.png" className="h-14" />
         </Link>
 
         {/* Desktop Navigation */}
