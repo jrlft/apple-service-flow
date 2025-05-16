@@ -6,7 +6,7 @@ interface PageHeaderProps {
   title: string;
   subtitle: string;
   isSheetLoaded: boolean;
-  lastUpdated?: string; // Mantendo como opcional
+  lastUpdated?: string;
 }
 
 export const PageHeader = ({ 
@@ -25,15 +25,10 @@ export const PageHeader = ({
               subtitle={subtitle} 
               centered
             />
-            <p className="text-muted-foreground">
+            <p className="text-muted-foreground text-justify">
               Consulte abaixo os valores para os serviços mais solicitados em cada tipo de dispositivo Apple.
               Para outros serviços ou modelos não listados, entre em contato para um orçamento personalizado.
             </p>
-            {isSheetLoaded && lastUpdated && (
-              <p className="text-xs mt-2 text-muted-foreground">
-                Dados sincronizados com Google Sheets • Última atualização: {lastUpdated}
-              </p>
-            )}
           </div>
         </AnimatedElement>
       </div>

@@ -4,8 +4,19 @@ export const DEVICE_TYPES = [
   { id: "iphone", label: "iPhone" },
   { id: "ipad", label: "iPad" },
   { id: "mac", label: "Mac" },
-  { id: "watch", label: "Apple Watch" }
+  { id: "watch", label: "Apple Watch" },
+  { id: "airpods", label: "AirPods" },
+  { id: "outros", label: "Outros Serviços" }
 ];
+
+// Mapping of device types to Google Sheet IDs
+export const SHEET_IDS = {
+  iphone: "1QD_ZgaC5-pDjTpryvlW-AmOoQXbjI8SLl9heWnx3rwU",
+  ipad: "1QD_ZgaC5-pDjTpryvlW-AmOoQXbjI8SLl9heWnx3rwU", // Replace with actual iPad sheet ID when available
+  watch: "1QD_ZgaC5-pDjTpryvlW-AmOoQXbjI8SLl9heWnx3rwU", // Replace with actual Watch sheet ID when available
+  airpods: "1QD_ZgaC5-pDjTpryvlW-AmOoQXbjI8SLl9heWnx3rwU", // Replace with actual AirPods sheet ID when available
+  outros: "1QD_ZgaC5-pDjTpryvlW-AmOoQXbjI8SLl9heWnx3rwU" // Replace with actual Others sheet ID when available
+};
 
 // Fallback data (used when Google Sheets is unavailable)
 export const FALLBACK_PRICES = {
@@ -22,6 +33,13 @@ export const FALLBACK_PRICES = {
   watch: [
     { model: "Apple Watch Series 3", repairType: "Troca de Bateria", pixPrice: "R$ 290", cashPrice: "R$ 310", installments2to5: "R$ 320", installments6to10: "R$ 330" },
     { model: "Apple Watch Series 7", repairType: "Troca de Tela", pixPrice: "R$ 790", cashPrice: "R$ 820", installments2to5: "R$ 840", installments6to10: "R$ 870" }
+  ],
+  airpods: [
+    { model: "AirPods 2", repairType: "Troca de Bateria", pixPrice: "R$ 240", cashPrice: "R$ 260", installments2to5: "R$ 280", installments6to10: "R$ 300" },
+    { model: "AirPods Pro", repairType: "Reparo", pixPrice: "R$ 390", cashPrice: "R$ 410", installments2to5: "R$ 430", installments6to10: "R$ 450" }
+  ],
+  outros: [
+    { model: "Beats", repairType: "Reparo Geral", pixPrice: "R$ 290", cashPrice: "R$ 310", installments2to5: "R$ 320", installments6to10: "R$ 350" }
   ],
   mac: []
 };

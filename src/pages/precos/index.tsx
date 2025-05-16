@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { AnimatedElement } from "@/components/animations/animated-element";
 import { Navbar } from "@/components/layout/navbar";
@@ -16,7 +16,18 @@ import { Helmet } from "react-helmet";
 const Precos = () => {
   const [selectedDevice, setSelectedDevice] = useState("iphone");
   const [searchTerm, setSearchTerm] = useState("");
-  const { priceData, page, isLoading, isSheetLoaded, lastUpdated } = usePriceData();
+  const { priceData, page, isLoading, isSheetLoaded, lastUpdated, loadDeviceData } = usePriceData();
+
+  // Load device data when selection changes
+  useEffect(() => {
+    loadDeviceData(selectedDevice);
+  }, [selectedDevice]);
+
+  // Handle device selection change
+  const handleDeviceChange = (device: string) => {
+    setSelectedDevice(device);
+    setSearchTerm(""); // Clear search when changing device
+  };
 
   // Filtrar dados com base na pesquisa
   const filteredData = (priceData[selectedDevice] || []).filter((item: any) => {
@@ -28,13 +39,6 @@ const Precos = () => {
     
     return modelLower.includes(searchLower) || repairLower.includes(searchLower);
   });
-
-  console.log("Current price data:", priceData);
-  console.log("Selected device data:", priceData[selectedDevice]);
-  console.log("Filtered data:", filteredData);
-  console.log("Search term:", searchTerm);
-  console.log("Is sheet loaded:", isSheetLoaded);
-  console.log("Last updated:", lastUpdated);
 
   // Add Facebook Pixel and Google Ads Script
   const MarketingScripts = () => {
@@ -96,7 +100,7 @@ const Precos = () => {
                   <DeviceFilter 
                     devices={DEVICE_TYPES}
                     selectedDevice={selectedDevice}
-                    onDeviceChange={setSelectedDevice}
+                    onDeviceChange={handleDeviceChange}
                   />
                   <div className="w-full md:w-64">
                     <Input
