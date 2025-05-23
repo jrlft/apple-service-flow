@@ -1,17 +1,19 @@
 
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { Calendar, ChevronLeft, Clock } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { AnimatedElement } from "@/components/animations/animated-element";
 import { getSamplePost } from "./sampleData";
 import { BlogPostRelated } from "@/components/blog/blog-post-related";
 import { BlogPostShare } from "@/components/blog/blog-post-share";
+import { BlogPostHeader } from "@/components/blog/blog-post-header";
 
 const BlogPost = () => {
   const { postId } = useParams<{ postId: string }>();
   const [post, setPost] = useState<any>(null);
+  const [relatedPosts, setRelatedPosts] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -22,6 +24,28 @@ const BlogPost = () => {
         // For now, we'll use sample data
         const postData = await getSamplePost(postId);
         setPost(postData);
+        // Get some sample related posts (in a real app, you would fetch based on tags, categories, etc.)
+        const sampleRelatedPosts = await Promise.resolve([
+          {
+            id: "related1",
+            title: "Como proteger seu iPhone contra quedas",
+            excerpt: "Dicas e truques para evitar danos no seu dispositivo.",
+            image: "placeholder.svg"
+          },
+          {
+            id: "related2",
+            title: "Dicas para economizar bateria",
+            excerpt: "Aprenda a fazer sua bateria durar mais durante o dia.",
+            image: "placeholder.svg"
+          },
+          {
+            id: "related3",
+            title: "Novidades do iOS 17",
+            excerpt: "Conheça os recursos mais importantes da nova versão.",
+            image: "placeholder.svg"
+          }
+        ]);
+        setRelatedPosts(sampleRelatedPosts);
       } catch (error) {
         console.error("Error loading post:", error);
       } finally {
@@ -69,28 +93,12 @@ const BlogPost = () => {
       <Navbar />
       
       {/* Header */}
-      <section className="bg-secondary py-16">
-        <div className="container">
-          <AnimatedElement>
-            <div className="max-w-3xl mx-auto">
-              <Link to="/blog" className="inline-flex items-center text-primary hover:underline mb-6">
-                <ChevronLeft className="mr-1 h-4 w-4" />
-                Voltar para o Blog
-              </Link>
-              <h1 className="text-3xl md:text-4xl font-bold mb-4">{post.title}</h1>
-              <p className="text-xl text-muted-foreground mb-6">{post.excerpt}</p>
-              <div className="text-sm text-muted-foreground flex items-center gap-4">
-                <span className="flex items-center gap-1">
-                  <Calendar className="h-3 w-3" /> {post.date}
-                </span>
-                <span className="flex items-center gap-1">
-                  <Clock className="h-3 w-3" /> {post.readTime} de leitura
-                </span>
-              </div>
-            </div>
-          </AnimatedElement>
-        </div>
-      </section>
+      <BlogPostHeader
+        title={post.title}
+        excerpt={post.excerpt}
+        date={post.date}
+        readTime={post.readTime}
+      />
       
       {/* Content */}
       <main className="py-12 bg-gray-50">
@@ -121,7 +129,7 @@ const BlogPost = () => {
                 
                 {/* Share */}
                 <div className="mt-8">
-                  <BlogPostShare title={post.title} />
+                  <BlogPostShare />
                 </div>
               </AnimatedElement>
             </div>
@@ -130,7 +138,7 @@ const BlogPost = () => {
             <div className="lg:col-span-4">
               <AnimatedElement delay={0.2}>
                 {/* Related posts */}
-                <BlogPostRelated currentPostId={post.id} />
+                <BlogPostRelated currentPostId={post.id} posts={relatedPosts} />
               </AnimatedElement>
             </div>
           </div>

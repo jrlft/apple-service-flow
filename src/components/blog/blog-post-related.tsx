@@ -16,8 +16,12 @@ interface BlogPostRelatedProps {
   posts: BlogPost[];
 }
 
-export function BlogPostRelated({ currentPostId, posts }: BlogPostRelatedProps) {
+export function BlogPostRelated({ currentPostId, posts = [] }: BlogPostRelatedProps) {
   const relatedPosts = posts.filter(p => p.id !== currentPostId).slice(0, 3);
+
+  if (relatedPosts.length === 0) {
+    return null;
+  }
 
   return (
     <section className="py-12 bg-secondary/30">
