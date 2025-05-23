@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -34,6 +33,7 @@ import AvancadoConteudos from "./pages/curso-iphone/avancado/conteudos";
 import AvancadoQuiz from "./pages/curso-iphone/avancado/quiz";
 import Faq from "./pages/Faq";
 import Agendamento from "./pages/Agendamento";
+import OutrosServicos from "./pages/servicos/OutrosServicos";
 
 const queryClient = new QueryClient();
 
@@ -50,6 +50,7 @@ const App = () => (
           <Route path="/servicos/ipad" element={<ServicoIpad />} />
           <Route path="/servicos/mac" element={<ServicoMac />} />
           <Route path="/servicos/watch" element={<ServicoWatch />} />
+          <Route path="/servicos/outros" element={<OutrosServicos />} />
           <Route path="/precos" element={<Precos />} />
           <Route path="/contato" element={<Contato />} />
           <Route path="/cookies" element={<Cookies />} />

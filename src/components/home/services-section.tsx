@@ -3,7 +3,7 @@ import { AnimatedElement } from "@/components/animations/animated-element";
 import { SectionTitle } from "@/components/ui/section-title";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Smartphone, Tablet, Laptop, Watch } from "lucide-react";
+import { Smartphone, Tablet, Laptop, Watch, headphones } from "lucide-react";
 
 const SERVICES = [
   {
@@ -34,6 +34,13 @@ const SERVICES = [
     link: "/servicos/watch",
     delay: 0.3,
   },
+  {
+    title: "AirPods",
+    description: "Reparo especializado para AirPods, incluindo bateria, conectividade e limpeza profunda.",
+    icon: <headphones className="h-10 w-10" />,
+    link: "/servicos/outros#airpods",
+    delay: 0.4,
+  },
 ];
 
 export function ServicesSection() {
@@ -48,7 +55,7 @@ export function ServicesSection() {
           />
         </AnimatedElement>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mt-12">
           {SERVICES.map((service, index) => (
             <AnimatedElement key={index} delay={service.delay}>
               <div className="bg-white p-6 rounded-lg shadow-md h-full flex flex-col">
@@ -56,7 +63,7 @@ export function ServicesSection() {
                   {service.icon}
                 </div>
                 <h3 className="text-xl font-bold mb-3">{service.title}</h3>
-                <p className="text-muted-foreground flex-grow mb-4">{service.description}</p>
+                <p className="text-muted-foreground flex-grow mb-4 text-sm">{service.description}</p>
                 <Button asChild variant="outline" className="w-full">
                   <Link to={service.link}>Saiba Mais</Link>
                 </Button>
