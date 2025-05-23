@@ -100,15 +100,6 @@ export const PriceTable = ({
         <p>* Valores com pagamento no PIX têm 5% de desconto</p>
         <p>* Deslize para o lado para ver todas as opções de pagamento</p>
       </div>
-      
-      {filteredData.length > 0 && !isSheetLoaded && (
-        <div className="mt-4 text-amber-600 bg-amber-50 p-3 rounded-md text-sm">
-          <p>
-            <strong>Nota:</strong> Não foi possível carregar os dados mais recentes do Google Sheets. 
-            Os valores exibidos podem estar desatualizados.
-          </p>
-        </div>
-      )}
     </div>
   );
 };

@@ -12,13 +12,14 @@ export function HeroSection() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <AnimatedElement direction="left">
             <div className="text-center lg:text-left">
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-primary text-center">
-                Bem-vindo à Link TI<br />Centro de Serviço Autorizado da Apple
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-center">
+                <span className="text-primary font-extrabold block">Bem-vindo à Link TI</span>
+                <span className="text-primary">Centro de Serviço Autorizado da Apple</span>
               </h1>
               <p className="text-xl mb-8 text-muted-foreground text-justify">
                 Aqui, trazemos a excelência Apple para Mato Grosso! Como centro de serviços autorizado, 
                 usamos apenas peças originais e contamos com técnicos certificados para cuidar do seu iPhone, 
-                iPad, Mac, Apple Watch e mais. 
+                iPad, Mac, Apple Watch e mais.
                 <br /><br />
                 Nosso compromisso? Reparos rápidos, atendimento acolhedor e dispositivos como novos.
               </p>

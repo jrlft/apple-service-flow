@@ -2,13 +2,10 @@
 import { Link } from "react-router-dom";
 import { Calendar, ChevronLeft, Clock } from "lucide-react";
 import { AnimatedElement } from "@/components/animations/animated-element";
-import { LazyImage } from "@/components/shared/lazy-image";
 
 interface BlogPostHeaderProps {
   title: string;
   excerpt: string;
-  author: string;
-  authorImage: string;
   date: string;
   readTime: string;
 }
@@ -16,8 +13,6 @@ interface BlogPostHeaderProps {
 export function BlogPostHeader({
   title,
   excerpt,
-  author,
-  authorImage,
   date,
   readTime,
 }: BlogPostHeaderProps) {
@@ -32,25 +27,13 @@ export function BlogPostHeader({
             </Link>
             <h1 className="text-3xl md:text-4xl font-bold mb-4">{title}</h1>
             <p className="text-xl text-muted-foreground mb-6">{excerpt}</p>
-            <div className="flex items-center gap-4">
-              <div className="w-10 h-10 rounded-full overflow-hidden">
-                <LazyImage
-                  src={authorImage}
-                  alt={author}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div>
-                <div className="font-semibold">{author}</div>
-                <div className="text-sm text-muted-foreground flex items-center gap-4">
-                  <span className="flex items-center gap-1">
-                    <Calendar className="h-3 w-3" /> {date}
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <Clock className="h-3 w-3" /> {readTime} de leitura
-                  </span>
-                </div>
-              </div>
+            <div className="text-sm text-muted-foreground flex items-center gap-4">
+              <span className="flex items-center gap-1">
+                <Calendar className="h-3 w-3" /> {date}
+              </span>
+              <span className="flex items-center gap-1">
+                <Clock className="h-3 w-3" /> {readTime} de leitura
+              </span>
             </div>
           </div>
         </AnimatedElement>

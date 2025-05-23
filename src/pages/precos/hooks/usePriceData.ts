@@ -8,7 +8,6 @@ export const usePriceData = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isSheetLoaded, setIsSheetLoaded] = useState(false);
   const [lastUpdated, setLastUpdated] = useState<string>("");
-  const [retryCount, setRetryCount] = useState(0);
   const [activeSheetId, setActiveSheetId] = useState<string>(SHEET_IDS.iphone);
 
   const loadSheetData = async (deviceType: string = "iphone") => {
@@ -38,28 +37,39 @@ export const usePriceData = () => {
       
       // Google Sheets returns data wrapped in a callback, remove that
       const jsonText = textData.replace(/^.*\(([\s\S]*)\);?$/, '$1');
-      const data = JSON.parse(jsonText);
+      console.log("JSON Text after regex:", jsonText.substring(0, 200) + "...");
       
-      console.log("Sheet data received:", data);
-      
-      if (data && data.table && data.table.rows) {
-        // Process the data
-        const processedData = processSheetData(data);
+      try {
+        const data = JSON.parse(jsonText);
+        console.log("Sheet data parsed successfully");
         
-        if (processedData && Object.keys(processedData).length > 0) {
-          // Update only the data for this device type
-          setPriceData(prevData => ({
-            ...prevData,
-            [deviceType]: processedData[deviceType] || []
-          }));
+        if (data && data.table && data.table.rows) {
+          console.log(`Found ${data.table.rows.length} rows in the sheet`);
           
-          setIsSheetLoaded(true);
-          setLastUpdated(new Date().toLocaleString('pt-BR'));
+          // Process the data
+          const processedData = processSheetData(data, deviceType);
+          
+          if (processedData && processedData[deviceType] && processedData[deviceType].length > 0) {
+            // Update only the data for this device type
+            setPriceData(prevData => ({
+              ...prevData,
+              [deviceType]: processedData[deviceType] || []
+            }));
+            
+            setIsSheetLoaded(true);
+            setLastUpdated(new Date().toLocaleString('pt-BR'));
+            console.log(`Successfully loaded ${processedData[deviceType].length} items for ${deviceType}`);
+          } else {
+            console.error("Failed to process sheet data for", deviceType);
+            throw new Error("Failed to process sheet data");
+          }
         } else {
-          throw new Error("Failed to process sheet data");
+          console.error("Invalid data format from Google Sheets", data);
+          throw new Error("Invalid data format from Google Sheets");
         }
-      } else {
-        throw new Error("Invalid data format from Google Sheets");
+      } catch (parseError) {
+        console.error("Error parsing JSON data:", parseError);
+        throw new Error("Error parsing sheet data");
       }
     } catch (error) {
       console.error(`Error loading ${deviceType} price data:`, error);
@@ -70,91 +80,56 @@ export const usePriceData = () => {
   };
 
   // Process the sheet data from Google Sheets API response
-  const processSheetData = (data: any) => {
+  const processSheetData = (data: any, currentDeviceType: string) => {
     try {
       if (!data || !data.table || !data.table.rows) {
         return null;
       }
       
-      // Initialize processed data structure
+      // Initialize processed data structure focusing on current device type
       const processedData: Record<string, any[]> = {
-        iphone: [],
-        ipad: [],
-        mac: [],
-        watch: [],
-        airpods: [],
-        outros: []
+        [currentDeviceType]: []
       };
       
       // Get column headers
       const headers = data.table.cols.map((col: any) => col.label);
       console.log("Headers:", headers);
       
-      // Process each row
-      data.table.rows.forEach((row: any) => {
-        if (!row.c || row.c.length < 2) return;
-        
-        // Extract product info from row
-        const productInfo = extractProductInfo(row);
-        if (productInfo) {
-          const { deviceType, model, repairType, pixPrice, cashPrice, installments2to5, installments6to10 } = productInfo;
-          
-          // Add to the appropriate device category
-          if (processedData[deviceType]) {
-            processedData[deviceType].push({
-              model,
-              repairType,
-              pixPrice,
-              cashPrice,
-              installments2to5,
-              installments6to10
-            });
-          }
-        }
-      });
+      // Skip the header row if present
+      const startIndex = data.table.rows[0]?.c[0]?.v === 'Modelo' ? 1 : 0;
       
-      // Log the results
-      for (const [device, items] of Object.entries(processedData)) {
-        console.log(`${device}: ${items.length} items processed`);
+      // Process each row
+      for (let i = startIndex; i < data.table.rows.length; i++) {
+        const row = data.table.rows[i];
+        if (!row.c || row.c.length < 2) continue;
+        
+        const model = row.c[0]?.v || '';
+        const repairType = row.c[1]?.v || '';
+        
+        // Skip empty rows
+        if (!model && !repairType) continue;
+        
+        // Get price values with fallbacks
+        const installments6to10 = formatCurrency(row.c[2]?.v);
+        const installments2to5 = formatCurrency(row.c[3]?.v);
+        const cashPrice = formatCurrency(row.c[4]?.v);
+        const pixPrice = formatCurrency(row.c[5]?.v);
+        
+        // Add to the device category
+        processedData[currentDeviceType].push({
+          model,
+          repairType,
+          pixPrice,
+          cashPrice,
+          installments2to5,
+          installments6to10
+        });
       }
       
+      console.log(`Processed ${processedData[currentDeviceType].length} items for ${currentDeviceType}`);
       return processedData;
     } catch (error) {
       console.error("Error processing sheet data:", error);
-      return null;
-    }
-  };
-
-  // Extract product information from a row
-  const extractProductInfo = (row: any) => {
-    try {
-      // Get values from each cell in the row
-      const model = row.c[0]?.v || '';
-      const repairType = row.c[1]?.v || '';
-      const price10x = formatCurrency(row.c[2]?.v);
-      const price5x = formatCurrency(row.c[3]?.v);
-      const priceVista = formatCurrency(row.c[4]?.v);
-      const pricePix = formatCurrency(row.c[5]?.v);
-      
-      // Determine device type from model name
-      let deviceType = 'outros';
-      if (model.toLowerCase().includes('iphone')) deviceType = 'iphone';
-      else if (model.toLowerCase().includes('ipad')) deviceType = 'ipad';
-      else if (model.toLowerCase().includes('mac')) deviceType = 'mac';
-      else if (model.toLowerCase().includes('watch')) deviceType = 'watch';
-      else if (model.toLowerCase().includes('airpod')) deviceType = 'airpods';
-      
-      return {
-        deviceType,
-        model,
-        repairType,
-        pixPrice: pricePix,
-        cashPrice: priceVista,
-        installments2to5: price5x,
-        installments6to10: price10x
-      };
-    } catch (error) {
-      console.error("Error extracting product info:", error);
       return null;
     }
   };
