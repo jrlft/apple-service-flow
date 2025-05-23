@@ -1,3 +1,4 @@
+
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Navbar } from "@/components/layout/navbar";
@@ -8,7 +9,6 @@ import { LazyImage } from "@/components/shared/lazy-image";
 import { ChevronLeft } from "lucide-react";
 import { BlogPostHeader } from "@/components/blog/blog-post-header";
 import { BlogPostShare } from "@/components/blog/blog-post-share";
-import { BlogPostAuthor } from "@/components/blog/blog-post-author";
 import { BlogPostRelated } from "@/components/blog/blog-post-related";
 
 const BLOG_POSTS = [
@@ -112,8 +112,6 @@ const BlogPost = () => {
         <BlogPostHeader
           title={post.title}
           excerpt={post.excerpt}
-          author={post.author}
-          authorImage={post.authorImage}
           date={post.date}
           readTime={post.readTime}
         />
@@ -136,12 +134,6 @@ const BlogPost = () => {
                   />
                   <BlogPostShare />
                 </div>
-
-                <BlogPostAuthor
-                  author={post.author}
-                  authorImage={post.authorImage}
-                  authorBio={post.authorBio}
-                />
               </AnimatedElement>
             </div>
           </div>
