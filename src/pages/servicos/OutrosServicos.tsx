@@ -5,7 +5,7 @@ import { AnimatedElement } from "@/components/animations/animated-element";
 import { SectionTitle } from "@/components/ui/section-title";
 import { Button } from "@/components/ui/button";
 import { WhatsAppButton } from "@/components/ui/whatsapp-button";
-import { headphones } from "lucide-react";
+import { Headphones } from "lucide-react";
 
 const OutrosServicos = () => {
   const servicosExtras = [
@@ -65,7 +65,7 @@ const OutrosServicos = () => {
               <AnimatedElement direction="left">
                 <div className="bg-white rounded-lg shadow-md p-8">
                   <div className="bg-primary bg-opacity-10 p-4 rounded-full w-fit mb-4 text-primary">
-                    <headphones className="h-12 w-12" />
+                    <Headphones className="h-12 w-12" />
                   </div>
                   <h3 className="text-3xl font-bold mb-4">AirPods</h3>
                   <p className="text-muted-foreground mb-6">
@@ -91,7 +91,7 @@ const OutrosServicos = () => {
               <AnimatedElement direction="right">
                 <div className="bg-white rounded-lg shadow-md p-8">
                   <div className="bg-primary bg-opacity-10 p-4 rounded-full w-fit mb-4 text-primary">
-                    <headphones className="h-12 w-12" />
+                    <Headphones className="h-12 w-12" />
                   </div>
                   <h3 className="text-3xl font-bold mb-4">Beats</h3>
                   <p className="text-muted-foreground mb-6">
