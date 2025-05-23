@@ -1,20 +1,23 @@
 
-import { Facebook, Twitter, Linkedin } from "lucide-react";
+import { Facebook, Twitter, Linkedin, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export function BlogPostShare() {
   return (
-    <div className="mt-12 pt-6 border-t flex items-center justify-between flex-wrap gap-4">
-      <div className="font-semibold">Compartilhe este artigo:</div>
+    <div className="border-t pt-6 mt-6">
+      <h4 className="font-medium mb-4">Compartilhe este artigo</h4>
       <div className="flex gap-2">
-        <Button variant="outline" size="icon" className="rounded-full">
-          <Facebook className="h-5 w-5" />
+        <Button variant="outline" size="icon">
+          <Facebook className="h-4 w-4" />
         </Button>
-        <Button variant="outline" size="icon" className="rounded-full">
-          <Twitter className="h-5 w-5" />
+        <Button variant="outline" size="icon">
+          <Twitter className="h-4 w-4" />
         </Button>
-        <Button variant="outline" size="icon" className="rounded-full">
-          <Linkedin className="h-5 w-5" />
+        <Button variant="outline" size="icon">
+          <Linkedin className="h-4 w-4" />
+        </Button>
+        <Button variant="outline" size="icon">
+          <Mail className="h-4 w-4" />
         </Button>
       </div>
     </div>
