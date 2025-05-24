@@ -18,10 +18,10 @@ export function Footer() {
             </p>
             <div className="flex space-x-4">
               <a href="https://facebook.com/linkti" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="hover:text-accent transition-colors">
-                <Facebook size={20} />
+                <Facebook size={30} />
               </a>
-              <a href="https://instagram.com/linkti" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="hover:text-accent transition-colors">
-                <Instagram size={20} />
+              <a href="https://instagram.com/linkti.info" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="hover:text-accent transition-colors">
+                <Instagram size={30} />
               </a>
             </div>
           </div>
@@ -34,6 +34,7 @@ export function Footer() {
               <li><Link to="/servicos/ipad" className="hover:text-accent transition-colors">Reparo de iPad</Link></li>
               <li><Link to="/servicos/mac" className="hover:text-accent transition-colors">Reparo de Mac</Link></li>
               <li><Link to="/servicos/watch" className="hover:text-accent transition-colors">Reparo de Apple Watch</Link></li>
+              <li><Link to="/servicos/airpods" className="hover:text-accent transition-colors">Reparo de AirPods</Link></li>
               <li><Link to="/precos" className="hover:text-accent transition-colors">Tabela de Preços</Link></li>
             </ul>
           </div>
@@ -59,7 +60,9 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-2">
                 <Mail size={16} />
-                <span>atendimento@linkti.info</span>
+                <a href="mailto:atendimento@linkti.info" className="hover:text-accent transition-colors">
+                  atendimento@linkti.info
+                </a>
               </li>
               <li className="flex items-center gap-2">
                 <MapPin size={16} />

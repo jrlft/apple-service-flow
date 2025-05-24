@@ -38,7 +38,7 @@ const SERVICES = [
     title: "AirPods",
     description: "Reparo especializado para AirPods, incluindo bateria, conectividade e limpeza profunda.",
     icon: <Headphones className="h-10 w-10" />,
-    link: "/servicos/outros#airpods",
+    link: "/servicos/airpods",
     delay: 0.4,
   },
 ];

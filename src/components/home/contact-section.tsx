@@ -1,4 +1,3 @@
-
 import { AnimatedElement } from "@/components/animations/animated-element";
 import { SectionTitle } from "@/components/ui/section-title";
 import { Button } from "@/components/ui/button";
@@ -73,6 +72,7 @@ export function ContactSection() {
                     <option value="ipad">iPad</option>
                     <option value="mac">Mac</option>
                     <option value="watch">Apple Watch</option>
+                    <option value="airpods">AirPods</option>
                     <option value="other">Outro</option>
                   </select>
                 </div>
@@ -86,13 +86,28 @@ export function ContactSection() {
                 
                 <Button type="submit" className="w-full">Enviar Mensagem</Button>
                 
-                <div className="text-center mt-4">
+                <div className="text-center mt-6 space-y-3">
                   <WhatsAppButton 
                     phoneNumber="+556536216000" 
                     message="Olá, gostaria de informações sobre assistência técnica para dispositivos Apple."
+                    className="w-full"
                   >
                     Prefere WhatsApp? Clique aqui
                   </WhatsAppButton>
+                  
+                  <Button 
+                    asChild 
+                    variant="destructive" 
+                    className="w-full"
+                  >
+                    <a 
+                      href="https://getsupport.apple.com/repair-locations?storeId=442491"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Se desejar, agende um horário conosco!
+                    </a>
+                  </Button>
                 </div>
               </form>
             </div>
@@ -119,7 +134,9 @@ export function ContactSection() {
                   </div>
                   <div>
                     <h4 className="font-semibold mb-1">Email</h4>
-                    <p className="text-muted-foreground">atendimento@linkti.info</p>
+                    <a href="mailto:atendimento@linkti.info" className="text-muted-foreground hover:text-primary transition-colors">
+                      atendimento@linkti.info
+                    </a>
                   </div>
                 </div>
                 

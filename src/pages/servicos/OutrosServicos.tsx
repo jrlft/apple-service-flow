@@ -5,7 +5,7 @@ import { AnimatedElement } from "@/components/animations/animated-element";
 import { SectionTitle } from "@/components/ui/section-title";
 import { Button } from "@/components/ui/button";
 import { WhatsAppButton } from "@/components/ui/whatsapp-button";
-import { Headphones } from "lucide-react";
+import { Headphones, Smartphone, HardDrive } from "lucide-react";
 
 const OutrosServicos = () => {
   const servicosExtras = [
@@ -25,6 +25,14 @@ const OutrosServicos = () => {
         { dispositivo: "iPhone/iPad", preco: "R$ 80,00", descricao: "Backup completo e restauração de dados" },
         { dispositivo: "Mac", preco: "R$ 150,00", descricao: "Time Machine ou backup personalizado" },
         { dispositivo: "Recuperação de dados", preco: "A partir de R$ 200,00", descricao: "Recuperação de arquivos perdidos" }
+      ]
+    },
+    {
+      categoria: "Locação de Smartphones",
+      itens: [
+        { dispositivo: "iPhone temporário", preco: "R$ 25,00/dia", descricao: "Locação de iPhone durante reparo do seu dispositivo" },
+        { dispositivo: "iPhone básico", preco: "R$ 120,00/semana", descricao: "Locação semanal de iPhone com funcionalidades básicas" },
+        { dispositivo: "iPhone premium", preco: "R$ 200,00/semana", descricao: "Locação semanal de iPhone com todas as funcionalidades" }
       ]
     },
     {
@@ -58,37 +66,11 @@ const OutrosServicos = () => {
           </div>
         </section>
 
-        {/* Seção AirPods e Beats */}
+        {/* Seção Beats, Locação e Recuperação */}
         <section className="py-16">
           <div className="container">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
               <AnimatedElement direction="left">
-                <div className="bg-white rounded-lg shadow-md p-8">
-                  <div className="bg-primary bg-opacity-10 p-4 rounded-full w-fit mb-4 text-primary">
-                    <Headphones className="h-12 w-12" />
-                  </div>
-                  <h3 className="text-3xl font-bold mb-4">AirPods</h3>
-                  <p className="text-muted-foreground mb-6">
-                    Reparo especializado para todos os modelos de AirPods, incluindo substituição de bateria, 
-                    problemas de conectividade, limpeza interna e calibração de áudio.
-                  </p>
-                  <ul className="space-y-2 mb-6">
-                    <li>• Substituição de bateria</li>
-                    <li>• Reparo de conectividade</li>
-                    <li>• Limpeza profunda</li>
-                    <li>• Calibração de áudio</li>
-                  </ul>
-                  <WhatsAppButton
-                    phoneNumber="+556536216000"
-                    message="Olá, gostaria de informações sobre reparo de AirPods."
-                    className="w-full"
-                  >
-                    Orçamento para AirPods
-                  </WhatsAppButton>
-                </div>
-              </AnimatedElement>
-
-              <AnimatedElement direction="right">
                 <div className="bg-white rounded-lg shadow-md p-8">
                   <div className="bg-primary bg-opacity-10 p-4 rounded-full w-fit mb-4 text-primary">
                     <Headphones className="h-12 w-12" />
@@ -110,6 +92,58 @@ const OutrosServicos = () => {
                     className="w-full"
                   >
                     Orçamento para Beats
+                  </WhatsAppButton>
+                </div>
+              </AnimatedElement>
+
+              <AnimatedElement>
+                <div className="bg-white rounded-lg shadow-md p-8">
+                  <div className="bg-primary bg-opacity-10 p-4 rounded-full w-fit mb-4 text-primary">
+                    <Smartphone className="h-12 w-12" />
+                  </div>
+                  <h3 className="text-3xl font-bold mb-4">Locação</h3>
+                  <p className="text-muted-foreground mb-6">
+                    Aluguel de smartphones temporários para uso durante o período de reparo do seu dispositivo, 
+                    mantendo você sempre conectado.
+                  </p>
+                  <ul className="space-y-2 mb-6">
+                    <li>• iPhone temporário</li>
+                    <li>• Locação diária ou semanal</li>
+                    <li>• Modelos básicos e premium</li>
+                    <li>• Setup incluído</li>
+                  </ul>
+                  <WhatsAppButton
+                    phoneNumber="+556536216000"
+                    message="Olá, gostaria de informações sobre locação de smartphones."
+                    className="w-full"
+                  >
+                    Solicitar Locação
+                  </WhatsAppButton>
+                </div>
+              </AnimatedElement>
+
+              <AnimatedElement direction="right">
+                <div className="bg-white rounded-lg shadow-md p-8">
+                  <div className="bg-primary bg-opacity-10 p-4 rounded-full w-fit mb-4 text-primary">
+                    <HardDrive className="h-12 w-12" />
+                  </div>
+                  <h3 className="text-3xl font-bold mb-4">Recuperação</h3>
+                  <p className="text-muted-foreground mb-6">
+                    Serviços especializados em recuperação de dados perdidos, backup completo e restauração 
+                    de informações importantes dos seus dispositivos.
+                  </p>
+                  <ul className="space-y-2 mb-6">
+                    <li>• Recuperação de fotos e vídeos</li>
+                    <li>• Backup completo</li>
+                    <li>• Restauração de contatos</li>
+                    <li>• Migração de dados</li>
+                  </ul>
+                  <WhatsAppButton
+                    phoneNumber="+556536216000"
+                    message="Olá, gostaria de informações sobre recuperação de dados."
+                    className="w-full"
+                  >
+                    Recuperar Dados
                   </WhatsAppButton>
                 </div>
               </AnimatedElement>

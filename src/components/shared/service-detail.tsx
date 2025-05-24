@@ -100,7 +100,11 @@ export function ServiceDetail({
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <AnimatedElement direction="left">
               <div className="bg-white rounded-lg shadow-md p-4 h-[300px] flex items-center justify-center overflow-hidden">
-                <div className="text-gray-400">Imagem Problemas Comuns</div>
+                <img 
+                  src="/lovable-uploads/5f8b9888-4c37-4c54-a48f-0f716cdfc0de.png" 
+                  alt="Problemas Comuns" 
+                  className="max-w-full max-h-full object-contain" 
+                />
               </div>
             </AnimatedElement>
 

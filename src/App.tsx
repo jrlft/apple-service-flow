@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -13,6 +14,7 @@ import ServicoIphone from "./pages/servicos/ServicoIphone";
 import ServicoIpad from "./pages/servicos/ServicoIpad";
 import ServicoMac from "./pages/servicos/ServicoMac";
 import ServicoWatch from "./pages/servicos/ServicoWatch";
+import ServicoAirpods from "./pages/servicos/ServicoAirpods";
 import Precos from "./pages/precos";
 import Contato from "./pages/Contato";
 import Cookies from "./pages/Cookies";
@@ -50,6 +52,7 @@ const App = () => (
           <Route path="/servicos/ipad" element={<ServicoIpad />} />
           <Route path="/servicos/mac" element={<ServicoMac />} />
           <Route path="/servicos/watch" element={<ServicoWatch />} />
+          <Route path="/servicos/airpods" element={<ServicoAirpods />} />
           <Route path="/servicos/outros" element={<OutrosServicos />} />
           <Route path="/precos" element={<Precos />} />
           <Route path="/contato" element={<Contato />} />

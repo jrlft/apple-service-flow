@@ -29,14 +29,14 @@ const NAV_ITEMS_ROW_1 = [
   {
     label: "Watch",
     href: "/servicos/watch"
+  },
+  {
+    label: "AirPods",
+    href: "/servicos/airpods"
   }
 ];
 
 const NAV_ITEMS_ROW_2 = [
-  {
-    label: "AirPods",
-    href: "/servicos/outros#airpods"
-  },
   {
     label: "Outros Serviços",
     href: "/servicos/outros"
@@ -121,8 +121,8 @@ export function Navbar() {
             </nav>
           </div>
 
-          {/* Segunda linha - Navegação secundária */}
-          <div className="flex justify-center">
+          {/* Segunda linha - Navegação secundária alinhada à direita */}
+          <div className="flex justify-end">
             <nav className="flex items-center space-x-4">
               {NAV_ITEMS_ROW_2.map(item => (
                 <Link

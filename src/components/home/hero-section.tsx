@@ -13,7 +13,7 @@ export function HeroSection() {
           <AnimatedElement direction="left">
             <div className="text-center lg:text-left">
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-center">
-                <span className="text-primary font-extrabold block">Bem-vindo à Link TI</span>
+                <span className="text-foreground font-black block">Bem-vindo à Link TI</span>
                 <span className="text-primary">Centro de Serviço Autorizado da Apple</span>
               </h1>
               <p className="text-xl mb-8 text-muted-foreground text-justify">

@@ -1,10 +1,7 @@
 
-import { useEffect, useState } from "react";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { ServiceDetail } from "@/components/shared/service-detail";
-import { WhatsAppButton } from "@/components/ui/whatsapp-button";
-import { fetchPage, checkStrapiConnection } from "@/lib/strapi";
 
 const iPhoneFeatures = [
   {
@@ -45,84 +42,21 @@ const commonProblems = [
 ];
 
 const ServicoIphone = () => {
-  const [serviceData, setServiceData] = useState<any>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [useFallback, setUseFallback] = useState(false);
-
-  useEffect(() => {
-    const loadServiceData = async () => {
-      try {
-        setIsLoading(true);
-        
-        // Check if Strapi is available
-        const strapiAvailable = await checkStrapiConnection();
-        
-        if (strapiAvailable) {
-          try {
-            // Try to fetch service data
-            const data = await fetchPage("servico-iphone");
-            if (data) {
-              setServiceData(data);
-              setUseFallback(false);
-            } else {
-              setUseFallback(true);
-            }
-          } catch (error) {
-            console.error("Error loading iPhone service page:", error);
-            setUseFallback(true);
-          }
-        } else {
-          setUseFallback(true);
-        }
-      } catch (error) {
-        console.error("Error in service data loading process:", error);
-        setUseFallback(true);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    
-    loadServiceData();
-  }, []);
-
-  // Use dynamic data if available, otherwise use static data
-  const title = serviceData?.attributes?.title || "Reparo de iPhone";
-  const subtitle = serviceData?.attributes?.subtitle || "Serviços especializados para todos os modelos de iPhone";
-  const description = serviceData?.attributes?.description || 
-    "Oferecemos serviços completos de reparo para todos os modelos de iPhone, desde o iPhone SE até os modelos mais recentes. Nossos técnicos certificados utilizam peças originais Apple para garantir que seu dispositivo volte a funcionar como novo.";
-  const imageUrl = serviceData?.attributes?.image?.data?.attributes?.url || null;
-
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
       <main className="flex-grow">
-        {isLoading ? (
-          <div className="flex items-center justify-center py-24">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-primary"></div>
-          </div>
-        ) : (
-          <>
-            {useFallback && (
-              <div className="text-center py-3 mt-24 mb-4">
-                <p className="text-amber-600 bg-amber-50 py-2 px-4 rounded-md inline-block">
-                  Carregando dados estáticos. A conexão com o Strapi não está disponível.
-                </p>
-              </div>
-            )}
-            
-            <ServiceDetail 
-              title={title}
-              subtitle={subtitle}
-              description={description}
-              imagePlaceholder="Imagem iPhone Placeholder"
-              image={imageUrl}
-              features={serviceData?.attributes?.features || iPhoneFeatures}
-              commonProblems={serviceData?.attributes?.commonProblems || commonProblems}
-              whatsappNumber="+556536216000"
-              whatsappMessage="Olá, gostaria de solicitar um orçamento para reparo do meu iPhone."
-            />
-          </>
-        )}
+        <ServiceDetail 
+          title="Reparo de iPhone"
+          subtitle="Serviços especializados para todos os modelos de iPhone"
+          description="Oferecemos serviços completos de reparo para todos os modelos de iPhone, desde o iPhone SE até os modelos mais recentes. Nossos técnicos certificados utilizam peças originais Apple para garantir que seu dispositivo volte a funcionar como novo."
+          imagePlaceholder="Imagem iPhone Placeholder"
+          image="/lovable-uploads/7ec50e96-2a6f-4dd0-9c7c-02ec0e69bf86.png"
+          features={iPhoneFeatures}
+          commonProblems={commonProblems}
+          whatsappNumber="+556536216000"
+          whatsappMessage="Olá, gostaria de solicitar um orçamento para reparo do meu iPhone."
+        />
       </main>
       <Footer />
     </div>
