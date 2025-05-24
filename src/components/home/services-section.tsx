@@ -3,7 +3,7 @@ import { AnimatedElement } from "@/components/animations/animated-element";
 import { SectionTitle } from "@/components/ui/section-title";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Smartphone, Tablet, Laptop, Watch, headphones } from "lucide-react";
+import { Smartphone, Tablet, Laptop, Watch, Headphones } from "lucide-react";
 
 const SERVICES = [
   {
@@ -37,7 +37,7 @@ const SERVICES = [
   {
     title: "AirPods",
     description: "Reparo especializado para AirPods, incluindo bateria, conectividade e limpeza profunda.",
-    icon: <headphones className="h-10 w-10" />,
+    icon: <Headphones className="h-10 w-10" />,
     link: "/servicos/outros#airpods",
     delay: 0.4,
   },
