@@ -6,7 +6,6 @@ import { fetchPage, fetchMetadata, checkStrapiConnection } from "@/lib/strapi";
 import { HeroSection } from "@/components/home/hero-section";
 import { ServicesSection } from "@/components/home/services-section";
 import { AboutSection } from "@/components/home/about-section";
-import { TestimonialsSection } from "@/components/home/testimonials-section";
 import { ContactSection } from "@/components/home/contact-section";
 import { CtaSection } from "@/components/home/cta-section";
 import { BlogSection } from "@/components/home/blog-section";
@@ -56,7 +55,6 @@ const sectionMap: Record<string, any> = {
   "section.hero": HeroSection,
   "section.services": ServicesSection,
   "section.about": AboutSection,
-  "section.testimonials": TestimonialsSection,
   "section.contact": ContactSection,
   "section.cta": CtaSection,
   "section.blog": BlogSection,
@@ -125,7 +123,6 @@ const Index = () => {
         <HeroSection />
         <ServicesSection />
         <AboutSection />
-        <TestimonialsSection />
         <ContactSection />
         <CtaSection />
         <BlogSection />
@@ -170,13 +167,6 @@ const Index = () => {
         {!isLoading && useFallback && renderStaticContent()}
       </main>
       <Footer />
-      
-      {/* Nota discreta no rodapé */}
-      {useFallback && (
-        <div className="text-[6px] text-muted-foreground ml-4 mb-1">
-          Não foi possível estabelecer conexão com o Strapi CMS. Exibindo conteúdo estático.
-        </div>
-      )}
     </div>
   );
 };
