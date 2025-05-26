@@ -1,4 +1,3 @@
-
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { AnimatedElement } from "@/components/animations/animated-element";
@@ -29,7 +28,6 @@ const BLOG_POSTS = [
     date: "15 de abril, 2025",
     image: "placeholder.svg",
     category: "repairs",
-    author: "Carlos Silva",
     readTime: "5 min",
   },
   {
@@ -40,7 +38,6 @@ const BLOG_POSTS = [
     date: "08 de abril, 2025",
     image: "placeholder.svg",
     category: "tips",
-    author: "Mariana Costa",
     readTime: "6 min",
   },
   {
@@ -51,7 +48,6 @@ const BLOG_POSTS = [
     date: "02 de abril, 2025",
     image: "placeholder.svg",
     category: "news",
-    author: "Rodrigo Mendes",
     readTime: "4 min",
   },
   {
@@ -62,7 +58,6 @@ const BLOG_POSTS = [
     date: "28 de março, 2025",
     image: "placeholder.svg",
     category: "tutorials",
-    author: "Amanda Rocha",
     readTime: "7 min",
   },
   {
@@ -73,7 +68,6 @@ const BLOG_POSTS = [
     date: "22 de março, 2025",
     image: "placeholder.svg",
     category: "tips",
-    author: "Lucas Oliveira",
     readTime: "5 min",
   },
   {
@@ -84,7 +78,6 @@ const BLOG_POSTS = [
     date: "15 de março, 2025",
     image: "placeholder.svg",
     category: "news",
-    author: "Fernanda Lima",
     readTime: "3 min",
   },
 ];
@@ -199,8 +192,7 @@ const Blog = () => {
                             </div>
                             <h3 className="text-xl font-bold mb-3">{post.title}</h3>
                             <p className="text-muted-foreground mb-4 flex-1">{post.excerpt}</p>
-                            <div className="flex items-center justify-between mt-4">
-                              <span className="text-sm text-muted-foreground">Por {post.author}</span>
+                            <div className="flex items-center justify-end mt-4">
                               <Link to={`/blog/${post.id}`} className="text-primary font-medium inline-flex items-center gap-1 hover:gap-2 transition-all">
                                 Ler mais <ArrowRight className="w-4 h-4" />
                               </Link>

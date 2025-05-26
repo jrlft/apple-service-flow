@@ -18,10 +18,10 @@ export function Footer() {
             </p>
             <div className="flex space-x-4">
               <a href="https://facebook.com/linkti" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="hover:text-accent transition-colors">
-                <Facebook size={30} />
+                <Facebook size={45} />
               </a>
               <a href="https://instagram.com/linkti.info" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="hover:text-accent transition-colors">
-                <Instagram size={30} />
+                <Instagram size={45} />
               </a>
             </div>
           </div>
@@ -66,7 +66,14 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-2">
                 <MapPin size={16} />
-                <span>Rua Odorico Tocantins, nr 125 - Quilombo, Cuiabá-MT, 78045-170</span>
+                <a 
+                  href="https://maps.app.goo.gl/1wc1Jrjt7SwxUaGCA" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="hover:text-accent transition-colors"
+                >
+                  Rua Odorico Tocantins, nr 125 - Quilombo, Cuiabá-MT, 78045-170
+                </a>
               </li>
               <li className="flex items-center gap-2">
                 <Clock size={16} />

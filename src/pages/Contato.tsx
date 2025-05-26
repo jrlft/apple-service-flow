@@ -1,4 +1,3 @@
-
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { AnimatedElement } from "@/components/animations/animated-element";
@@ -21,13 +20,9 @@ const Contato = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // IMPORTANTE: Este formulário atualmente só mostra uma notificação
-    // Para receber emails reais, você precisa configurar um backend
-    // Opções: EmailJS, Netlify Forms, Supabase Functions, ou servidor próprio
-    
     toast({
       title: "Mensagem enviada!",
-      description: "Entraremos em contato em breve. (Nota: Formulário em modo demonstração)",
+      description: "Entraremos em contato em breve.",
     });
   };
 
@@ -88,12 +83,11 @@ const Contato = () => {
                 <p className="text-muted-foreground">
                   {contact?.attributes?.description || "Precisa de assistência técnica para seu dispositivo Apple? Entre em contato conosco através de um dos nossos canais de atendimento ou preencha o formulário abaixo."}
                 </p>
-                <div className="mt-6 space-y-4">
+                <div className="mt-6 flex flex-col items-center space-y-4">
                   <WhatsAppButton
                     phoneNumber="+556536216000"
                     message="Olá, gostaria de informações sobre assistência técnica para dispositivos Apple."
                     size="lg"
-                    className="mx-auto"
                   >
                     Falar com um Técnico via WhatsApp
                   </WhatsAppButton>
@@ -101,7 +95,7 @@ const Contato = () => {
                   <Button 
                     asChild 
                     size="lg" 
-                    className="bg-red-600 hover:bg-red-700 text-white mx-auto"
+                    className="bg-red-600 hover:bg-red-700 text-white"
                   >
                     <a 
                       href="https://getsupport.apple.com/repair-locations?storeId=442491" 
@@ -123,14 +117,6 @@ const Contato = () => {
               <AnimatedElement direction="left">
                 <div className="bg-white rounded-lg shadow-md p-8">
                   <h3 className="text-2xl font-bold mb-6">Envie sua mensagem</h3>
-                  
-                  <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6">
-                    <p className="text-sm text-amber-800">
-                      <strong>Configuração necessária:</strong> Este formulário está em modo demonstração. 
-                      Para receber emails reais no endereço atendimento@linkti.info, você precisa configurar um backend 
-                      (EmailJS, Netlify Forms, ou servidor próprio).
-                    </p>
-                  </div>
                   
                   <form onSubmit={handleSubmit} className="space-y-5">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -290,10 +276,6 @@ const Contato = () => {
         </section>
       </main>
       <Footer />
-      
-      <div className="text-[6px] text-muted-foreground ml-4 mb-1">
-        Não foi possível estabelecer conexão com o Strapi CMS. Exibindo conteúdo estático.
-      </div>
     </div>
   );
 };

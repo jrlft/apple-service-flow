@@ -1,4 +1,3 @@
-
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { ServiceDetail } from "@/components/shared/service-detail";
@@ -51,7 +50,7 @@ const ServicoAirpods = () => {
           subtitle="Serviços especializados para todos os modelos de AirPods"
           description="Oferecemos reparos completos para todos os modelos de AirPods, incluindo AirPods Pro, AirPods Max e AirPods tradicionais. Nossos técnicos especializados utilizam equipamentos de precisão para garantir reparos de alta qualidade."
           imagePlaceholder="Imagem AirPods Placeholder"
-          image={null}
+          image="/lovable-uploads/7ec50e96-2a6f-4dd0-9c7c-02ec0e69bf86.png"
           features={airpodsFeatures}
           commonProblems={commonProblems}
           whatsappNumber="+556536216000"

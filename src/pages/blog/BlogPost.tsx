@@ -20,11 +20,8 @@ const BlogPost = () => {
     const loadPost = async () => {
       try {
         setIsLoading(true);
-        // In a real app, you would fetch the post from an API
-        // For now, we'll use sample data
         const postData = await getSamplePost(postId);
         setPost(postData);
-        // Get some sample related posts (in a real app, you would fetch based on tags, categories, etc.)
         const sampleRelatedPosts = await Promise.resolve([
           {
             id: "related1",
