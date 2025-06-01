@@ -1,4 +1,3 @@
-
 // Tipos de dispositivos
 export const DEVICE_TYPES = [
   { id: "iphone", label: "iPhone" },
@@ -11,11 +10,11 @@ export const DEVICE_TYPES = [
 
 // Mapping of device types to Google Sheet IDs
 export const SHEET_IDS = {
-  iphone: "1QD_ZgaC5-pDjTpryvlW-AmOoQXbjI8SLl9heWnx3rwU",
-  ipad: "1QD_ZgaC5-pDjTpryvlW-AmOoQXbjI8SLl9heWnx3rwU", // Replace with actual iPad sheet ID when available
-  watch: "1QD_ZgaC5-pDjTpryvlW-AmOoQXbjI8SLl9heWnx3rwU", // Replace with actual Watch sheet ID when available
-  airpods: "1QD_ZgaC5-pDjTpryvlW-AmOoQXbjI8SLl9heWnx3rwU", // Replace with actual AirPods sheet ID when available
-  outros: "1QD_ZgaC5-pDjTpryvlW-AmOoQXbjI8SLl9heWnx3rwU" // Replace with actual Others sheet ID when available
+  iphone: "1s8BXmaQUCeVs76B5aWCEnMWV-HiOGgOjCoxkeSR9vto",
+  ipad: "1s8BXmaQUCeVs76B5aWCEnMWV-HiOGgOjCoxkeSR9vto", // Using same sheet for now
+  watch: "1s8BXmaQUCeVs76B5aWCEnMWV-HiOGgOjCoxkeSR9vto", // Using same sheet for now
+  airpods: "1s8BXmaQUCeVs76B5aWCEnMWV-HiOGgOjCoxkeSR9vto", // Using same sheet for now
+  outros: "1s8BXmaQUCeVs76B5aWCEnMWV-HiOGgOjCoxkeSR9vto" // Using same sheet for now
 };
 
 // Fallback data (used when Google Sheets is unavailable)
