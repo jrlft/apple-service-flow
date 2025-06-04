@@ -16,7 +16,7 @@ import { Helmet } from "react-helmet";
 const Precos = () => {
   const [selectedDevice, setSelectedDevice] = useState("iphone");
   const [searchTerm, setSearchTerm] = useState("");
-  const { priceData, page, isLoading, isSheetLoaded, lastUpdated, loadDeviceData } = usePriceData();
+  const { priceData, page, isLoading, isSheetLoaded, lastUpdated, error, loadDeviceData } = usePriceData();
 
   // Load device data when selection changes
   useEffect(() => {
@@ -119,6 +119,7 @@ const Precos = () => {
                     isLoading={isLoading}
                     searchTerm={searchTerm}
                     isSheetLoaded={isSheetLoaded}
+                    error={error}
                   />
                 </div>
 
@@ -135,7 +136,7 @@ const Precos = () => {
       <Footer />
       {!isSheetLoaded && (
         <div className="text-[6px] text-muted-foreground ml-4 mb-1">
-          Não foi possível estabelecer conexão com o Strapi CMS. Exibindo conteúdo estático.
+          Dados não sincronizados com a planilha Google Sheets.
         </div>
       )}
     </div>

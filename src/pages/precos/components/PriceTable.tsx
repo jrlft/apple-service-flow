@@ -3,6 +3,7 @@ import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, Tabl
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { WhatsAppButton } from "@/components/ui/whatsapp-button";
+import { AlertCircle, Wifi, WifiOff } from "lucide-react";
 
 interface PriceItem {
   model: string;
@@ -19,6 +20,7 @@ interface PriceTableProps {
   isLoading: boolean;
   searchTerm: string;
   isSheetLoaded: boolean;
+  error?: string;
 }
 
 export const PriceTable = ({
@@ -26,12 +28,43 @@ export const PriceTable = ({
   filteredData,
   isLoading,
   searchTerm,
-  isSheetLoaded
+  isSheetLoaded,
+  error
 }: PriceTableProps) => {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-12">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-primary"></div>
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-primary mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Carregando dados da planilha...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Mostrar erro se houver problemas de conexão
+  if (error && filteredData.length === 0) {
+    return (
+      <div className="text-center py-12">
+        <div className="flex items-center justify-center mb-4">
+          <WifiOff className="h-12 w-12 text-red-500" />
+        </div>
+        <h3 className="text-xl font-semibold mb-2 text-red-600">Erro de Conexão</h3>
+        <p className="text-muted-foreground mb-4">{error}</p>
+        <p className="text-sm text-muted-foreground mb-6">
+          Não é possível exibir dados desatualizados. Entre em contato para valores atualizados.
+        </p>
+        <div className="flex flex-col sm:flex-row justify-center gap-4">
+          <Button asChild>
+            <Link to="/contato">Entre em Contato</Link>
+          </Button>
+          <WhatsAppButton 
+            phoneNumber="+556536216000"
+            message={`Olá, gostaria de saber os valores atualizados para reparo de ${selectedDevice}.`}
+          >
+            WhatsApp para Orçamento
+          </WhatsAppButton>
+        </div>
       </div>
     );
   }
@@ -61,6 +94,21 @@ export const PriceTable = ({
 
   return (
     <div>
+      {/* Indicador de status da conexão */}
+      {isSheetLoaded && (
+        <div className="flex items-center gap-2 mb-4 text-sm text-green-600">
+          <Wifi className="h-4 w-4" />
+          <span>Dados sincronizados com a planilha</span>
+        </div>
+      )}
+      
+      {error && filteredData.length > 0 && (
+        <div className="flex items-center gap-2 mb-4 text-sm text-amber-600 bg-amber-50 p-2 rounded">
+          <AlertCircle className="h-4 w-4" />
+          <span>Alguns dados podem estar desatualizados</span>
+        </div>
+      )}
+
       <div className="overflow-x-auto -mx-4 sm:mx-0">
         <Table>
           <TableHeader>
@@ -88,7 +136,7 @@ export const PriceTable = ({
             ) : (
               <TableRow>
                 <TableCell colSpan={6} className="text-center py-8">
-                  {searchTerm ? "Nenhum modelo encontrado com esse termo." : "Nenhum dado disponível para este dispositivo."}
+                  {searchTerm ? "Nenhum modelo encontrado com esse termo." : "Nenhum dado disponível. Verifique a conexão com a planilha."}
                 </TableCell>
               </TableRow>
             )}
@@ -99,6 +147,9 @@ export const PriceTable = ({
       <div className="mt-4 text-xs text-muted-foreground md:text-sm">
         <p>* Valores com pagamento no PIX têm 5% de desconto</p>
         <p>* Deslize para o lado para ver todas as opções de pagamento</p>
+        {!isSheetLoaded && (
+          <p className="text-amber-600 mt-2">⚠️ Para garantir valores atualizados, entre em contato conosco</p>
+        )}
       </div>
     </div>
   );

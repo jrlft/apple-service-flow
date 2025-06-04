@@ -1,23 +1,27 @@
 
 import { useState, useEffect } from "react";
 import { fetchPage } from "@/lib/strapi";
-import { FALLBACK_PRICES, SHEET_IDS } from "../constants";
+import { SHEET_IDS } from "../constants";
 import { fetchSheetData } from "../utils/googleSheetsApi";
 import { processCSVData, processSheetData } from "../utils/dataProcessors";
 
 export const usePriceData = () => {
-  const [priceData, setPriceData] = useState<any>(FALLBACK_PRICES);
+  // Removido FALLBACK_PRICES - não vamos mais usar dados inventados
+  const [priceData, setPriceData] = useState<any>({});
   const [page, setPage] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isSheetLoaded, setIsSheetLoaded] = useState(false);
   const [lastUpdated, setLastUpdated] = useState<string>("");
-  const [activeSheetId, setActiveSheetId] = useState<string>(SHEET_IDS.iphone);
+  const [error, setError] = useState<string>("");
 
   const loadSheetData = async (deviceType: string = "iphone") => {
     setIsLoading(true);
+    setError("");
     
     try {
       const sheetId = SHEET_IDS[deviceType as keyof typeof SHEET_IDS] || SHEET_IDS.iphone;
+      console.log(`Tentando carregar dados para ${deviceType} do sheet ID: ${sheetId}`);
+      
       const result = await fetchSheetData(sheetId, deviceType);
       
       let processedData;
@@ -35,12 +39,24 @@ export const usePriceData = () => {
         
         setIsSheetLoaded(true);
         setLastUpdated(new Date().toLocaleString('pt-BR'));
-        console.log(`Successfully loaded ${processedData[deviceType].length} items for ${deviceType}`);
+        console.log(`✅ Carregados ${processedData[deviceType].length} itens para ${deviceType}`);
+      } else {
+        console.warn(`⚠️ Nenhum dado válido encontrado para ${deviceType}`);
+        setError(`Não foi possível carregar dados para ${deviceType}`);
+        // Limpar dados anteriores se não conseguir carregar novos
+        setPriceData(prevData => ({
+          ...prevData,
+          [deviceType]: []
+        }));
       }
     } catch (error) {
-      console.error(`Error loading ${deviceType} price data:`, error);
-      console.log("Verifique se a planilha está publicada na web e acessível publicamente");
-      console.log("URL da planilha:", `https://docs.google.com/spreadsheets/d/${SHEET_IDS[deviceType as keyof typeof SHEET_IDS]}`);
+      console.error(`❌ Erro ao carregar dados para ${deviceType}:`, error);
+      setError(`Erro ao conectar com a planilha do Google Sheets`);
+      // Limpar dados se houver erro
+      setPriceData(prevData => ({
+        ...prevData,
+        [deviceType]: []
+      }));
     } finally {
       setIsLoading(false);
     }
@@ -66,8 +82,9 @@ export const usePriceData = () => {
   useEffect(() => {
     loadSheetData("iphone");
     
+    // Refresh data every 15 minutes
     const intervalId = setInterval(() => {
-      console.log("Refreshing price data");
+      console.log("🔄 Atualizando dados da planilha");
       loadSheetData("iphone");
     }, 15 * 60 * 1000);
     
@@ -85,6 +102,7 @@ export const usePriceData = () => {
     isLoading,
     isSheetLoaded,
     lastUpdated,
+    error,
     loadDeviceData
   };
 };
