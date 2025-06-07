@@ -3,30 +3,32 @@ import { AnimatedElement } from "@/components/animations/animated-element";
 import { Button } from "@/components/ui/button";
 import { WhatsAppButton } from "@/components/ui/whatsapp-button";
 import { Link } from "react-router-dom";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export function CtaSection() {
+  const { t } = useLanguage();
+
   return (
     <section className="py-20 bg-primary text-white">
       <div className="container">
         <div className="max-w-3xl mx-auto text-center">
           <AnimatedElement>
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Precisando de reparo para seu dispositivo Apple?
+              {t('cta.title')}
             </h2>
             <p className="text-lg mb-8 text-white/80">
-              Entre em contato conosco hoje mesmo.
-              Nossos especialistas estão prontos para ajudar com qualquer problema no seu dispositivo.
+              {t('cta.description')}
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Button asChild size="lg" variant="secondary">
-                <Link to="/contato">Entre em Contato</Link>
+                <Link to="/contato">{t('cta.contactButton')}</Link>
               </Button>
               <WhatsAppButton 
                 phoneNumber="+556536216000" 
-                message="Olá, gostaria de solicitar um orçamento para reparo do meu dispositivo Apple."
+                message={t('cta.whatsappMessage')}
                 size="lg"
               >
-                Orçamento via WhatsApp
+                {t('cta.whatsappButton')}
               </WhatsAppButton>
             </div>
           </AnimatedElement>

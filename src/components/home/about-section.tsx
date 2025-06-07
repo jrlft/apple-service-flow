@@ -3,17 +3,20 @@ import { AnimatedElement } from "@/components/animations/animated-element";
 import { SectionTitle } from "@/components/ui/section-title";
 import { Check } from "lucide-react";
 import { WhatsAppButton } from "@/components/ui/whatsapp-button";
-
-const HIGHLIGHTS = [
-  "Primeiro Centro de Serviço Autorizado em MT, desde 2010.",
-  "Técnicos certificados pela Apple",
-  "Peças originais e garantia oficial",
-  "Laboratório com ferramentas homologadas pela Apple",
-  "Atendimento em garantia, Applecare e fora de garantia.", 
-  "Diagnóstico preciso e transparente"
-];
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export function AboutSection() {
+  const { t } = useLanguage();
+
+  const HIGHLIGHTS = [
+    t('about.highlight1'),
+    t('about.highlight2'),
+    t('about.highlight3'),
+    t('about.highlight4'),
+    t('about.highlight5'),
+    t('about.highlight6')
+  ];
+
   return (
     <section className="py-20">
       <div className="container">
@@ -31,39 +34,39 @@ export function AboutSection() {
           <AnimatedElement direction="right">
             <div>
               <SectionTitle 
-                title="Sobre Nossa Empresa" 
-                subtitle="Excelência em serviços Apple há mais de 15 anos"
+                title={t('about.title')}
+                subtitle={t('about.subtitle')}
               />
               
               <p className="text-muted-foreground mb-6">
-                Fundada em 2003, a Link TI é um centro de serviço autorizado Apple dedicado a fornecer reparos e manutenção de alta qualidade para todos os seus dispositivos Apple, desde 2010. Nossa equipe de técnicos certificados pela Apple tem anos de experiência e está comprometida em oferecer um serviço excepcional.
+                {t('about.description1')}
               </p>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
                 {HIGHLIGHTS.map((item, index) => (
                   <div key={index} className="flex items-center gap-2">
-                    <div className="bg-primary bg-opacity-10 p-1 rounded-full text-primary">
+                    <div className="bg-primary bg-opacity-10 dark:bg-primary/20 p-1 rounded-full text-primary">
                       <Check className="h-4 w-4" />
                     </div>
-                    <span>{item}</span>
+                    <span className="text-foreground text-sm">{item}</span>
                   </div>
                 ))}
               </div>
               
               <p className="text-muted-foreground mb-6">
-                Buscamos garantir que seus dispositivos Apple funcionem perfeitamente, proporcionando reparos rápidos e confiáveis com peças originais, sempre mantendo integridade e transparência em nossos diagnósticos e orçamentos.
+                {t('about.description2')}
               </p>
               <p className="text-muted-foreground">
-                Com mais de 65 mil reparos realizados com sucesso, somos a escolha confiável para cuidar dos seus dispositivos Apple.
+                {t('about.description3')}
               </p>
               
               <div className="mt-6">
                 <WhatsAppButton 
                   phoneNumber="+556536216000" 
-                  message="Olá, gostaria de informações sobre assistência técnica para dispositivos Apple."
+                  message={t('hero.whatsappMessage')}
                   size="lg"
                 >
-                  Atendimento via WhatsApp
+                  {t('about.whatsappButton')}
                 </WhatsAppButton>
               </div>
             </div>
