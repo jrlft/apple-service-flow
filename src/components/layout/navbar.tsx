@@ -4,72 +4,76 @@ import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
-const NAV_ITEMS_ROW_1 = [
-  {
-    label: "Início",
-    href: "/"
-  },
-  {
-    label: "Serviços",
-    href: "/servicos"
-  },
-  {
-    label: "iPhone",
-    href: "/servicos/iphone"
-  },
-  {
-    label: "iPad",
-    href: "/servicos/ipad"
-  },
-  {
-    label: "Mac",
-    href: "/servicos/mac"
-  },
-  {
-    label: "Watch",
-    href: "/servicos/watch"
-  },
-  {
-    label: "AirPods",
-    href: "/servicos/airpods"
-  }
-];
-
-const NAV_ITEMS_ROW_2 = [
-  {
-    label: "Outros Serviços",
-    href: "/servicos/outros"
-  },
-  {
-    label: "Preços",
-    href: "/precos"
-  },
-  {
-    label: "Dúvidas",
-    href: "/faq"
-  },
-  {
-    label: "Agendamento",
-    href: "/agendamento"
-  },
-  {
-    label: "Contato",
-    href: "/contato"
-  },
-  {
-    label: "Blog",
-    href: "/blog"
-  }
-];
-
-// Para mobile, combine todas as opções
-const ALL_NAV_ITEMS = [...NAV_ITEMS_ROW_1, ...NAV_ITEMS_ROW_2];
+import { useLanguage } from "@/contexts/LanguageContext";
+import { LanguageSelector } from "@/components/shared/LanguageSelector";
+import { ThemeToggle } from "@/components/shared/ThemeToggle";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
+  const { t } = useLanguage();
+
+  const NAV_ITEMS_ROW_1 = [
+    {
+      label: t('nav.home'),
+      href: "/"
+    },
+    {
+      label: t('nav.services'),
+      href: "/servicos"
+    },
+    {
+      label: t('nav.iphone'),
+      href: "/servicos/iphone"
+    },
+    {
+      label: t('nav.ipad'),
+      href: "/servicos/ipad"
+    },
+    {
+      label: t('nav.mac'),
+      href: "/servicos/mac"
+    },
+    {
+      label: t('nav.watch'),
+      href: "/servicos/watch"
+    },
+    {
+      label: t('nav.airpods'),
+      href: "/servicos/airpods"
+    }
+  ];
+
+  const NAV_ITEMS_ROW_2 = [
+    {
+      label: t('nav.otherServices'),
+      href: "/servicos/outros"
+    },
+    {
+      label: t('nav.prices'),
+      href: "/precos"
+    },
+    {
+      label: t('nav.faq'),
+      href: "/faq"
+    },
+    {
+      label: t('nav.appointment'),
+      href: "/agendamento"
+    },
+    {
+      label: t('nav.contact'),
+      href: "/contato"
+    },
+    {
+      label: t('nav.blog'),
+      href: "/blog"
+    }
+  ];
+
+  // Para mobile, combine todas as opções
+  const ALL_NAV_ITEMS = [...NAV_ITEMS_ROW_1, ...NAV_ITEMS_ROW_2];
 
   const toggleNavbar = () => setIsOpen(!isOpen);
 
@@ -95,7 +99,7 @@ export function Navbar() {
       <div className="container">
         {/* Desktop Layout */}
         <div className="hidden md:block">
-          {/* Primeira linha - Logo + Primeira linha de navegação */}
+          {/* Primeira linha - Logo + Primeira linha de navegação + Controles */}
           <div className="flex items-center justify-between mb-2">
             <Link to="/" className="flex items-center">
               <img 
@@ -119,6 +123,12 @@ export function Navbar() {
                 </Link>
               ))}
             </nav>
+
+            {/* Controles de idioma e tema */}
+            <div className="flex items-center gap-2">
+              <LanguageSelector />
+              <ThemeToggle />
+            </div>
           </div>
 
           {/* Segunda linha - Navegação secundária alinhada à direita */}
@@ -150,19 +160,23 @@ export function Navbar() {
             />
           </Link>
 
-          <Button 
-            variant="ghost" 
-            size="icon" 
-            onClick={toggleNavbar} 
-            aria-label="Toggle Menu"
-          >
-            {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </Button>
+          <div className="flex items-center gap-2">
+            <LanguageSelector />
+            <ThemeToggle />
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              onClick={toggleNavbar} 
+              aria-label={t('nav.toggleMenu')}
+            >
+              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </Button>
+          </div>
         </div>
 
         {/* Mobile Navigation Menu */}
         {isOpen && (
-          <div className="fixed inset-0 top-16 z-50 bg-white md:hidden">
+          <div className="fixed inset-0 top-16 z-50 bg-white dark:bg-gray-900 md:hidden">
             <nav className="container flex flex-col py-8">
               {ALL_NAV_ITEMS.map(item => (
                 <Link
