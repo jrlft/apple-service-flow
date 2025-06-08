@@ -94,14 +94,14 @@ export function Navbar() {
   return (
     <header className={cn(
       "fixed top-0 w-full z-50 transition-all duration-300",
-      isScrolled ? "bg-white bg-opacity-95 shadow-md py-2" : "bg-transparent py-3"
+      isScrolled ? "bg-white/95 backdrop-blur dark:bg-gray-900/95 shadow-md py-2" : "bg-transparent py-3"
     )}>
-      <div className="container">
+      <div className="container mx-auto px-4">
         {/* Desktop Layout */}
-        <div className="hidden md:block">
+        <div className="hidden lg:block">
           {/* Primeira linha - Logo + Primeira linha de navegação + Controles */}
           <div className="flex items-center justify-between mb-2">
-            <Link to="/" className="flex items-center">
+            <Link to="/" className="flex items-center flex-shrink-0">
               <img 
                 alt="Link TI Logo" 
                 src="/lovable-uploads/27d0f32d-9804-4b98-a47a-f2c663bf247a.png" 
@@ -109,13 +109,13 @@ export function Navbar() {
               />
             </Link>
 
-            <nav className="flex items-center space-x-4">
+            <nav className="flex items-center space-x-6 flex-1 justify-center">
               {NAV_ITEMS_ROW_1.map(item => (
                 <Link
                   key={item.href}
                   to={item.href}
                   className={cn(
-                    "text-sm font-medium transition-colors hover:text-primary flex items-center gap-1",
+                    "text-sm font-medium transition-colors hover:text-primary whitespace-nowrap",
                     location.pathname === item.href ? "text-primary" : "text-foreground"
                   )}
                 >
@@ -125,21 +125,21 @@ export function Navbar() {
             </nav>
 
             {/* Controles de idioma e tema */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3 flex-shrink-0">
               <LanguageSelector />
               <ThemeToggle />
             </div>
           </div>
 
-          {/* Segunda linha - Navegação secundária alinhada à direita */}
-          <div className="flex justify-end">
-            <nav className="flex items-center space-x-4">
+          {/* Segunda linha - Navegação secundária centralizada */}
+          <div className="flex justify-center">
+            <nav className="flex items-center space-x-6">
               {NAV_ITEMS_ROW_2.map(item => (
                 <Link
                   key={item.href}
                   to={item.href}
                   className={cn(
-                    "text-sm font-medium transition-colors hover:text-primary flex items-center gap-1",
+                    "text-sm font-medium transition-colors hover:text-primary whitespace-nowrap",
                     location.pathname === item.href ? "text-primary" : "text-foreground"
                   )}
                 >
@@ -151,12 +151,12 @@ export function Navbar() {
         </div>
 
         {/* Mobile Layout */}
-        <div className="md:hidden flex items-center justify-between">
+        <div className="lg:hidden flex items-center justify-between">
           <Link to="/" className="flex items-center">
             <img 
               alt="Link TI Logo" 
               src="/lovable-uploads/27d0f32d-9804-4b98-a47a-f2c663bf247a.png" 
-              className="h-12" 
+              className="h-10" 
             />
           </Link>
 
@@ -176,7 +176,7 @@ export function Navbar() {
 
         {/* Mobile Navigation Menu */}
         {isOpen && (
-          <div className="fixed inset-0 top-16 z-50 bg-white dark:bg-gray-900 md:hidden">
+          <div className="fixed inset-0 top-16 z-50 bg-white dark:bg-gray-900 lg:hidden">
             <nav className="container flex flex-col py-8">
               {ALL_NAV_ITEMS.map(item => (
                 <Link
