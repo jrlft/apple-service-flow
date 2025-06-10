@@ -99,8 +99,8 @@ export function Navbar() {
       <div className="container mx-auto px-4">
         {/* Desktop Layout */}
         <div className="hidden lg:block">
-          {/* Primeira linha - Logo + Primeira linha de navegação + Controles */}
-          <div className="flex items-center justify-between mb-2">
+          {/* Primeira linha - Logo + Navegação + Controles */}
+          <div className="flex items-start justify-between mb-2">
             <Link to="/" className="flex items-center flex-shrink-0">
               <img 
                 alt="Link TI Logo" 
@@ -109,30 +109,33 @@ export function Navbar() {
               />
             </Link>
 
-            <nav className="flex items-center space-x-6 flex-1 justify-center">
-              {NAV_ITEMS_ROW_1.map(item => (
-                <Link
-                  key={item.href}
-                  to={item.href}
-                  className={cn(
-                    "text-sm font-medium transition-colors hover:text-primary whitespace-nowrap",
-                    location.pathname === item.href ? "text-primary" : "text-foreground"
-                  )}
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </nav>
+            <div className="flex items-start gap-8">
+              {/* Navegação primeira linha */}
+              <nav className="flex items-center space-x-6">
+                {NAV_ITEMS_ROW_1.map(item => (
+                  <Link
+                    key={item.href}
+                    to={item.href}
+                    className={cn(
+                      "text-sm font-medium transition-colors hover:text-primary whitespace-nowrap",
+                      location.pathname === item.href ? "text-primary" : "text-foreground"
+                    )}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </nav>
 
-            {/* Controles de idioma e tema */}
-            <div className="flex items-center gap-3 flex-shrink-0">
-              <LanguageSelector />
-              <ThemeToggle />
+              {/* Controles empilhados - idioma em cima, modo escuro embaixo */}
+              <div className="flex flex-col items-end gap-1">
+                <LanguageSelector />
+                <ThemeToggle />
+              </div>
             </div>
           </div>
 
-          {/* Segunda linha - Navegação secundária centralizada */}
-          <div className="flex justify-center">
+          {/* Segunda linha - Navegação secundária alinhada à direita */}
+          <div className="flex justify-end" style={{ marginRight: '140px' }}>
             <nav className="flex items-center space-x-6">
               {NAV_ITEMS_ROW_2.map(item => (
                 <Link
