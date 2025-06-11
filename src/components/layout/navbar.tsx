@@ -109,9 +109,9 @@ export function Navbar() {
               />
             </Link>
 
-            <div className="flex items-center gap-6">
-              {/* Navegação primeira linha */}
-              <nav className="flex items-center space-x-6">
+            <div className="flex items-center gap-4">
+              {/* Navegação primeira linha - alinhada à direita */}
+              <nav className="flex items-center space-x-6 text-right">
                 {NAV_ITEMS_ROW_1.map(item => (
                   <Link
                     key={item.href}
@@ -126,17 +126,17 @@ export function Navbar() {
                 ))}
               </nav>
 
-              {/* Controles empilhados - idioma em cima, modo escuro embaixo */}
-              <div className="flex flex-col items-center gap-1">
+              {/* Controles - alinhados verticalmente à esquerda */}
+              <div className="flex flex-col items-start gap-1 ml-4">
                 <LanguageSelector />
                 <ThemeToggle />
               </div>
             </div>
           </div>
 
-          {/* Segunda linha - Navegação secundária alinhada à direita */}
-          <div className="flex justify-end" style={{ marginRight: '100px' }}>
-            <nav className="flex items-center space-x-6">
+          {/* Segunda linha - Navegação secundária alinhada à direita, próxima aos controles */}
+          <div className="flex justify-end mt-1" style={{ marginRight: '120px' }}>
+            <nav className="flex items-center space-x-6 text-right">
               {NAV_ITEMS_ROW_2.map(item => (
                 <Link
                   key={item.href}
