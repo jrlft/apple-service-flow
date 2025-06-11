@@ -100,7 +100,7 @@ export function Navbar() {
         {/* Desktop Layout */}
         <div className="hidden lg:block">
           {/* Primeira linha - Logo + Navegação + Controles */}
-          <div className="flex items-start justify-between mb-2">
+          <div className="flex items-center justify-between">
             <Link to="/" className="flex items-center flex-shrink-0">
               <img 
                 alt="Link TI Logo" 
@@ -109,7 +109,7 @@ export function Navbar() {
               />
             </Link>
 
-            <div className="flex items-start gap-8">
+            <div className="flex items-center gap-6">
               {/* Navegação primeira linha */}
               <nav className="flex items-center space-x-6">
                 {NAV_ITEMS_ROW_1.map(item => (
@@ -127,7 +127,7 @@ export function Navbar() {
               </nav>
 
               {/* Controles empilhados - idioma em cima, modo escuro embaixo */}
-              <div className="flex flex-col items-end gap-1">
+              <div className="flex flex-col items-center gap-1">
                 <LanguageSelector />
                 <ThemeToggle />
               </div>
@@ -135,7 +135,7 @@ export function Navbar() {
           </div>
 
           {/* Segunda linha - Navegação secundária alinhada à direita */}
-          <div className="flex justify-end" style={{ marginRight: '140px' }}>
+          <div className="flex justify-end" style={{ marginRight: '100px' }}>
             <nav className="flex items-center space-x-6">
               {NAV_ITEMS_ROW_2.map(item => (
                 <Link
