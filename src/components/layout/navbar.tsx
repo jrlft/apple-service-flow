@@ -38,7 +38,10 @@ export function Navbar() {
     {
       label: t('nav.watch'),
       href: "/servicos/watch"
-    },
+    }
+  ];
+
+  const NAV_ITEMS_ROW_2 = [
     {
       label: t('nav.airpods'),
       href: "/servicos/airpods"
@@ -46,10 +49,7 @@ export function Navbar() {
     {
       label: t('nav.otherServices'),
       href: "/servicos/outros"
-    }
-  ];
-
-  const NAV_ITEMS_ROW_2 = [
+    },
     {
       label: "SOS Dados",
       href: "/sos-dados"
@@ -119,7 +119,7 @@ export function Navbar() {
               {/* Menu principal em duas linhas */}
               <div className="flex flex-col justify-center h-full mr-6">
                 {/* Primeira linha do menu */}
-                <nav className="flex items-center space-x-8 mb-1 justify-end">
+                <nav className="flex items-center space-x-4 mb-1 justify-end">
                   {NAV_ITEMS_ROW_1.map(item => (
                     <Link
                       key={item.href}
@@ -135,7 +135,7 @@ export function Navbar() {
                 </nav>
 
                 {/* Segunda linha do menu */}
-                <nav className="flex items-center space-x-8 justify-end">
+                <nav className="flex items-center space-x-4 justify-end">
                   {NAV_ITEMS_ROW_2.map(item => (
                     <Link
                       key={item.href}
