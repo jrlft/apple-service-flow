@@ -1,4 +1,3 @@
-
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { Button } from "@/components/ui/button";
@@ -310,17 +309,11 @@ const SosDados = () => {
                     Entre em contato agora mesmo com nossa equipe especializada.
                   </p>
                   
-                  <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-8">
-                    <Button size="lg" variant="secondary" className="px-10 py-6 text-xl font-bold">
+                  <div className="flex justify-center items-center mb-8">
+                    <Button size="lg" className="px-10 py-6 text-xl font-bold bg-green-500 hover:bg-green-600 text-white">
                       <a href="https://wa.me/556536216000?text=Olá! Preciso de ajuda para recuperar meus dados perdidos." className="flex items-center">
                         <Phone className="mr-3 h-6 w-6" />
                         WhatsApp
-                      </a>
-                    </Button>
-                    <Button size="lg" variant="outline" className="px-10 py-6 text-xl font-bold border-white text-white hover:bg-white hover:text-red-500">
-                      <a href="tel:+556536216000" className="flex items-center">
-                        <Phone className="mr-3 h-6 w-6" />
-                        (65) 3621-6000
                       </a>
                     </Button>
                   </div>

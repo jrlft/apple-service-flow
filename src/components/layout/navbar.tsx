@@ -42,14 +42,14 @@ export function Navbar() {
     {
       label: t('nav.airpods'),
       href: "/servicos/airpods"
+    },
+    {
+      label: t('nav.otherServices'),
+      href: "/servicos/outros"
     }
   ];
 
   const NAV_ITEMS_ROW_2 = [
-    {
-      label: t('nav.otherServices'),
-      href: "/servicos/outros"
-    },
     {
       label: "SOS Dados",
       href: "/sos-dados"
