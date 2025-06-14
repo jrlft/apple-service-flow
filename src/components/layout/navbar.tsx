@@ -99,8 +99,8 @@ export function Navbar() {
       <div className="container mx-auto px-4">
         {/* Desktop Layout */}
         <div className="hidden lg:block">
-          {/* Layout principal */}
-          <div className="flex items-center justify-between">
+          {/* Layout horizontal completo */}
+          <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <Link to="/" className="flex items-center flex-shrink-0">
               <img 
@@ -110,12 +110,12 @@ export function Navbar() {
               />
             </Link>
 
-            {/* Menu principal e controles */}
-            <div className="flex items-start gap-6">
-              {/* Navegação - duas linhas */}
-              <div className="flex flex-col items-end gap-1">
-                {/* Primeira linha */}
-                <nav className="flex items-center space-x-6">
+            {/* Container do menu e controles */}
+            <div className="flex items-center h-full">
+              {/* Menu principal em duas linhas */}
+              <div className="flex flex-col justify-center h-full mr-6">
+                {/* Primeira linha do menu */}
+                <nav className="flex items-center space-x-8 mb-1">
                   {NAV_ITEMS_ROW_1.map(item => (
                     <Link
                       key={item.href}
@@ -130,8 +130,8 @@ export function Navbar() {
                   ))}
                 </nav>
 
-                {/* Segunda linha */}
-                <nav className="flex items-center space-x-6">
+                {/* Segunda linha do menu */}
+                <nav className="flex items-center space-x-8">
                   {NAV_ITEMS_ROW_2.map(item => (
                     <Link
                       key={item.href}
@@ -148,10 +148,10 @@ export function Navbar() {
               </div>
 
               {/* Linha separadora vertical */}
-              <div className="h-16 w-px bg-gray-300 dark:bg-gray-600 self-center"></div>
+              <div className="w-px h-12 bg-gray-300 dark:bg-gray-600 mx-4"></div>
 
-              {/* Controles - idioma e tema */}
-              <div className="flex flex-col items-start gap-2 pt-1">
+              {/* Controles de idioma e tema */}
+              <div className="flex flex-col justify-center h-full space-y-1">
                 <LanguageSelector />
                 <ThemeToggle />
               </div>
