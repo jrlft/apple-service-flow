@@ -99,8 +99,9 @@ export function Navbar() {
       <div className="container mx-auto px-4">
         {/* Desktop Layout */}
         <div className="hidden lg:block">
-          {/* Primeira linha - Logo + Navegação + Controles */}
+          {/* Layout principal */}
           <div className="flex items-center justify-between">
+            {/* Logo */}
             <Link to="/" className="flex items-center flex-shrink-0">
               <img 
                 alt="Link TI Logo" 
@@ -109,47 +110,52 @@ export function Navbar() {
               />
             </Link>
 
-            <div className="flex items-center gap-4">
-              {/* Navegação primeira linha - alinhada à direita */}
-              <nav className="flex items-center space-x-6 text-right">
-                {NAV_ITEMS_ROW_1.map(item => (
-                  <Link
-                    key={item.href}
-                    to={item.href}
-                    className={cn(
-                      "text-sm font-medium transition-colors hover:text-primary whitespace-nowrap",
-                      location.pathname === item.href ? "text-primary" : "text-foreground"
-                    )}
-                  >
-                    {item.label}
-                  </Link>
-                ))}
-              </nav>
+            {/* Menu principal e controles */}
+            <div className="flex items-start gap-6">
+              {/* Navegação - duas linhas */}
+              <div className="flex flex-col items-end gap-1">
+                {/* Primeira linha */}
+                <nav className="flex items-center space-x-6">
+                  {NAV_ITEMS_ROW_1.map(item => (
+                    <Link
+                      key={item.href}
+                      to={item.href}
+                      className={cn(
+                        "text-sm font-medium transition-colors hover:text-primary whitespace-nowrap",
+                        location.pathname === item.href ? "text-primary" : "text-foreground"
+                      )}
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </nav>
 
-              {/* Controles - alinhados verticalmente à esquerda */}
-              <div className="flex flex-col items-start gap-1 ml-4">
+                {/* Segunda linha */}
+                <nav className="flex items-center space-x-6">
+                  {NAV_ITEMS_ROW_2.map(item => (
+                    <Link
+                      key={item.href}
+                      to={item.href}
+                      className={cn(
+                        "text-sm font-medium transition-colors hover:text-primary whitespace-nowrap",
+                        location.pathname === item.href ? "text-primary" : "text-foreground"
+                      )}
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </nav>
+              </div>
+
+              {/* Linha separadora vertical */}
+              <div className="h-16 w-px bg-gray-300 dark:bg-gray-600 self-center"></div>
+
+              {/* Controles - idioma e tema */}
+              <div className="flex flex-col items-start gap-2 pt-1">
                 <LanguageSelector />
                 <ThemeToggle />
               </div>
             </div>
-          </div>
-
-          {/* Segunda linha - Navegação secundária alinhada à direita, próxima aos controles */}
-          <div className="flex justify-end mt-1" style={{ marginRight: '120px' }}>
-            <nav className="flex items-center space-x-6 text-right">
-              {NAV_ITEMS_ROW_2.map(item => (
-                <Link
-                  key={item.href}
-                  to={item.href}
-                  className={cn(
-                    "text-sm font-medium transition-colors hover:text-primary whitespace-nowrap",
-                    location.pathname === item.href ? "text-primary" : "text-foreground"
-                  )}
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </nav>
           </div>
         </div>
 
