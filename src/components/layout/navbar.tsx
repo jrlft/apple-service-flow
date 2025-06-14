@@ -38,6 +38,10 @@ export function Navbar() {
     {
       label: t('nav.watch'),
       href: "/servicos/watch"
+    },
+    {
+      label: t('nav.otherServices'),
+      href: "/servicos/outros"
     }
   ];
 
@@ -47,12 +51,9 @@ export function Navbar() {
       href: "/servicos/airpods"
     },
     {
-      label: t('nav.otherServices'),
-      href: "/servicos/outros"
-    },
-    {
       label: "SOS Dados",
-      href: "/sos-dados"
+      href: "/sos-dados",
+      special: true
     },
     {
       label: t('nav.prices'),
@@ -142,7 +143,7 @@ export function Navbar() {
                       to={item.href}
                       className={cn(
                         "text-sm font-medium transition-colors hover:text-primary whitespace-nowrap",
-                        location.pathname === item.href ? "text-primary" : "text-foreground"
+                        item.special ? "text-red-500 font-bold" : (location.pathname === item.href ? "text-primary" : "text-foreground")
                       )}
                     >
                       {item.label}
@@ -197,7 +198,7 @@ export function Navbar() {
                   to={item.href}
                   className={cn(
                     "text-lg py-3 font-medium transition-colors hover:text-primary",
-                    location.pathname === item.href ? "text-primary" : "text-foreground"
+                    item.special ? "text-red-500 font-bold" : (location.pathname === item.href ? "text-primary" : "text-foreground")
                   )}
                 >
                   {item.label}
