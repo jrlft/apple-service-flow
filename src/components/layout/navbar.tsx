@@ -115,7 +115,7 @@ export function Navbar() {
               {/* Menu principal em duas linhas */}
               <div className="flex flex-col justify-center h-full mr-6">
                 {/* Primeira linha do menu */}
-                <nav className="flex items-center space-x-8 mb-1">
+                <nav className="flex items-center space-x-8 mb-1 justify-end">
                   {NAV_ITEMS_ROW_1.map(item => (
                     <Link
                       key={item.href}
@@ -131,7 +131,7 @@ export function Navbar() {
                 </nav>
 
                 {/* Segunda linha do menu */}
-                <nav className="flex items-center space-x-8">
+                <nav className="flex items-center space-x-8 justify-end">
                   {NAV_ITEMS_ROW_2.map(item => (
                     <Link
                       key={item.href}
