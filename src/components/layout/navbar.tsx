@@ -51,6 +51,10 @@ export function Navbar() {
       href: "/servicos/outros"
     },
     {
+      label: "SOS Dados",
+      href: "/sos-dados"
+    },
+    {
       label: t('nav.prices'),
       href: "/precos"
     },
