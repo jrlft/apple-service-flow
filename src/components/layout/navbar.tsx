@@ -51,11 +51,6 @@ export function Navbar() {
       href: "/servicos/airpods"
     },
     {
-      label: "SOS Dados",
-      href: "/sos-dados",
-      special: true
-    },
-    {
       label: t('nav.prices'),
       href: "/precos"
     },
@@ -74,6 +69,11 @@ export function Navbar() {
     {
       label: t('nav.blog'),
       href: "/blog"
+    },
+    {
+      label: "SOS Dados",
+      href: "/sos-dados",
+      special: true
     }
   ];
 
@@ -120,7 +120,7 @@ export function Navbar() {
               {/* Menu principal em duas linhas */}
               <div className="flex flex-col justify-center h-full mr-6">
                 {/* Primeira linha do menu */}
-                <nav className="flex items-center space-x-4 mb-1 justify-end">
+                <nav className="flex items-center space-x-3 mb-1 justify-end">
                   {NAV_ITEMS_ROW_1.map(item => (
                     <Link
                       key={item.href}
@@ -136,7 +136,7 @@ export function Navbar() {
                 </nav>
 
                 {/* Segunda linha do menu */}
-                <nav className="flex items-center space-x-4 justify-end">
+                <nav className="flex items-center space-x-3 justify-end">
                   {NAV_ITEMS_ROW_2.map(item => (
                     <Link
                       key={item.href}
@@ -198,7 +198,7 @@ export function Navbar() {
                   to={item.href}
                   className={cn(
                     "text-lg py-3 font-medium transition-colors hover:text-primary",
-                    item.special ? "text-red-500 font-bold" : (location.pathname === item.href ? "text-primary" : "text-foreground")
+                    (item as any).special ? "text-red-500 font-bold" : (location.pathname === item.href ? "text-primary" : "text-foreground")
                   )}
                 >
                   {item.label}
