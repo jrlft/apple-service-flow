@@ -25,6 +25,7 @@ import Termos from "./pages/Termos";
 import Garantia from "./pages/Garantia";
 import Admin from "./pages/Admin";
 import SosDados from "./pages/SosDados";
+import QuizPage from "./pages/quiz";
 import { CookieConsent } from "./components/shared/cookie-consent";
 import CursoIphonePage from "./pages/curso-iphone";
 import IniciantePage from "./pages/curso-iphone/iniciante";
@@ -60,6 +61,7 @@ const App = () => (
               <Route path="/servicos/airpods" element={<ServicoAirpods />} />
               <Route path="/servicos/outros" element={<OutrosServicos />} />
               <Route path="/sos-dados" element={<SosDados />} />
+              <Route path="/quiz" element={<QuizPage />} />
               <Route path="/precos" element={<Precos />} />
               <Route path="/contato" element={<Contato />} />
               <Route path="/cookies" element={<Cookies />} />

@@ -51,6 +51,10 @@ export function Navbar() {
       href: "/servicos/airpods"
     },
     {
+      label: "Quiz",
+      href: "/quiz"
+    },
+    {
       label: t('nav.prices'),
       href: "/precos"
     },
