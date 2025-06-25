@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { quizQuestions, QuizQuestion } from "../data/questions";
 import { Trophy, Star, ThumbsUp, Lightbulb, BookOpen } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface QuizState {
   currentQuestion: number;
@@ -16,6 +17,7 @@ interface QuizState {
 }
 
 export function QuizComponent() {
+  const { t, language } = useLanguage();
   const [quizState, setQuizState] = useState<QuizState>({
     currentQuestion: 0,
     score: 0,
@@ -28,10 +30,28 @@ export function QuizComponent() {
   const currentQ = quizQuestions[quizState.currentQuestion];
   const progress = ((quizState.currentQuestion + 1) / quizQuestions.length) * 100;
 
+  // Get question data based on language
+  const getQuestionData = (question: QuizQuestion) => {
+    if (language === 'en' && question.question && question.options && question.correct_answer) {
+      return {
+        pergunta: question.question,
+        opcoes: question.options,
+        resposta_correta: question.correct_answer
+      };
+    }
+    return {
+      pergunta: question.pergunta,
+      opcoes: question.opcoes,
+      resposta_correta: question.resposta_correta
+    };
+  };
+
+  const questionData = getQuestionData(currentQ);
+
   const handleAnswerSelect = (selectedOption: string) => {
     if (quizState.selectedAnswer) return; // Prevent multiple selections
 
-    const isCorrect = selectedOption === currentQ.resposta_correta;
+    const isCorrect = selectedOption === questionData.resposta_correta;
     
     setQuizState(prev => ({
       ...prev,
@@ -72,17 +92,17 @@ export function QuizComponent() {
 
   const getDiscountInfo = (score: number) => {
     const discountMap: { [key: number]: { discount: number; title: string; icon: React.ReactNode } } = {
-      10: { discount: 15, title: "Parabéns! Você é um expert em iPhone!", icon: <Trophy className="h-16 w-16 text-yellow-500" /> },
-      9: { discount: 14, title: "Muito Bom!", icon: <Star className="h-16 w-16 text-blue-500" /> },
-      8: { discount: 13, title: "Ótimo Trabalho!", icon: <ThumbsUp className="h-16 w-16 text-green-500" /> },
-      7: { discount: 12, title: "Bom Desempenho!", icon: <ThumbsUp className="h-16 w-16 text-green-400" /> },
-      6: { discount: 11, title: "Quase lá!", icon: <Star className="h-16 w-16 text-yellow-400" /> },
-      5: { discount: 10, title: "Interessante!", icon: <Lightbulb className="h-16 w-16 text-orange-500" /> }
+      10: { discount: 15, title: t('quiz.congratulations'), icon: <Trophy className="h-16 w-16 text-yellow-500" /> },
+      9: { discount: 14, title: t('quiz.veryGood'), icon: <Star className="h-16 w-16 text-blue-500" /> },
+      8: { discount: 13, title: t('quiz.greatWork'), icon: <ThumbsUp className="h-16 w-16 text-green-500" /> },
+      7: { discount: 12, title: t('quiz.goodPerformance'), icon: <ThumbsUp className="h-16 w-16 text-green-400" /> },
+      6: { discount: 11, title: t('quiz.almostThere'), icon: <Star className="h-16 w-16 text-yellow-400" /> },
+      5: { discount: 10, title: t('quiz.interesting'), icon: <Lightbulb className="h-16 w-16 text-orange-500" /> }
     };
 
     return discountMap[score] || { 
       discount: 0, 
-      title: "Continue Estudando!", 
+      title: t('quiz.keepStudying'), 
       icon: <BookOpen className="h-16 w-16 text-gray-500" />
     };
   };
@@ -109,44 +129,48 @@ export function QuizComponent() {
           <CardContent className="text-center space-y-6">
             {discount > 0 ? (
               <div className="bg-gradient-to-r from-primary/10 to-primary/5 p-6 rounded-lg border border-primary/20">
-                <h3 className="text-xl font-semibold mb-2">🎉 Você ganhou {discount}% de desconto!</h3>
+                <h3 className="text-xl font-semibold mb-2">🎉 {t('quiz.youWon').replace('{discount}', discount.toString())}</h3>
                 <p className="text-muted-foreground mb-4">
-                  Válido em qualquer acessório na Link TI
+                  {t('quiz.validAccessories')}
                 </p>
                 <div className="bg-white p-4 rounded border-2 border-dashed border-primary">
                   <p className="font-medium text-primary">
-                    📱 Dê um print nesta tela e apresente em nossa recepção
+                    {t('quiz.printScreen')}
                   </p>
                 </div>
               </div>
             ) : (
               <div className="bg-muted/30 p-6 rounded-lg">
                 <p className="text-muted-foreground">
-                  Não desanime! Com mais prática você vai dominar o iPhone em pouco tempo.
+                  {t('quiz.dontGiveUp')}
                 </p>
               </div>
             )}
             
             <div className="flex gap-4 justify-center">
               <Button onClick={resetQuiz} variant="outline">
-                Refazer Quiz
+                {t('quiz.retakeQuiz')}
               </Button>
               <Button 
                 onClick={() => {
-                  const text = `Acabei de fazer o Quiz de iPhone da Link TI e acertei ${quizState.score} de ${quizQuestions.length} perguntas (${percentage}%)! 📱✨`;
+                  const text = t('quiz.shareText')
+                    .replace('{score}', quizState.score.toString())
+                    .replace('{total}', quizQuestions.length.toString())
+                    .replace('{percentage}', percentage.toString());
+                  
                   if (navigator.share) {
                     navigator.share({
-                      title: 'Quiz de iPhone - Link TI',
+                      title: t('quiz.title'),
                       text: text,
                       url: window.location.href
                     });
                   } else {
                     navigator.clipboard.writeText(text + ' ' + window.location.href);
-                    alert('Resultado copiado para a área de transferência!');
+                    alert(t('quiz.copiedToClipboard'));
                   }
                 }}
               >
-                Compartilhar Resultado
+                {t('quiz.shareResult')}
               </Button>
             </div>
           </CardContent>
@@ -162,23 +186,25 @@ export function QuizComponent() {
           <div className="space-y-4">
             <Progress value={progress} className="w-full" />
             <div className="text-center text-sm text-muted-foreground">
-              Pergunta {quizState.currentQuestion + 1} de {quizQuestions.length}
+              {t('quiz.questionOf')
+                .replace('{current}', (quizState.currentQuestion + 1).toString())
+                .replace('{total}', quizQuestions.length.toString())}
             </div>
           </div>
         </CardHeader>
         <CardContent className="space-y-6">
-          <h2 className="text-xl font-semibold text-center">{currentQ.pergunta}</h2>
+          <h2 className="text-xl font-semibold text-center">{questionData.pergunta}</h2>
           
           <div className="space-y-3">
-            {currentQ.opcoes.map((opcao, index) => {
+            {questionData.opcoes.map((opcao, index) => {
               let buttonVariant: "default" | "outline" | "destructive" | "secondary" = "outline";
               let className = "";
               
               if (quizState.showCorrectAnswer) {
-                if (opcao === currentQ.resposta_correta) {
+                if (opcao === questionData.resposta_correta) {
                   buttonVariant = "default";
                   className = "bg-green-500 hover:bg-green-600 text-white";
-                } else if (opcao === quizState.selectedAnswer && opcao !== currentQ.resposta_correta) {
+                } else if (opcao === quizState.selectedAnswer && opcao !== questionData.resposta_correta) {
                   buttonVariant = "destructive";
                 }
               } else if (opcao === quizState.selectedAnswer) {
