@@ -1,30 +1,21 @@
+
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { AnimatedElement } from "@/components/animations/animated-element";
 import { SectionTitle } from "@/components/ui/section-title";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { WhatsAppButton } from "@/components/ui/whatsapp-button";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
-import { toast } from "@/components/ui/use-toast";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 import { useEffect, useState } from "react";
 import { fetchPage } from "@/lib/strapi";
 import { Helmet } from "react-helmet";
 
 const Contato = () => {
+  const { t } = useLanguage();
   const [contact, setContact] = useState<any>(null);
   useEffect(() => { fetchPage("contato").then(setContact); }, []);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    toast({
-      title: "Mensagem enviada!",
-      description: "Entraremos em contato em breve.",
-    });
-  };
 
   // Add Facebook Pixel and Google Ads Script
   const MarketingScripts = () => {
@@ -76,20 +67,20 @@ const Contato = () => {
             <AnimatedElement>
               <div className="max-w-3xl mx-auto text-center">
                 <SectionTitle 
-                  title={contact?.attributes?.title || "Entre em Contato"} 
-                  subtitle={contact?.attributes?.subtitle || "Estamos aqui para ajudar!"}
+                  title={contact?.attributes?.title || t('contact.title')} 
+                  subtitle={contact?.attributes?.subtitle || t('contact.subtitle')}
                   centered
                 />
-                <p className="text-muted-foreground">
-                  {contact?.attributes?.description || "Precisa de assistência técnica para seu dispositivo Apple? Entre em contato conosco através de um dos nossos canais de atendimento ou preencha o formulário abaixo."}
+                <p className="text-muted-foreground mb-8">
+                  {contact?.attributes?.description || t('contact.form.description')}
                 </p>
-                <div className="mt-6 flex flex-col items-center space-y-4">
+                <div className="flex flex-col items-center space-y-4">
                   <WhatsAppButton
                     phoneNumber="+556536216000"
-                    message="Olá, gostaria de informações sobre assistência técnica para dispositivos Apple."
+                    message={t('hero.whatsappMessage')}
                     size="lg"
                   >
-                    Falar com um Técnico via WhatsApp
+                    {t('hero.whatsappButton')}
                   </WhatsAppButton>
                   
                   <Button 
@@ -102,7 +93,7 @@ const Contato = () => {
                       target="_blank" 
                       rel="noopener noreferrer"
                     >
-                      Se desejar, agende um horário conosco!
+                      {t('nav.appointment')}
                     </a>
                   </Button>
                 </div>
@@ -113,105 +104,24 @@ const Contato = () => {
 
         <section className="py-16">
           <div className="container">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-              <AnimatedElement direction="left">
+            <div className="max-w-4xl mx-auto">
+              <AnimatedElement>
                 <div className="bg-white rounded-lg shadow-md p-8">
-                  <h3 className="text-2xl font-bold mb-6">Envie sua mensagem</h3>
+                  <h3 className="text-2xl font-bold mb-6 text-center">{t('contact.info.title')}</h3>
                   
-                  <form onSubmit={handleSubmit} className="space-y-5">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                      <div>
-                        <label htmlFor="name" className="block mb-2 text-sm font-medium">
-                          Nome
-                        </label>
-                        <Input id="name" placeholder="Seu nome completo" required />
-                      </div>
-                      
-                      <div>
-                        <label htmlFor="email" className="block mb-2 text-sm font-medium">
-                          Email
-                        </label>
-                        <Input id="email" type="email" placeholder="seu@email.com" required />
-                      </div>
-                    </div>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                      <div>
-                        <label htmlFor="phone" className="block mb-2 text-sm font-medium">
-                          Telefone
-                        </label>
-                        <Input id="phone" placeholder="(00) 00000-0000" />
-                      </div>
-                      
-                      <div>
-                        <label htmlFor="device" className="block mb-2 text-sm font-medium">
-                          Dispositivo
-                        </label>
-                        <select 
-                          id="device" 
-                          className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                          defaultValue=""
-                        >
-                          <option value="" disabled>Selecione o dispositivo</option>
-                          <option value="iphone">iPhone</option>
-                          <option value="ipad">iPad</option>
-                          <option value="mac">Mac</option>
-                          <option value="watch">Apple Watch</option>
-                          <option value="other">Outro</option>
-                        </select>
-                      </div>
-                    </div>
-                    
-                    <div>
-                      <label htmlFor="subject" className="block mb-2 text-sm font-medium">
-                        Assunto
-                      </label>
-                      <Input id="subject" placeholder="Assunto da sua mensagem" required />
-                    </div>
-                    
-                    <div>
-                      <label htmlFor="message" className="block mb-2 text-sm font-medium">
-                        Mensagem
-                      </label>
-                      <Textarea id="message" placeholder="Descreva o problema com seu dispositivo" rows={6} required />
-                    </div>
-                    
-                    <div className="flex items-center">
-                      <input 
-                        id="privacy" 
-                        type="checkbox" 
-                        className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
-                        required
-                      />
-                      <label htmlFor="privacy" className="ml-2 block text-sm text-gray-700">
-                        Concordo com a <a href="/privacidade" className="text-primary hover:underline">Política de Privacidade</a>
-                      </label>
-                    </div>
-                    
-                    <Button type="submit" className="w-full">Enviar Mensagem</Button>
-                  </form>
-                </div>
-              </AnimatedElement>
-              
-              <AnimatedElement direction="right">
-                <div className="bg-white rounded-lg shadow-md p-8">
-                  <h3 className="text-2xl font-bold mb-6">Informações de Contato</h3>
-                  
-                  <div className="space-y-6 mb-8">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
                     <div className="flex items-start gap-4">
                       <div className="bg-primary bg-opacity-10 p-3 rounded-full text-primary">
                         <Phone className="h-6 w-6" />
                       </div>
                       <div>
-                        <h4 className="font-semibold mb-1">Telefone / WhatsApp</h4>
-                        <p className="text-muted-foreground">65-3621-6000</p>
-                        <div className="mt-2">
-                          <WhatsAppButton
-                            phoneNumber="+556536216000"
-                            message="Olá, gostaria de falar sobre assistência técnica."
-                            size="sm"
-                          />
-                        </div>
+                        <h4 className="font-semibold mb-1">{t('common.phone')} / WhatsApp</h4>
+                        <p className="text-muted-foreground mb-2">65-3621-6000</p>
+                        <WhatsAppButton
+                          phoneNumber="+556536216000"
+                          message={t('hero.whatsappMessage')}
+                          size="sm"
+                        />
                       </div>
                     </div>
                     
@@ -220,8 +130,10 @@ const Contato = () => {
                         <Mail className="h-6 w-6" />
                       </div>
                       <div>
-                        <h4 className="font-semibold mb-1">Email</h4>
-                        <p className="text-muted-foreground">atendimento@linkti.info</p>
+                        <h4 className="font-semibold mb-1">{t('common.email')}</h4>
+                        <a href="mailto:atendimento@linkti.info" className="text-muted-foreground hover:text-primary transition-colors">
+                          atendimento@linkti.info
+                        </a>
                       </div>
                     </div>
                     
@@ -230,7 +142,7 @@ const Contato = () => {
                         <MapPin className="h-6 w-6" />
                       </div>
                       <div>
-                        <h4 className="font-semibold mb-1">Endereço</h4>
+                        <h4 className="font-semibold mb-1">{t('common.address')}</h4>
                         <p className="text-muted-foreground">
                           Rua Odorico Tocantins, nr 125 - Quilombo<br />
                           Cuiabá-MT, 78045-170
@@ -243,20 +155,36 @@ const Contato = () => {
                         <Clock className="h-6 w-6" />
                       </div>
                       <div>
-                        <h4 className="font-semibold mb-1">Horário de Funcionamento</h4>
-                        <p className="text-muted-foreground">Segunda a Sexta: 9h às 18h</p>
-                        <p className="text-muted-foreground">Sábado: 8h às 12h</p>
+                        <h4 className="font-semibold mb-1">{t('contact.hours.title')}</h4>
+                        <p className="text-muted-foreground">{t('contact.hours.weekdays')}</p>
+                        <p className="text-muted-foreground">{t('contact.hours.saturday')}</p>
                       </div>
                     </div>
                   </div>
+
+                  <div className="text-center mb-8">
+                    <Button 
+                      asChild 
+                      size="lg" 
+                      className="bg-red-600 hover:bg-red-700 text-white"
+                    >
+                      <a 
+                        href="https://getsupport.apple.com/repair-locations?storeId=442491" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                      >
+                        {t('nav.appointment')}
+                      </a>
+                    </Button>
+                  </div>
                   
                   <div>
-                    <h4 className="font-semibold mb-3">Nossa Localização</h4>
+                    <h4 className="font-semibold mb-3 text-center">Nossa Localização</h4>
                     <a 
                       href="https://maps.app.goo.gl/MCa4K2R7oNSHhzLu6" 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="block h-[250px] rounded-md overflow-hidden hover:opacity-90 transition-opacity"
+                      className="block h-[300px] rounded-md overflow-hidden hover:opacity-90 transition-opacity"
                     >
                       <iframe 
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3843.2555856403396!2d-56.06220012529709!3d-15.57887748509297!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x939da5edc0672077%3A0xe9c7716b268c8609!2sR.%20Odorico%20Tocantins%2C%20125%20-%20Quilombo%2C%20Cuiab%C3%A1%20-%20MT%2C%2078045-170!5e0!3m2!1spt-BR!2sbr!4v1715889955253!5m2!1spt-BR!2sbr" 
