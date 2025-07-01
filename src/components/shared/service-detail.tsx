@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { WhatsAppButton } from "@/components/ui/whatsapp-button";
 import { Link } from "react-router-dom";
 import { Check } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface ServiceFeature {
   title: string;
@@ -34,6 +35,8 @@ export function ServiceDetail({
   whatsappNumber,
   whatsappMessage
 }: ServiceDetailProps) {
+  const { t } = useLanguage();
+  
   return (
     <div className="pt-32">
       {/* Hero Section */}
@@ -45,14 +48,14 @@ export function ServiceDetail({
               <p className="text-muted-foreground mb-6">{description}</p>
               <div className="flex flex-wrap gap-4">
                 <Button asChild size="lg">
-                  <Link to="/contato">Solicitar Orçamento</Link>
+                  <Link to="/contato">{t('serviceDetail.getQuote')}</Link>
                 </Button>
                 <WhatsAppButton 
                   phoneNumber={whatsappNumber}
                   message={whatsappMessage}
                   size="lg"
                 >
-                  Orçamento via WhatsApp
+                  {t('serviceDetail.whatsappQuote')}
                 </WhatsAppButton>
               </div>
             </AnimatedElement>
@@ -75,8 +78,8 @@ export function ServiceDetail({
         <div className="container">
           <AnimatedElement>
             <SectionTitle 
-              title="Nossos Serviços" 
-              subtitle="Soluções completas para seu dispositivo Apple" 
+              title={t('serviceDetail.ourServices')} 
+              subtitle={t('serviceDetail.completeSolutions')} 
               centered
             />
           </AnimatedElement>
@@ -110,8 +113,8 @@ export function ServiceDetail({
 
             <AnimatedElement direction="right">
               <SectionTitle 
-                title="Problemas Comuns" 
-                subtitle="Os problemas mais frequentes que resolvemos" 
+                title={t('serviceDetail.commonProblems')} 
+                subtitle={t('serviceDetail.frequentProblems')} 
               />
               
               <div className="space-y-4">
@@ -127,7 +130,7 @@ export function ServiceDetail({
               
               <div className="mt-8">
                 <Button asChild size="lg">
-                  <Link to="/contato">Solicitar Reparo</Link>
+                  <Link to="/contato">{t('serviceDetail.requestRepair')}</Link>
                 </Button>
               </div>
             </AnimatedElement>
@@ -140,14 +143,13 @@ export function ServiceDetail({
         <div className="container">
           <div className="max-w-3xl mx-auto text-center">
             <AnimatedElement>
-              <h2 className="text-3xl font-bold mb-6">Precisando de reparo para seu dispositivo?</h2>
+              <h2 className="text-3xl font-bold mb-6">{t('serviceDetail.needRepair')}</h2>
               <p className="text-lg mb-8 opacity-90">
-                Entre em contato conosco hoje mesmo para um orçamento sem compromisso.
-                Nossos especialistas estão prontos para ajudar.
+                {t('serviceDetail.contactToday')}
               </p>
               <div className="flex flex-wrap justify-center gap-4">
                 <Button asChild size="lg" variant="secondary">
-                  <Link to="/contato">Entre em Contato</Link>
+                  <Link to="/contato">{t('serviceDetail.contactUs')}</Link>
                 </Button>
                 <WhatsAppButton 
                   phoneNumber={whatsappNumber}
@@ -156,7 +158,7 @@ export function ServiceDetail({
                   variant="outline"
                   className="bg-transparent hover:bg-white/10"
                 >
-                  Orçamento via WhatsApp
+                  {t('serviceDetail.whatsappQuote')}
                 </WhatsAppButton>
               </div>
             </AnimatedElement>

@@ -2,6 +2,7 @@
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { ServiceDetail } from "@/components/shared/service-detail";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const iPhoneFeatures = [
   {
@@ -42,20 +43,60 @@ const commonProblems = [
 ];
 
 const ServicoIphone = () => {
+  const { t } = useLanguage();
+  
+  const iPhoneFeatures = [
+    {
+      title: t('iphone.features.screenReplacement.title'),
+      description: t('iphone.features.screenReplacement.description')
+    },
+    {
+      title: t('iphone.features.batteryReplacement.title'),
+      description: t('iphone.features.batteryReplacement.description')
+    },
+    {
+      title: t('iphone.features.cameraRepair.title'),
+      description: t('iphone.features.cameraRepair.description')
+    },
+    {
+      title: t('iphone.features.audioProblems.title'),
+      description: t('iphone.features.audioProblems.description')
+    },
+    {
+      title: t('iphone.features.boardRepair.title'),
+      description: t('iphone.features.boardRepair.description')
+    },
+    {
+      title: t('iphone.features.softwareUpdate.title'),
+      description: t('iphone.features.softwareUpdate.description')
+    }
+  ];
+
+  const commonProblems = [
+    t('iphone.problems.brokenScreen'),
+    t('iphone.problems.batteryIssues'),
+    t('iphone.problems.wontTurnOn'),
+    t('iphone.problems.connectivity'),
+    t('iphone.problems.camera'),
+    t('iphone.problems.buttons'),
+    t('iphone.problems.charging'),
+    t('iphone.problems.audio')
+  ];
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
       <main className="flex-grow">
         <ServiceDetail 
-          title="Reparo de iPhone"
-          subtitle="Serviços especializados para todos os modelos de iPhone"
-          description="Oferecemos serviços completos de reparo para todos os modelos de iPhone, desde o iPhone SE até os modelos mais recentes. Nossos técnicos certificados utilizam peças originais Apple para garantir que seu dispositivo volte a funcionar como novo."
+          title={t('iphone.title')}
+          subtitle={t('iphone.subtitle')}
+          description={t('iphone.description')}
           imagePlaceholder="Imagem iPhone Placeholder"
           image="/lovable-uploads/7ec50e96-2a6f-4dd0-9c7c-02ec0e69bf86.png"
           features={iPhoneFeatures}
           commonProblems={commonProblems}
           whatsappNumber="+556536216000"
-          whatsappMessage="Olá, gostaria de solicitar um orçamento para reparo do meu iPhone."
+          whatsappMessage={t('iphone.whatsappMessage')}
         />
       </main>
       <Footer />
