@@ -6,41 +6,44 @@ import { SectionTitle } from "@/components/ui/section-title";
 import { Button } from "@/components/ui/button";
 import { WhatsAppButton } from "@/components/ui/whatsapp-button";
 import { Headphones, Smartphone, HardDrive } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const OutrosServicos = () => {
+  const { t } = useLanguage();
+  
   const servicosExtras = [
     {
-      categoria: "Limpeza Física",
+      categoria: t('otherServices.categories.physicalCleaning'),
       itens: [
-        { dispositivo: "iPhone", preco: "R$ 50,00", descricao: "Limpeza interna e externa completa" },
-        { dispositivo: "iPad", preco: "R$ 70,00", descricao: "Limpeza interna e externa completa" },
-        { dispositivo: "MacBook", preco: "R$ 120,00", descricao: "Limpeza interna e externa, teclado e tela" },
-        { dispositivo: "iMac", preco: "R$ 150,00", descricao: "Limpeza interna e externa completa" },
-        { dispositivo: "Apple Watch", preco: "R$ 30,00", descricao: "Limpeza externa e pulseira" }
+        { dispositivo: "iPhone", preco: "R$ 50,00", descricao: t('otherServices.cleaning.iphone') },
+        { dispositivo: "iPad", preco: "R$ 70,00", descricao: t('otherServices.cleaning.ipad') },
+        { dispositivo: "MacBook", preco: "R$ 120,00", descricao: t('otherServices.cleaning.macbook') },
+        { dispositivo: "iMac", preco: "R$ 150,00", descricao: t('otherServices.cleaning.imac') },
+        { dispositivo: "Apple Watch", preco: "R$ 30,00", descricao: t('otherServices.cleaning.applewatch') }
       ]
     },
     {
-      categoria: "Backup e Restauração",
+      categoria: t('otherServices.categories.backupRestore'),
       itens: [
-        { dispositivo: "iPhone/iPad", preco: "R$ 80,00", descricao: "Backup completo e restauração de dados" },
-        { dispositivo: "Mac", preco: "R$ 150,00", descricao: "Time Machine ou backup personalizado" },
-        { dispositivo: "Recuperação de dados", preco: "A partir de R$ 200,00", descricao: "Recuperação de arquivos perdidos" }
+        { dispositivo: "iPhone/iPad", preco: "R$ 80,00", descricao: t('otherServices.backup.iphoneipad') },
+        { dispositivo: "Mac", preco: "R$ 150,00", descricao: t('otherServices.backup.mac') },
+        { dispositivo: t('otherServices.backup.dataRecovery'), preco: "A partir de R$ 200,00", descricao: t('otherServices.backup.dataRecovery') }
       ]
     },
     {
-      categoria: "Locação de Smartphones",
+      categoria: t('otherServices.categories.smartphoneRental'),
       itens: [
-        { dispositivo: "iPhone temporário", preco: "R$ 25,00/dia", descricao: "Locação de iPhone durante reparo do seu dispositivo" },
-        { dispositivo: "iPhone básico", preco: "R$ 120,00/semana", descricao: "Locação semanal de iPhone com funcionalidades básicas" },
-        { dispositivo: "iPhone premium", preco: "R$ 200,00/semana", descricao: "Locação semanal de iPhone com todas as funcionalidades" }
+        { dispositivo: "iPhone temporário", preco: "R$ 25,00/dia", descricao: t('otherServices.rental.temporaryIphoneDaily') },
+        { dispositivo: "iPhone básico", preco: "R$ 120,00/semana", descricao: t('otherServices.rental.basicIphone') },
+        { dispositivo: "iPhone premium", preco: "R$ 200,00/semana", descricao: t('otherServices.rental.premiumIphone') }
       ]
     },
     {
-      categoria: "Diagnóstico e Consultoria",
+      categoria: t('otherServices.categories.diagnosticConsulting'),
       itens: [
-        { dispositivo: "Diagnóstico completo", preco: "R$ 60,00", descricao: "Análise detalhada do dispositivo" },
-        { dispositivo: "Consultoria técnica", preco: "R$ 100,00/hora", descricao: "Orientação técnica especializada" },
-        { dispositivo: "Setup inicial", preco: "R$ 120,00", descricao: "Configuração inicial de novos dispositivos" }
+        { dispositivo: "Diagnóstico completo", preco: "R$ 60,00", descricao: t('otherServices.diagnostic.complete') },
+        { dispositivo: "Consultoria técnica", preco: "R$ 100,00/hora", descricao: t('otherServices.diagnostic.technicalConsulting') },
+        { dispositivo: "Setup inicial", preco: "R$ 120,00", descricao: t('otherServices.diagnostic.initialSetup') }
       ]
     }
   ];

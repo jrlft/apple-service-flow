@@ -2,60 +2,63 @@
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { ServiceDetail } from "@/components/shared/service-detail";
-
-const iPadFeatures = [
-  {
-    title: "Substituição de Tela",
-    description: "Reparo de telas quebradas, rachadas ou com problemas de touch usando peças originais para todos os modelos de iPad."
-  },
-  {
-    title: "Troca de Bateria",
-    description: "Substituição de baterias desgastadas ou com problemas de carga, restaurando a autonomia original do seu iPad."
-  },
-  {
-    title: "Reparo de Conector",
-    description: "Conserto de conectores de carregamento danificados ou com mau contato, garantindo carregamento adequado."
-  },
-  {
-    title: "Problemas de Wi-Fi",
-    description: "Diagnóstico e reparo de problemas de conectividade Wi-Fi e Bluetooth que afetam o desempenho do iPad."
-  },
-  {
-    title: "Reparo de Botões",
-    description: "Conserto de botões físicos como Power, Home e controles de volume que não respondem corretamente."
-  },
-  {
-    title: "Problemas de Software",
-    description: "Resolução de travamentos, lentidão e outros problemas de software através de diagnóstico especializado."
-  }
-];
-
-const commonProblems = [
-  "Tela quebrada ou com problemas de toque",
-  "iPad não liga ou desliga sozinho",
-  "Bateria descarrega rapidamente",
-  "Problemas de carregamento",
-  "Wi-Fi ou Bluetooth não funcionam corretamente",
-  "iPad travando ou com desempenho lento",
-  "Botões físicos não respondem",
-  "Problemas com câmeras frontal ou traseira"
-];
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const ServicoIpad = () => {
+  const { t } = useLanguage();
+  
+  const iPadFeatures = [
+    {
+      title: t('ipad.features.screenReplacement.title'),
+      description: t('ipad.features.screenReplacement.description')
+    },
+    {
+      title: t('ipad.features.batteryReplacement.title'),
+      description: t('ipad.features.batteryReplacement.description')
+    },
+    {
+      title: t('ipad.features.connectorRepair.title'),
+      description: t('ipad.features.connectorRepair.description')
+    },
+    {
+      title: t('ipad.features.wifiProblems.title'),
+      description: t('ipad.features.wifiProblems.description')
+    },
+    {
+      title: t('ipad.features.buttonRepair.title'),
+      description: t('ipad.features.buttonRepair.description')
+    },
+    {
+      title: t('ipad.features.softwareProblems.title'),
+      description: t('ipad.features.softwareProblems.description')
+    }
+  ];
+
+  const commonProblems = [
+    t('ipad.problems.brokenScreen'),
+    t('ipad.problems.wontTurnOn'),
+    t('ipad.problems.batteryDrain'),
+    t('ipad.problems.charging'),
+    t('ipad.problems.connectivity'),
+    t('ipad.problems.freezing'),
+    t('ipad.problems.buttons'),
+    t('ipad.problems.camera')
+  ];
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
       <main className="flex-grow">
         <ServiceDetail 
-          title="Reparo de iPad"
-          subtitle="Serviços especializados para toda linha de iPad"
-          description="Nosso centro de serviço oferece reparos completos para todos os modelos de iPad, incluindo iPad Pro, iPad Air, iPad mini e iPad tradicional. Utilizamos peças originais e técnicos certificados para garantir reparos de alta qualidade."
+          title={t('ipad.title')}
+          subtitle={t('ipad.subtitle')}
+          description={t('ipad.description')}
           imagePlaceholder="Imagem iPad Placeholder"
           image="/lovable-uploads/7ec50e96-2a6f-4dd0-9c7c-02ec0e69bf86.png"
           features={iPadFeatures}
           commonProblems={commonProblems}
           whatsappNumber="+556536216000"
-          whatsappMessage="Olá, gostaria de solicitar um orçamento para reparo do meu iPad."
+          whatsappMessage={t('ipad.whatsappMessage')}
         />
       </main>
       <Footer />

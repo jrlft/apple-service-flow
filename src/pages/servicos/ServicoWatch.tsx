@@ -2,60 +2,63 @@
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { ServiceDetail } from "@/components/shared/service-detail";
-
-const watchFeatures = [
-  {
-    title: "Substituição de Tela",
-    description: "Reparo de telas quebradas ou arranhadas para todos os modelos de Apple Watch, restaurando a aparência original."
-  },
-  {
-    title: "Troca de Bateria",
-    description: "Substituição de baterias desgastadas que não mantêm mais a carga, restaurando a autonomia do seu Apple Watch."
-  },
-  {
-    title: "Reparo de Botões",
-    description: "Conserto de coroa digital e botões laterais que não respondem corretamente ao toque ou pressão."
-  },
-  {
-    title: "Problemas de Sensores",
-    description: "Diagnóstico e reparo de sensores de frequência cardíaca, acelerômetro e outros sensores específicos."
-  },
-  {
-    title: "Substituição de Vedações",
-    description: "Restauração da resistência à água com a substituição de vedações e borrachas de proteção."
-  },
-  {
-    title: "Atualização de Software",
-    description: "Resolução de problemas de software, restauração do sistema e correção de bugs específicos."
-  }
-];
-
-const commonProblems = [
-  "Tela quebrada ou arranhada",
-  "Bateria descarrega rapidamente",
-  "Apple Watch não liga ou não carrega",
-  "Botões não respondem corretamente",
-  "Sensores de saúde não funcionam adequadamente",
-  "Problemas de pareamento com iPhone",
-  "Perda da resistência à água",
-  "Travamentos ou reinicializações inesperadas"
-];
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const ServicoWatch = () => {
+  const { t } = useLanguage();
+  
+  const watchFeatures = [
+    {
+      title: t('watch.features.screenReplacement.title'),
+      description: t('watch.features.screenReplacement.description')
+    },
+    {
+      title: t('watch.features.batteryReplacement.title'),
+      description: t('watch.features.batteryReplacement.description')
+    },
+    {
+      title: t('watch.features.buttonRepair.title'),
+      description: t('watch.features.buttonRepair.description')
+    },
+    {
+      title: t('watch.features.sensorProblems.title'),
+      description: t('watch.features.sensorProblems.description')
+    },
+    {
+      title: t('watch.features.sealReplacement.title'),
+      description: t('watch.features.sealReplacement.description')
+    },
+    {
+      title: t('watch.features.softwareUpdate.title'),
+      description: t('watch.features.softwareUpdate.description')
+    }
+  ];
+
+  const commonProblems = [
+    t('watch.problems.brokenScreen'),
+    t('watch.problems.batteryDrain'),
+    t('watch.problems.wontTurnOn'),
+    t('watch.problems.buttons'),
+    t('watch.problems.sensors'),
+    t('watch.problems.pairing'),
+    t('watch.problems.waterResistance'),
+    t('watch.problems.crashes')
+  ];
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
       <main className="flex-grow">
         <ServiceDetail 
-          title="Reparo de Apple Watch"
-          subtitle="Serviços especializados para todos os modelos de Apple Watch"
-          description="Nosso centro autorizado oferece reparos completos para todos os modelos de Apple Watch, desde a Série 1 até os modelos mais recentes. Utilizamos peças originais e técnicos certificados para garantir o funcionamento perfeito do seu dispositivo."
+          title={t('watch.title')}
+          subtitle={t('watch.subtitle')}
+          description={t('watch.description')}
           imagePlaceholder="Imagem Apple Watch Placeholder"
           image="/lovable-uploads/7ec50e96-2a6f-4dd0-9c7c-02ec0e69bf86.png"
           features={watchFeatures}
           commonProblems={commonProblems}
           whatsappNumber="+556536216000"
-          whatsappMessage="Olá, gostaria de solicitar um orçamento para reparo do meu Apple Watch."
+          whatsappMessage={t('watch.whatsappMessage')}
         />
       </main>
       <Footer />
