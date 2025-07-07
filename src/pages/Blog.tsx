@@ -8,85 +8,90 @@ import { LazyImage } from "@/components/shared/lazy-image";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
-// Categorias simuladas para o blog
-const CATEGORIES = [
-  { id: "all", name: "Todos" },
-  { id: "repairs", name: "Reparos" },
-  { id: "tips", name: "Dicas" },
-  { id: "news", name: "Novidades" },
-  { id: "tutorials", name: "Tutoriais" },
+// Mock categories for blog
+const getCategoriesForLanguage = (t: any) => [
+  { id: "all", name: t('blog.categories.all') },
+  { id: "repairs", name: t('blog.categories.repairs') },
+  { id: "tips", name: t('blog.categories.tips') },
+  { id: "news", name: t('blog.categories.news') },
+  { id: "tutorials", name: t('blog.categories.tutorials') },
 ];
 
-// Posts simulados para o blog
-const BLOG_POSTS = [
+// Mock blog posts
+const getBlogPostsForLanguage = (t: any) => [
   {
     id: 1,
-    title: "Como saber se é hora de trocar a bateria do seu iPhone",
-    excerpt: "Saiba identificar os principais sinais de que sua bateria está no fim e entenda o momento ideal para substituí-la.",
+    title: t('blog.posts.battery.title'),
+    excerpt: t('blog.posts.battery.excerpt'),
     content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eleifend malesuada diam, vel ultricies ligula. Nullam sit amet consequat eros. Suspendisse potenti. Duis auctor ipsum eget felis laoreet, non congue eros tincidunt.",
-    date: "15 de abril, 2025",
+    date: t('blog.posts.battery.date'),
     image: "placeholder.svg",
     category: "repairs",
-    readTime: "5 min",
+    readTime: t('blog.posts.battery.readTime'),
   },
   {
     id: 2,
-    title: "Dicas para proteger seu MacBook de danos físicos",
-    excerpt: "Conheça as melhores práticas para manter seu MacBook protegido contra quedas, poeira, líquidos e outros danos comuns.",
+    title: t('blog.posts.macbook.title'),
+    excerpt: t('blog.posts.macbook.excerpt'),
     content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eleifend malesuada diam, vel ultricies ligula. Nullam sit amet consequat eros. Suspendisse potenti. Duis auctor ipsum eget felis laoreet, non congue eros tincidunt.",
-    date: "08 de abril, 2025",
+    date: t('blog.posts.macbook.date'),
     image: "placeholder.svg",
     category: "tips",
-    readTime: "6 min",
+    readTime: t('blog.posts.macbook.readTime'),
   },
   {
     id: 3,
-    title: "Novidades do iOS 19 que você precisa conhecer",
-    excerpt: "Descubra os recursos mais interessantes da nova versão do sistema operacional da Apple e como aproveitá-los.",
+    title: t('blog.posts.ios.title'),
+    excerpt: t('blog.posts.ios.excerpt'),
     content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eleifend malesuada diam, vel ultricies ligula. Nullam sit amet consequat eros. Suspendisse potenti. Duis auctor ipsum eget felis laoreet, non congue eros tincidunt.",
-    date: "02 de abril, 2025",
+    date: t('blog.posts.ios.date'),
     image: "placeholder.svg",
     category: "news",
-    readTime: "4 min",
+    readTime: t('blog.posts.ios.readTime'),
   },
   {
     id: 4,
-    title: "Como fazer backup do seu iPhone corretamente",
-    excerpt: "Aprenda a garantir que seus dados estejam sempre seguros com o método certo de backup para seu dispositivo.",
+    title: t('blog.posts.backup.title'),
+    excerpt: t('blog.posts.backup.excerpt'),
     content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eleifend malesuada diam, vel ultricies ligula. Nullam sit amet consequat eros. Suspendisse potenti. Duis auctor ipsum eget felis laoreet, non congue eros tincidunt.",
-    date: "28 de março, 2025",
+    date: t('blog.posts.backup.date'),
     image: "placeholder.svg",
     category: "tutorials",
-    readTime: "7 min",
+    readTime: t('blog.posts.backup.readTime'),
   },
   {
     id: 5,
-    title: "Por que seu iPad está lento e como resolver",
-    excerpt: "Entenda as causas comuns de lentidão em iPads e aprenda soluções práticas para melhorar o desempenho.",
+    title: t('blog.posts.ipad.title'),
+    excerpt: t('blog.posts.ipad.excerpt'),
     content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eleifend malesuada diam, vel ultricies ligula. Nullam sit amet consequat eros. Suspendisse potenti. Duis auctor ipsum eget felis laoreet, non congue eros tincidunt.",
-    date: "22 de março, 2025",
+    date: t('blog.posts.ipad.date'),
     image: "placeholder.svg",
     category: "tips",
-    readTime: "5 min",
+    readTime: t('blog.posts.ipad.readTime'),
   },
   {
     id: 6,
-    title: "Apple lança novo programa de reciclagem de dispositivos",
-    excerpt: "Conheça a nova iniciativa da Apple para tornar o descarte de dispositivos mais sustentável e ecológico.",
+    title: t('blog.posts.recycling.title'),
+    excerpt: t('blog.posts.recycling.excerpt'),
     content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eleifend malesuada diam, vel ultricies ligula. Nullam sit amet consequat eros. Suspendisse potenti. Duis auctor ipsum eget felis laoreet, non congue eros tincidunt.",
-    date: "15 de março, 2025",
+    date: t('blog.posts.recycling.date'),
     image: "placeholder.svg",
     category: "news",
-    readTime: "3 min",
+    readTime: t('blog.posts.recycling.readTime'),
   },
 ];
 
 // AVISO: Esta página foi migrada para /blog (dinâmico via Strapi)
 // Remover ou redirecionar para evitar duplicidade.
 const Blog = () => {
+  const { t } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
+  
+  const CATEGORIES = getCategoriesForLanguage(t);
+  const BLOG_POSTS = getBlogPostsForLanguage(t);
 
   // Filtrar posts por categoria e termo de pesquisa
   const filteredPosts = BLOG_POSTS.filter((post) => {
@@ -105,13 +110,12 @@ const Blog = () => {
             <AnimatedElement>
               <div className="max-w-3xl mx-auto text-center">
                 <SectionTitle 
-                  title="Blog" 
-                  subtitle="Dicas, tutoriais e novidades sobre o mundo Apple" 
+                  title={t('blog.title')} 
+                  subtitle={t('blog.subtitle')} 
                   centered
                 />
                 <p className="text-muted-foreground">
-                  Conteúdo exclusivo produzido por nossa equipe de especialistas para ajudar você 
-                  a aproveitar ao máximo seus dispositivos e conhecer as últimas novidades.
+                  {t('blog.description')}
                 </p>
               </div>
             </AnimatedElement>
@@ -125,17 +129,17 @@ const Blog = () => {
               <div className="lg:col-span-1">
                 <AnimatedElement direction="left">
                   <div className="bg-white p-6 rounded-lg shadow-md sticky top-24">
-                    <h3 className="text-lg font-semibold mb-4">Pesquisar</h3>
+                    <h3 className="text-lg font-semibold mb-4">{t('blog.search')}</h3>
                     <div className="mb-6">
                       <Input
-                        placeholder="Buscar artigos..."
+                        placeholder={t('blog.searchPlaceholder')}
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         className="mb-2"
                       />
                     </div>
                     
-                    <h3 className="text-lg font-semibold mb-4">Categorias</h3>
+                    <h3 className="text-lg font-semibold mb-4">{t('blog.categoriesTitle')}</h3>
                     <div className="space-y-2">
                       {CATEGORIES.map((category) => (
                         <Button
@@ -151,16 +155,16 @@ const Blog = () => {
                     </div>
                     
                     <div className="mt-8 pt-6 border-t">
-                      <h3 className="text-lg font-semibold mb-4">Fique por dentro</h3>
+                      <h3 className="text-lg font-semibold mb-4">{t('blog.newsletter.title')}</h3>
                       <p className="text-sm text-muted-foreground mb-4">
-                        Assine nossa newsletter e receba as últimas atualizações e dicas diretamente no seu email.
+                        {t('blog.newsletter.description')}
                       </p>
                       <Input
-                        placeholder="Seu melhor email"
+                        placeholder={t('blog.newsletter.placeholder')}
                         type="email"
                         className="mb-2"
                       />
-                      <Button className="w-full">Assinar</Button>
+                      <Button className="w-full">{t('blog.newsletter.subscribe')}</Button>
                     </div>
                   </div>
                 </AnimatedElement>
@@ -188,13 +192,13 @@ const Blog = () => {
                           <div className="p-6 flex-1 flex flex-col">
                             <div className="flex items-center justify-between text-sm text-muted-foreground mb-2">
                               <span>{post.date}</span>
-                              <span>{post.readTime} de leitura</span>
+                              <span>{post.readTime}</span>
                             </div>
                             <h3 className="text-xl font-bold mb-3">{post.title}</h3>
                             <p className="text-muted-foreground mb-4 flex-1">{post.excerpt}</p>
                             <div className="flex items-center justify-end mt-4">
                               <Link to={`/blog/${post.id}`} className="text-primary font-medium inline-flex items-center gap-1 hover:gap-2 transition-all">
-                                Ler mais <ArrowRight className="w-4 h-4" />
+                                {t('blog.readMore')} <ArrowRight className="w-4 h-4" />
                               </Link>
                             </div>
                           </div>
@@ -204,9 +208,9 @@ const Blog = () => {
                   </div>
                 ) : (
                   <div className="bg-white p-12 rounded-lg shadow-md text-center">
-                    <h3 className="text-xl font-medium mb-2">Nenhum artigo encontrado</h3>
+                    <h3 className="text-xl font-medium mb-2">{t('blog.noArticles')}</h3>
                     <p className="text-muted-foreground">
-                      Não encontramos artigos correspondentes à sua pesquisa. Tente usar termos diferentes ou resetar os filtros.
+                      {t('blog.noArticlesDescription')}
                     </p>
                     <Button 
                       variant="outline" 
@@ -216,7 +220,7 @@ const Blog = () => {
                         setSearchTerm("");
                       }}
                     >
-                      Limpar filtros
+                      {t('blog.clearFilters')}
                     </Button>
                   </div>
                 )}

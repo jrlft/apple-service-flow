@@ -10,8 +10,10 @@ import { Helmet } from "react-helmet";
 import { WhatsAppButton } from "@/components/ui/whatsapp-button";
 import { AnimatedElement } from "@/components/animations/animated-element";
 import { SectionTitle } from "@/components/ui/section-title";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Agendamento = () => {
+  const { t } = useLanguage();
   const [pageContent, setPageContent] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -29,7 +31,7 @@ const Agendamento = () => {
         setMetadata(metaData);
       } catch (err) {
         console.error("Error loading agendamento page:", err);
-        setError("Erro ao carregar o conteúdo da página. Por favor, tente novamente mais tarde.");
+        setError(t('appointment.errorLoading'));
       } finally {
         setIsLoading(false);
       }
@@ -40,36 +42,36 @@ const Agendamento = () => {
 
   // Default content if Strapi data is not available
   const defaultContent = {
-    title: "Agendamento",
-    subtitle: "Reserve seu horário e prepare seu dispositivo para o reparo",
-    introduction: "Agende seu reparo com facilidade e prepare seu dispositivo seguindo as orientações da Apple.",
-    appointmentButtonText: "Clique aqui para agendar seu horário conosco",
+    title: t('appointment.title'),
+    subtitle: t('appointment.subtitle'),
+    introduction: t('appointment.introduction'),
+    appointmentButtonText: t('appointment.buttonText'),
     appointmentUrl: "https://getsupport.apple.com/repair-locations?storeId=442491",
-    prepareSectionTitle: "Prepare Seu Aparelho para o Reparo",
+    prepareSectionTitle: t('appointment.prepareSection.title'),
     guideCards: [
       {
-        title: "Como fazer backup do seu iPhone",
-        description: "Aprenda a salvar todos os seus dados antes de enviar seu dispositivo para reparo.",
+        title: t('appointment.prepareSection.cards.backup.title'),
+        description: t('appointment.prepareSection.cards.backup.description'),
         url: "https://support.apple.com/pt-br/109519"
       },
       {
-        title: "O que fazer antes de vender, doar ou trocar seu iPhone",
-        description: "Passos importantes para preparar seu dispositivo para reparo ou troca.",
+        title: t('appointment.prepareSection.cards.prepare.title'),
+        description: t('appointment.prepareSection.cards.prepare.description'),
         url: "https://support.apple.com/pt-br/102868"
       },
       {
-        title: "Como apagar todos os dados do seu iPhone",
-        description: "Instruções para apagar seus dados pessoais com segurança.",
+        title: t('appointment.prepareSection.cards.erase.title'),
+        description: t('appointment.prepareSection.cards.erase.description'),
         url: "https://support.apple.com/pt-br/116942"
       }
     ],
-    checklistTitle: "Checklist para o Reparo",
+    checklistTitle: t('appointment.checklist.title'),
     checklistItems: [
-      "Faça backup completo dos seus dados",
-      "Desative o Buscar iPhone (Encontrar iPhone)",
-      "Reúna os acessórios originais (se possível)",
-      "Remova a capa protetora e película",
-      "Anote suas senhas em local seguro"
+      t('appointment.checklist.items.backup'),
+      t('appointment.checklist.items.findMy'),
+      t('appointment.checklist.items.accessories'),
+      t('appointment.checklist.items.case'),
+      t('appointment.checklist.items.passwords')
     ]
   };
 
@@ -80,10 +82,10 @@ const Agendamento = () => {
     <div className="min-h-screen flex flex-col">
       {metadata && (
         <Helmet>
-          <title>{metadata.title || "Agendamento - Link TI"}</title>
-          <meta name="description" content={metadata.description || "Agende seu reparo de dispositivos Apple com a Link TI."} />
-          <meta property="og:title" content={metadata.ogTitle || metadata.title || "Agendamento"} />
-          <meta property="og:description" content={metadata.ogDescription || metadata.description || "Agende seu reparo de dispositivos Apple."} />
+          <title>{metadata.title || t('appointment.seo.title')}</title>
+          <meta name="description" content={metadata.description || t('appointment.seo.description')} />
+          <meta property="og:title" content={metadata.ogTitle || metadata.title || t('appointment.title')} />
+          <meta property="og:description" content={metadata.ogDescription || metadata.description || t('appointment.seo.description')} />
           {metadata.ogImage && <meta property="og:image" content={metadata.ogImage.data.attributes.url} />}
         </Helmet>
       )}
@@ -95,7 +97,7 @@ const Agendamento = () => {
             <AnimatedElement>
               <SectionTitle 
                 title={content.title}
-                subtitle={content.subtitle || "Reserve seu horário e prepare seu dispositivo para o reparo"}
+                subtitle={content.subtitle || t('appointment.subtitle')}
                 centered
               />
             </AnimatedElement>
@@ -114,7 +116,7 @@ const Agendamento = () => {
                 onClick={() => window.location.reload()}
                 className="mt-4 px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90"
               >
-                Tentar novamente
+                {t('appointment.tryAgain')}
               </button>
             </div>
           ) : (
@@ -137,10 +139,10 @@ const Agendamento = () => {
                   <div className="mt-6">
                     <WhatsAppButton 
                       phoneNumber="+556536216000" 
-                      message="Olá, gostaria de agendar um horário para reparo do meu dispositivo Apple."
+                      message={t('appointment.whatsappMessage')}
                       size="lg"
                     >
-                      Ou agende pelo WhatsApp
+                      {t('appointment.whatsappButton')}
                     </WhatsAppButton>
                   </div>
                 </div>
@@ -161,7 +163,7 @@ const Agendamento = () => {
                             className="w-full"
                             onClick={() => window.open(card.url, "_blank")}
                           >
-                            Ver Guia <ExternalLink className="ml-2 h-4 w-4" />
+                            {t('appointment.viewGuide')} <ExternalLink className="ml-2 h-4 w-4" />
                           </Button>
                         </CardContent>
                       </Card>

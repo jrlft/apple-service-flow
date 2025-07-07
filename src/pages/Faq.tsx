@@ -7,6 +7,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Helmet } from "react-helmet";
 import { AnimatedElement } from "@/components/animations/animated-element";
 import { SectionTitle } from "@/components/ui/section-title";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 type FAQ = {
   id: number;
@@ -19,6 +20,7 @@ type FAQ = {
 };
 
 const FaqPage = () => {
+  const { t } = useLanguage();
   const [faqs, setFaqs] = useState<FAQ[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -36,7 +38,7 @@ const FaqPage = () => {
         setMetadata(metaData);
       } catch (err) {
         console.error("Error loading FAQs:", err);
-        setError("Erro ao carregar as perguntas frequentes. Por favor, tente novamente mais tarde.");
+        setError(t('faq.errorLoading'));
       } finally {
         setIsLoading(false);
       }
@@ -47,7 +49,7 @@ const FaqPage = () => {
 
   // Group FAQs by category if categories exist
   const groupedFaqs = faqs.reduce((acc: Record<string, FAQ[]>, faq: FAQ) => {
-    const category = faq.attributes.category || "Geral";
+    const category = faq.attributes.category || t('faq.categories.general');
     if (!acc[category]) {
       acc[category] = [];
     }
@@ -62,46 +64,46 @@ const FaqPage = () => {
     {
       id: 1,
       attributes: {
-        question: "Quais serviços oferecemos?",
-        answer: "Oferecemos serviços especializados de assistência técnica para produtos Apple, incluindo iPhone, iPad, MacBook e Apple Watch. Nossos serviços incluem troca de tela, substituição de bateria, reparo de placa lógica, recuperação de dados, entre outros.",
+        question: t('faq.default.services.question'),
+        answer: t('faq.default.services.answer'),
         order: 1,
-        category: "Serviços"
+        category: t('faq.categories.services')
       }
     },
     {
       id: 2,
       attributes: {
-        question: "Como agendar um reparo?",
-        answer: "Para agendar um reparo, você pode entrar em contato conosco pelo WhatsApp, telefone, ou através da nossa página de agendamento. Basta informar o modelo do dispositivo e o problema que está enfrentando, e nossa equipe entrará em contato para confirmar o horário e fornecer instruções.",
+        question: t('faq.default.scheduling.question'),
+        answer: t('faq.default.scheduling.answer'),
         order: 2,
-        category: "Agendamento"
+        category: t('faq.categories.scheduling')
       }
     },
     {
       id: 3,
       attributes: {
-        question: "Quanto tempo leva para consertar meu dispositivo?",
-        answer: "O tempo de reparo varia conforme o tipo de serviço. Reparos simples como troca de tela ou bateria podem ser feitos no mesmo dia, enquanto reparos mais complexos como problemas na placa lógica podem levar de 2 a 5 dias úteis, dependendo da disponibilidade de peças.",
+        question: t('faq.default.timeframe.question'),
+        answer: t('faq.default.timeframe.answer'),
         order: 3,
-        category: "Prazos"
+        category: t('faq.categories.timeframe')
       }
     },
     {
       id: 4,
       attributes: {
-        question: "Os reparos têm garantia?",
-        answer: "Sim, todos os nossos serviços possuem garantia. Peças como baterias e telas têm garantia de 90 dias, enquanto reparos na placa lógica geralmente têm garantia de 30 dias. Os termos específicos são informados no momento da entrega do dispositivo reparado.",
+        question: t('faq.default.warranty.question'),
+        answer: t('faq.default.warranty.answer'),
         order: 4,
-        category: "Garantia"
+        category: t('faq.categories.warranty')
       }
     },
     {
       id: 5,
       attributes: {
-        question: "Perco meus dados durante o reparo?",
-        answer: "Fazemos o possível para preservar seus dados durante o reparo, mas recomendamos sempre fazer backup completo do seu dispositivo antes de enviá-lo para manutenção. Em alguns casos específicos, como formatação do sistema ou troca de placa lógica, a perda de dados é inevitável.",
+        question: t('faq.default.data.question'),
+        answer: t('faq.default.data.answer'),
         order: 5,
-        category: "Procedimentos"
+        category: t('faq.categories.procedures')
       }
     }
   ];
@@ -110,10 +112,10 @@ const FaqPage = () => {
     <div className="min-h-screen flex flex-col">
       {metadata && (
         <Helmet>
-          <title>{metadata.title || "Dúvidas Frequentes - Link TI"}</title>
-          <meta name="description" content={metadata.description || "Perguntas frequentes sobre nossos serviços de assistência técnica Apple."} />
-          <meta property="og:title" content={metadata.ogTitle || metadata.title || "Dúvidas Frequentes"} />
-          <meta property="og:description" content={metadata.ogDescription || metadata.description || "Perguntas frequentes sobre nossos serviços."} />
+          <title>{metadata.title || t('faq.seo.title')}</title>
+          <meta name="description" content={metadata.description || t('faq.seo.description')} />
+          <meta property="og:title" content={metadata.ogTitle || metadata.title || t('faq.title')} />
+          <meta property="og:description" content={metadata.ogDescription || metadata.description || t('faq.seo.description')} />
           {metadata.ogImage && <meta property="og:image" content={metadata.ogImage.data.attributes.url} />}
         </Helmet>
       )}
@@ -123,8 +125,8 @@ const FaqPage = () => {
         <div className="container">
           <AnimatedElement>
             <SectionTitle 
-              title="Dúvidas Frequentes"
-              subtitle="Respostas para as perguntas mais comuns sobre nossos serviços"
+              title={t('faq.title')}
+              subtitle={t('faq.subtitle')}
               centered
             />
           </AnimatedElement>
@@ -143,7 +145,7 @@ const FaqPage = () => {
                   onClick={() => window.location.reload()}
                   className="mt-4 px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90"
                 >
-                  Tentar novamente
+                  {t('faq.tryAgain')}
                 </button>
               </div>
             )}

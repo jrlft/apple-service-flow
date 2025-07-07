@@ -12,8 +12,10 @@ import { PageHeader } from "./components/PageHeader";
 import { CallToAction } from "./components/CallToAction";
 import { PriceInfo } from "./components/PriceInfo";
 import { Helmet } from "react-helmet";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Precos = () => {
+  const { t } = useLanguage();
   const [selectedDevice, setSelectedDevice] = useState("iphone");
   const [searchTerm, setSearchTerm] = useState("");
   const { priceData, page, isLoading, isSheetLoaded, lastUpdated, error, loadDeviceData } = usePriceData();
@@ -86,8 +88,8 @@ const Precos = () => {
       <Navbar />
       <main className="flex-grow pt-24 pb-16">
         <PageHeader 
-          title={page?.attributes?.title || "Tabela de Preços"}
-          subtitle={page?.attributes?.subtitle || "Confira os valores de reparo para cada dispositivo Apple"}
+          title={page?.attributes?.title || t('prices.title')}
+          subtitle={page?.attributes?.subtitle || t('prices.subtitle')}
           isSheetLoaded={isSheetLoaded}
           lastUpdated={lastUpdated}
         />
@@ -104,7 +106,7 @@ const Precos = () => {
                   />
                   <div className="w-full md:w-64">
                     <Input
-                      placeholder="Buscar modelo..."
+                      placeholder={t('prices.searchPlaceholder')}
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
                       className="w-full"
@@ -136,7 +138,7 @@ const Precos = () => {
       <Footer />
       {!isSheetLoaded && (
         <div className="text-[6px] text-muted-foreground ml-4 mb-1">
-          Dados não sincronizados com a planilha Google Sheets.
+          {t('prices.dataNotSynced')}
         </div>
       )}
     </div>

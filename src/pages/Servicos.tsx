@@ -9,6 +9,7 @@ import { Smartphone, Tablet, Laptop, Watch } from "lucide-react";
 
 import { useEffect, useState } from "react";
 import { fetchServices, checkStrapiConnection } from "@/lib/strapi";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const iconMap: Record<string, any> = {
   iphone: Smartphone,
@@ -18,45 +19,48 @@ const iconMap: Record<string, any> = {
 };
 
 // Static fallback data when Strapi is unavailable
-const FALLBACK_SERVICES = [
+const getFallbackServices = (t: any) => [
   {
     id: 1,
     attributes: {
-      title: "Reparo de iPhone",
-      description: "Conserto especializado para todos os modelos de iPhone, desde telas quebradas até problemas de software.",
+      title: t('services.iphone.title'),
+      description: t('services.iphone.description'),
       slug: "iphone",
     }
   },
   {
     id: 2,
     attributes: {
-      title: "Reparo de iPad",
-      description: "Serviços completos para iPad, incluindo substituição de tela, bateria, conector de carga e mais.",
+      title: t('services.ipad.title'),
+      description: t('services.ipad.description'),
       slug: "ipad",
     }
   },
   {
     id: 3,
     attributes: {
-      title: "Reparo de Mac",
-      description: "Manutenção e reparo para MacBook, iMac e Mac mini, com soluções para problemas de hardware e software.",
+      title: t('services.mac.title'),
+      description: t('services.mac.description'),
       slug: "mac",
     }
   },
   {
     id: 4,
     attributes: {
-      title: "Reparo de Apple Watch",
-      description: "Serviços especializados para todos os modelos de Apple Watch, incluindo substituição de tela e bateria.",
+      title: t('services.watch.title'),
+      description: t('services.watch.description'),
       slug: "watch",
     }
   }
 ];
 
 const Servicos = () => {
+  const { t } = useLanguage();
   const [services, setServices] = useState<any[]>([]);
   const [useFallback, setUseFallback] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  
+  const FALLBACK_SERVICES = getFallbackServices(t);
 
   useEffect(() => {
     const loadServices = async () => {
@@ -98,18 +102,17 @@ const Servicos = () => {
             <AnimatedElement>
               <div className="max-w-3xl mx-auto text-center">
                 <SectionTitle 
-                  title="Nossos Serviços" 
-                  subtitle="Soluções completas para todos os seus dispositivos Apple" 
+                  title={t('services.title')} 
+                  subtitle={t('services.subtitle')} 
                   centered
                 />
                 <p className="text-muted-foreground">
-                  Como centro autorizado, oferecemos serviços de reparo e manutenção para toda linha de produtos Apple,
-                  utilizando peças originais e técnicos certificados para garantir a qualidade do serviço.
+                  {t('services.description')}
                 </p>
                 {useFallback && (
                   <div className="text-center py-3 mt-4">
                     <p className="text-amber-600 bg-amber-50 py-2 px-4 rounded-md inline-block">
-                      Carregando dados estáticos. A conexão com o Strapi não está disponível.
+                      {t('services.loadingFallback')}
                     </p>
                   </div>
                 )}
@@ -138,7 +141,7 @@ const Servicos = () => {
                           <h3 className="text-3xl font-bold mb-4">{service.attributes.title}</h3>
                           <p className="text-muted-foreground mb-6">{service.attributes.description}</p>
                           <Button asChild>
-                            <Link to={"/servicos/" + service.attributes.slug}>Ver Detalhes</Link>
+                            <Link to={"/servicos/" + service.attributes.slug}>{t('services.viewDetails')}</Link>
                           </Button>
                         </div>
                         <div className="bg-white rounded-lg shadow-md p-6 h-[300px] flex items-center justify-center">
@@ -163,17 +166,16 @@ const Servicos = () => {
           <div className="container">
             <div className="max-w-3xl mx-auto text-center">
               <AnimatedElement>
-                <h2 className="text-3xl font-bold mb-6">Precisa de ajuda com seu dispositivo Apple?</h2>
+                <h2 className="text-3xl font-bold mb-6">{t('services.cta.title')}</h2>
                 <p className="text-lg mb-8 opacity-90">
-                  Entre em contato conosco hoje mesmo para um orçamento sem compromisso.
-                  Nossos especialistas estão prontos para ajudar.
+                  {t('services.cta.description')}
                 </p>
                 <div className="flex flex-wrap justify-center gap-4">
                   <Button asChild size="lg" variant="secondary">
-                    <Link to="/contato">Entre em Contato</Link>
+                    <Link to="/contato">{t('services.cta.contact')}</Link>
                   </Button>
                   <Button asChild size="lg" variant="outline" className="bg-transparent hover:bg-white/10">
-                    <Link to="/precos">Ver Preços</Link>
+                    <Link to="/precos">{t('services.cta.viewPrices')}</Link>
                   </Button>
                 </div>
               </AnimatedElement>

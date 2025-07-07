@@ -6,8 +6,10 @@ import { Badge } from "@/components/ui/badge";
 import { AnimatedElement } from "@/components/animations/animated-element";
 import { HardDrive, Smartphone, Laptop, Database, Shield, Clock, CheckCircle, AlertTriangle, Zap, Users, Phone } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const SosDados = () => {
+  const { t } = useLanguage();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -28,78 +30,78 @@ const SosDados = () => {
   const services = [
     {
       icon: HardDrive,
-      title: "HD/SSD Danificado",
-      description: "Recuperação de dados em discos rígidos e SSDs com falhas mecânicas ou eletrônicas",
-      urgency: "Crítico"
+      title: t('sosData.services.hdd.title'),
+      description: t('sosData.services.hdd.description'),
+      urgency: t('sosData.urgency.critical')
     },
     {
       icon: Smartphone,
-      title: "Dispositivos Móveis",
-      description: "iPhone, iPad e smartphones Android com problemas de acesso aos dados",
-      urgency: "Alto"
+      title: t('sosData.services.mobile.title'),
+      description: t('sosData.services.mobile.description'),
+      urgency: t('sosData.urgency.high')
     },
     {
       icon: Laptop,
-      title: "Notebooks e Computadores",
-      description: "Recuperação de dados em PCs e Macs com falhas de sistema ou hardware",
-      urgency: "Médio"
+      title: t('sosData.services.computers.title'),
+      description: t('sosData.services.computers.description'),
+      urgency: t('sosData.urgency.medium')
     },
     {
       icon: Database,
-      title: "Servidores e RAID",
-      description: "Recuperação em sistemas corporativos, servidores e arrays RAID danificados",
-      urgency: "Crítico"
+      title: t('sosData.services.servers.title'),
+      description: t('sosData.services.servers.description'),
+      urgency: t('sosData.urgency.critical')
     }
   ];
 
   const features = [
     {
       icon: Shield,
-      title: "Segurança Total",
-      description: "Seus dados são tratados com máxima confidencialidade e segurança"
+      title: t('sosData.features.security.title'),
+      description: t('sosData.features.security.description')
     },
     {
       icon: Clock,
-      title: "Diagnóstico Rápido",
-      description: "Avaliação gratuita em até 24 horas para casos urgentes"
+      title: t('sosData.features.diagnosis.title'),
+      description: t('sosData.features.diagnosis.description')
     },
     {
       icon: CheckCircle,
-      title: "Taxa de Sucesso 95%",
-      description: "Uma das maiores taxas de recuperação do mercado brasileiro"
+      title: t('sosData.features.successRate.title'),
+      description: t('sosData.features.successRate.description')
     },
     {
       icon: Zap,
-      title: "Equipamentos Avançados",
-      description: "Utilizamos tecnologia de ponta para recuperação de dados"
+      title: t('sosData.features.equipment.title'),
+      description: t('sosData.features.equipment.description')
     }
   ];
 
   const steps = [
     {
       step: "01",
-      title: "Contato Inicial",
-      description: "Entre em contato conosco via WhatsApp ou telefone descrevendo o problema"
+      title: t('sosData.steps.contact.title'),
+      description: t('sosData.steps.contact.description')
     },
     {
       step: "02",
-      title: "Diagnóstico",
-      description: "Análise gratuita do dispositivo para identificar a causa e viabilidade"
+      title: t('sosData.steps.diagnosis.title'),
+      description: t('sosData.steps.diagnosis.description')
     },
     {
       step: "03",
-      title: "Orçamento",
-      description: "Apresentação do orçamento detalhado sem compromisso"
+      title: t('sosData.steps.quote.title'),
+      description: t('sosData.steps.quote.description')
     },
     {
       step: "04",
-      title: "Recuperação",
-      description: "Início do processo de recuperação com acompanhamento em tempo real"
+      title: t('sosData.steps.recovery.title'),
+      description: t('sosData.steps.recovery.description')
     },
     {
       step: "05",
-      title: "Entrega",
-      description: "Entrega dos dados recuperados com garantia de integridade"
+      title: t('sosData.steps.delivery.title'),
+      description: t('sosData.steps.delivery.description')
     }
   ];
 
@@ -125,32 +127,32 @@ const SosDados = () => {
                       <div className="flex items-center justify-center lg:justify-start mb-6">
                         <AlertTriangle className="h-12 w-12 text-red-500 mr-4" />
                         <Badge variant="destructive" className="text-lg px-4 py-2">
-                          RECUPERAÇÃO DE DADOS
+                          {t('sosData.badge')}
                         </Badge>
                       </div>
                       
                       <h1 className="text-4xl md:text-6xl font-bold mb-6 text-gray-900 dark:text-white">
-                        Perdeu seus <span className="text-red-500">dados</span>?
+                        {t('sosData.hero.title')}
                       </h1>
                       
                       <p className="text-xl md:text-2xl mb-8 text-gray-600 dark:text-gray-300">
-                        Não se desespere! Nossa equipe especializada pode recuperar seus arquivos perdidos de HDs, SSDs, pendrives, cartões de memória e muito mais.
+                        {t('sosData.hero.description')}
                       </p>
                       
                       <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center mb-8">
                         <Button size="lg" className="bg-red-500 hover:bg-red-600 text-white px-8 py-4 text-lg">
-                          <a href="https://wa.me/556536216000?text=Olá! Preciso de ajuda para recuperar meus dados perdidos." className="flex items-center">
-                            💾 Recuperar Meus Dados
+                          <a href={`https://wa.me/556536216000?text=${encodeURIComponent(t('sosData.whatsappMessage'))}`} className="flex items-center">
+                            💾 {t('sosData.hero.button')}
                           </a>
                         </Button>
                         <Button variant="outline" size="lg" className="px-8 py-4 text-lg">
-                          Diagnóstico Gratuito
+                          {t('sosData.hero.diagnosisButton')}
                         </Button>
                       </div>
                       
                       <div className="flex items-center justify-center lg:justify-start text-sm text-gray-500 dark:text-gray-400">
                         <Users className="h-4 w-4 mr-2" />
-                        Mais de 5.000 clientes atendidos com sucesso
+                        {t('sosData.hero.clients')}
                       </div>
                     </div>
                   </AnimatedElement>
@@ -179,7 +181,7 @@ const SosDados = () => {
                   <div className="flex items-center justify-center text-center">
                     <AlertTriangle className="h-6 w-6 mr-3 animate-pulse" />
                     <p className="text-lg font-semibold">
-                      <strong>ATENÇÃO:</strong> Cada minuto pode ser crucial para a recuperação dos seus dados!
+                      {t('sosData.alert.message')}
                     </p>
                   </div>
                 </div>
@@ -192,10 +194,10 @@ const SosDados = () => {
                 <div className="container mx-auto">
                   <div className="text-center mb-16">
                     <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 dark:text-white">
-                      Serviços de <span className="text-red-500">Recuperação</span>
+                      {t('sosData.servicesSection.title')}
                     </h2>
                     <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-                      Especializados em recuperação de dados para todos os tipos de dispositivos e situações de emergência
+                      {t('sosData.servicesSection.description')}
                     </p>
                   </div>
 
@@ -211,7 +213,7 @@ const SosDados = () => {
                             </div>
                             <div className="flex items-center justify-center mb-2">
                               <Badge 
-                                variant={service.urgency === "Crítico" ? "destructive" : service.urgency === "Alto" ? "default" : "secondary"}
+                                variant={service.urgency === t('sosData.urgency.critical') ? "destructive" : service.urgency === t('sosData.urgency.high') ? "default" : "secondary"}
                                 className="mb-2"
                               >
                                 {service.urgency}
@@ -236,10 +238,10 @@ const SosDados = () => {
                 <div className="container mx-auto">
                   <div className="text-center mb-16">
                     <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 dark:text-white">
-                      Como <span className="text-red-500">Funciona</span>
+                      {t('sosData.processSection.title')}
                     </h2>
                     <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-                      Processo simples e transparente para recuperar seus dados com segurança
+                      {t('sosData.processSection.description')}
                     </p>
                   </div>
 
@@ -271,7 +273,7 @@ const SosDados = () => {
                 <div className="container mx-auto">
                   <div className="text-center mb-16">
                     <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 dark:text-white">
-                      Por Que Escolher a <span className="text-red-500">Link TI?</span>
+                      {t('sosData.featuresSection.title')}
                     </h2>
                   </div>
 
@@ -302,18 +304,17 @@ const SosDados = () => {
                 <div className="container mx-auto text-center">
                   <AlertTriangle className="h-16 w-16 mx-auto mb-6 animate-pulse" />
                   <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                    Não Perca Tempo!
+                    {t('sosData.cta.title')}
                   </h2>
                   <p className="text-2xl mb-10 opacity-90 max-w-3xl mx-auto">
-                    Cada minuto pode ser crucial para a recuperação dos seus dados. 
-                    Entre em contato agora mesmo com nossa equipe especializada.
+                    {t('sosData.cta.description')}
                   </p>
                   
                   <div className="flex justify-center items-center mb-8">
                     <Button size="lg" className="px-10 py-6 text-xl font-bold bg-green-500 hover:bg-green-600 text-white">
-                      <a href="https://wa.me/556536216000?text=Olá! Preciso de ajuda para recuperar meus dados perdidos." className="flex items-center">
+                      <a href={`https://wa.me/556536216000?text=${encodeURIComponent(t('sosData.whatsappMessage'))}`} className="flex items-center">
                         <Phone className="mr-3 h-6 w-6" />
-                        WhatsApp
+                        {t('sosData.cta.whatsapp')}
                       </a>
                     </Button>
                   </div>
@@ -322,19 +323,19 @@ const SosDados = () => {
                     <AnimatedElement direction="up" delay={0.4}>
                       <div className="bg-white/10 backdrop-blur rounded-lg p-6">
                         <Shield className="h-8 w-8 mx-auto mb-3" />
-                        <p className="font-semibold">Diagnóstico gratuito</p>
+                        <p className="font-semibold">{t('sosData.cta.features.diagnosis')}</p>
                       </div>
                     </AnimatedElement>
                     <AnimatedElement direction="up" delay={0.5}>
                       <div className="bg-white/10 backdrop-blur rounded-lg p-6">
                         <CheckCircle className="h-8 w-8 mx-auto mb-3" />
-                        <p className="font-semibold">Sem dados, sem pagamento</p>
+                        <p className="font-semibold">{t('sosData.cta.features.noDataNoPayment')}</p>
                       </div>
                     </AnimatedElement>
                     <AnimatedElement direction="up" delay={0.6}>
                       <div className="bg-white/10 backdrop-blur rounded-lg p-6">
                         <Zap className="h-8 w-8 mx-auto mb-3" />
-                        <p className="font-semibold">Tecnologia avançada</p>
+                        <p className="font-semibold">{t('sosData.cta.features.technology')}</p>
                       </div>
                     </AnimatedElement>
                   </div>
