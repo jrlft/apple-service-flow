@@ -9,7 +9,7 @@ import { Headphones, Smartphone, HardDrive } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const OutrosServicos = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   
   const servicosExtras = [
     {
@@ -57,12 +57,12 @@ const OutrosServicos = () => {
             <AnimatedElement>
               <div className="max-w-4xl mx-auto text-center">
                 <SectionTitle 
-                  title="Outros Serviços" 
-                  subtitle="Serviços especializados para todos os seus dispositivos Apple" 
+                  title={t('otherServices.title')} 
+                  subtitle={t('otherServices.subtitle')} 
                   centered
                 />
                 <p className="text-muted-foreground">
-                  Além dos reparos tradicionais, oferecemos uma gama completa de serviços para manter seus dispositivos Apple funcionando perfeitamente.
+                  {t('otherServices.description')}
                 </p>
               </div>
             </AnimatedElement>
@@ -78,23 +78,22 @@ const OutrosServicos = () => {
                   <div className="bg-primary bg-opacity-10 p-4 rounded-full w-fit mb-4 text-primary">
                     <Headphones className="h-12 w-12" />
                   </div>
-                  <h3 className="text-3xl font-bold mb-4">Beats</h3>
+                  <h3 className="text-3xl font-bold mb-4">{t('otherServices.beats.title')}</h3>
                   <p className="text-muted-foreground mb-6">
-                    Serviços completos para fones Beats, incluindo reparo de drivers, substituição de almofadas, 
-                    problemas de cabo e manutenção geral.
+                    {t('otherServices.beats.description')}
                   </p>
                   <ul className="space-y-2 mb-6">
-                    <li>• Reparo de drivers</li>
-                    <li>• Substituição de almofadas</li>
-                    <li>• Reparo de cabos</li>
-                    <li>• Manutenção preventiva</li>
+                    <li>• {t('otherServices.beats.driverRepair')}</li>
+                    <li>• {t('otherServices.beats.padReplacement')}</li>
+                    <li>• {t('otherServices.beats.cableRepair')}</li>
+                    <li>• {t('otherServices.beats.preventiveMaintenance')}</li>
                   </ul>
                   <WhatsAppButton
                     phoneNumber="+556536216000"
-                    message="Olá, gostaria de informações sobre reparo de fones Beats."
+                    message={t('otherServices.beats.whatsappMessage')}
                     className="w-full"
                   >
-                    Orçamento para Beats
+                    {t('otherServices.beats.getQuote')}
                   </WhatsAppButton>
                 </div>
               </AnimatedElement>
@@ -104,23 +103,22 @@ const OutrosServicos = () => {
                   <div className="bg-primary bg-opacity-10 p-4 rounded-full w-fit mb-4 text-primary">
                     <Smartphone className="h-12 w-12" />
                   </div>
-                  <h3 className="text-3xl font-bold mb-4">Locação</h3>
+                  <h3 className="text-3xl font-bold mb-4">{t('otherServices.rental.title')}</h3>
                   <p className="text-muted-foreground mb-6">
-                    Aluguel de smartphones temporários para uso durante o período de reparo do seu dispositivo, 
-                    mantendo você sempre conectado.
+                    {t('otherServices.rental.description')}
                   </p>
                   <ul className="space-y-2 mb-6">
-                    <li>• iPhone temporário</li>
-                    <li>• Locação diária ou semanal</li>
-                    <li>• Modelos básicos e premium</li>
-                    <li>• Setup incluído</li>
+                    <li>• {t('otherServices.rental.temporaryIphone')}</li>
+                    <li>• {t('otherServices.rental.dailyWeekly')}</li>
+                    <li>• {t('otherServices.rental.basicPremium')}</li>
+                    <li>• {t('otherServices.rental.setupIncluded')}</li>
                   </ul>
                   <WhatsAppButton
                     phoneNumber="+556536216000"
-                    message="Olá, gostaria de informações sobre locação de smartphones."
+                    message={t('otherServices.rental.whatsappMessage')}
                     className="w-full"
                   >
-                    Solicitar Locação
+                    {t('otherServices.rental.requestRental')}
                   </WhatsAppButton>
                 </div>
               </AnimatedElement>
@@ -130,23 +128,22 @@ const OutrosServicos = () => {
                   <div className="bg-primary bg-opacity-10 p-4 rounded-full w-fit mb-4 text-primary">
                     <HardDrive className="h-12 w-12" />
                   </div>
-                  <h3 className="text-3xl font-bold mb-4">Recuperação</h3>
+                  <h3 className="text-3xl font-bold mb-4">{t('otherServices.recovery.title')}</h3>
                   <p className="text-muted-foreground mb-6">
-                    Serviços especializados em recuperação de dados perdidos, backup completo e restauração 
-                    de informações importantes dos seus dispositivos.
+                    {t('otherServices.recovery.description')}
                   </p>
                   <ul className="space-y-2 mb-6">
-                    <li>• Recuperação de fotos e vídeos</li>
-                    <li>• Backup completo</li>
-                    <li>• Restauração de contatos</li>
-                    <li>• Migração de dados</li>
+                    <li>• {t('otherServices.recovery.photosVideos')}</li>
+                    <li>• {t('otherServices.recovery.fullBackup')}</li>
+                    <li>• {t('otherServices.recovery.contactRestore')}</li>
+                    <li>• {t('otherServices.recovery.dataMigration')}</li>
                   </ul>
                   <WhatsAppButton
                     phoneNumber="+556536216000"
-                    message="Olá, gostaria de informações sobre recuperação de dados."
+                    message={t('otherServices.recovery.whatsappMessage')}
                     className="w-full"
                   >
-                    Recuperar Dados
+                    {t('otherServices.recovery.recoverData')}
                   </WhatsAppButton>
                 </div>
               </AnimatedElement>
@@ -155,9 +152,9 @@ const OutrosServicos = () => {
             {/* Tabela de Outros Serviços */}
             <AnimatedElement>
               <div className="bg-white rounded-lg shadow-md p-8">
-                <h3 className="text-2xl font-bold mb-6 text-center">Tabela de Preços - Serviços Especiais</h3>
+                <h3 className="text-2xl font-bold mb-6 text-center">{t('otherServices.priceTable.title')}</h3>
                 <p className="text-muted-foreground text-center mb-8">
-                  Confira nossa tabela de preços para serviços especializados. Valores sujeitos a alteração mediante avaliação.
+                  {t('otherServices.priceTable.description')}
                 </p>
                 
                 {servicosExtras.map((categoria, index) => (
@@ -167,9 +164,9 @@ const OutrosServicos = () => {
                       <table className="w-full border-collapse border border-gray-300">
                         <thead>
                           <tr className="bg-gray-50">
-                            <th className="border border-gray-300 px-4 py-3 text-left font-semibold">Dispositivo/Serviço</th>
-                            <th className="border border-gray-300 px-4 py-3 text-left font-semibold">Preço</th>
-                            <th className="border border-gray-300 px-4 py-3 text-left font-semibold">Descrição</th>
+                            <th className="border border-gray-300 px-4 py-3 text-left font-semibold">{t('otherServices.table.device')}</th>
+                            <th className="border border-gray-300 px-4 py-3 text-left font-semibold">{t('otherServices.table.price')}</th>
+                            <th className="border border-gray-300 px-4 py-3 text-left font-semibold">{t('otherServices.table.description')}</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -188,8 +185,7 @@ const OutrosServicos = () => {
 
                 <div className="bg-yellow-50 p-4 rounded-lg mt-6">
                   <p className="text-sm text-gray-700">
-                    <strong>Observações:</strong> Todos os preços são estimativas e podem variar conforme a complexidade do reparo. 
-                    Oferecemos orçamento gratuito e sem compromisso. Garantia de 90 dias para todos os serviços.
+                    <strong>{language === 'en' ? 'Note:' : 'Observações:'}</strong> {t('otherServices.note')}
                   </p>
                 </div>
               </div>
@@ -201,17 +197,17 @@ const OutrosServicos = () => {
           <div className="container">
             <div className="max-w-3xl mx-auto text-center">
               <AnimatedElement>
-                <h2 className="text-3xl font-bold mb-6">Precisa de um serviço personalizado?</h2>
+                <h2 className="text-3xl font-bold mb-6">{t('otherServices.customService.title')}</h2>
                 <p className="text-lg mb-8 opacity-90">
-                  Entre em contato conosco para serviços não listados ou orçamentos personalizados.
+                  {t('otherServices.customService.description')}
                 </p>
                 <div className="flex flex-wrap justify-center gap-4">
                   <Button asChild size="lg" variant="secondary">
-                    <a href="/contato">Entre em Contato</a>
+                    <a href="/contato">{language === 'en' ? 'Contact Us' : 'Entre em Contato'}</a>
                   </Button>
                   <WhatsAppButton
                     phoneNumber="+556536216000"
-                    message="Olá, gostaria de informações sobre serviços especializados."
+                    message={t('otherServices.customService.whatsappMessage')}
                     size="lg"
                     className="bg-whatsapp hover:bg-whatsapp/90"
                   >
