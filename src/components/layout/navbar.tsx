@@ -103,7 +103,7 @@ export function Navbar() {
   return (
     <header className={cn(
       "fixed top-0 w-full z-50 transition-all duration-300",
-      isScrolled ? "bg-white/95 backdrop-blur dark:bg-gray-900/95 shadow-md py-2" : "bg-transparent py-3"
+      isScrolled ? "bg-white/95 backdrop-blur dark:bg-gray-800/95 shadow-md py-2" : "bg-transparent py-3"
     )}>
       <div className="container mx-auto px-4">
         {/* Desktop Layout */}
@@ -194,7 +194,7 @@ export function Navbar() {
 
         {/* Mobile Navigation Menu */}
         {isOpen && (
-          <div className="fixed inset-0 top-16 z-50 bg-white dark:bg-gray-900 lg:hidden">
+          <div className="fixed inset-0 top-16 z-50 bg-white dark:bg-gray-800 lg:hidden">
             <nav className="container flex flex-col py-8">
               {ALL_NAV_ITEMS.map(item => (
                 <Link

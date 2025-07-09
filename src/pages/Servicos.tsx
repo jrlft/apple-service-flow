@@ -7,8 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Smartphone, Tablet, Laptop, Watch } from "lucide-react";
 
-import { useEffect, useState } from "react";
-import { fetchServices, checkStrapiConnection } from "@/lib/strapi";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const iconMap: Record<string, any> = {
@@ -18,80 +16,43 @@ const iconMap: Record<string, any> = {
   watch: Watch,
 };
 
-// Static fallback data when Strapi is unavailable
-const getFallbackServices = (t: any) => [
-  {
-    id: 1,
-    attributes: {
-      title: t('services.iphone.title'),
-      description: t('services.iphone.description'),
-      slug: "iphone",
-    }
-  },
-  {
-    id: 2,
-    attributes: {
-      title: t('services.ipad.title'),
-      description: t('services.ipad.description'),
-      slug: "ipad",
-    }
-  },
-  {
-    id: 3,
-    attributes: {
-      title: t('services.mac.title'),
-      description: t('services.mac.description'),
-      slug: "mac",
-    }
-  },
-  {
-    id: 4,
-    attributes: {
-      title: t('services.watch.title'),
-      description: t('services.watch.description'),
-      slug: "watch",
-    }
-  }
-];
-
 const Servicos = () => {
   const { t } = useLanguage();
-  const [services, setServices] = useState<any[]>([]);
-  const [useFallback, setUseFallback] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
   
-  const FALLBACK_SERVICES = getFallbackServices(t);
-
-  useEffect(() => {
-    const loadServices = async () => {
-      try {
-        setIsLoading(true);
-        const strapiAvailable = await checkStrapiConnection();
-        
-        if (strapiAvailable) {
-          const servicesData = await fetchServices();
-          if (servicesData && servicesData.length > 0) {
-            setServices(servicesData);
-            setUseFallback(false);
-          } else {
-            setServices(FALLBACK_SERVICES);
-            setUseFallback(true);
-          }
-        } else {
-          setServices(FALLBACK_SERVICES);
-          setUseFallback(true);
-        }
-      } catch (error) {
-        console.error("Error loading services:", error);
-        setServices(FALLBACK_SERVICES);
-        setUseFallback(true);
-      } finally {
-        setIsLoading(false);
+  const services = [
+    {
+      id: 1,
+      attributes: {
+        title: t('services.iphone.title'),
+        description: t('services.iphone.description'),
+        slug: "iphone",
       }
-    };
-    
-    loadServices();
-  }, []);
+    },
+    {
+      id: 2,
+      attributes: {
+        title: t('services.ipad.title'),
+        description: t('services.ipad.description'),
+        slug: "ipad",
+      }
+    },
+    {
+      id: 3,
+      attributes: {
+        title: t('services.mac.title'),
+        description: t('services.mac.description'),
+        slug: "mac",
+      }
+    },
+    {
+      id: 4,
+      attributes: {
+        title: t('services.watch.title'),
+        description: t('services.watch.description'),
+        slug: "watch",
+      }
+    }
+  ];
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -109,27 +70,15 @@ const Servicos = () => {
                 <p className="text-muted-foreground">
                   {t('services.description')}
                 </p>
-                {useFallback && (
-                  <div className="text-center py-3 mt-4">
-                    <p className="text-amber-600 bg-amber-50 py-2 px-4 rounded-md inline-block">
-                      {t('services.loadingFallback')}
-                    </p>
-                  </div>
-                )}
               </div>
             </AnimatedElement>
           </div>
         </section>
 
-        {isLoading ? (
-          <div className="flex items-center justify-center py-24">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-primary"></div>
-          </div>
-        ) : (
-          <section className="py-16">
-            <div className="container">
-              <div className="space-y-16">
-                {services.map((service, index) => {
+        <section className="py-16">
+          <div className="container">
+            <div className="space-y-16">
+              {services.map((service, index) => {
                   const Icon = iconMap[service.attributes.slug] || Smartphone;
                   return (
                     <AnimatedElement key={service.id} delay={index * 0.1}>
@@ -144,23 +93,18 @@ const Servicos = () => {
                             <Link to={"/servicos/" + service.attributes.slug}>{t('services.viewDetails')}</Link>
                           </Button>
                         </div>
-                        <div className="bg-white rounded-lg shadow-md p-6 h-[300px] flex items-center justify-center">
-                          {service.attributes.image && service.attributes.image.data?.attributes?.url ? (
-                            <img src={service.attributes.image.data?.attributes?.url} alt={service.attributes.title} className="max-h-60" />
-                          ) : (
-                            <div className="flex items-center justify-center h-full w-full bg-gray-100 rounded">
-                              <Icon className="h-20 w-20 text-gray-400" />
-                            </div>
-                          )}
+                        <div className="bg-card rounded-lg shadow-md p-6 h-[300px] flex items-center justify-center border">
+                          <div className="flex items-center justify-center h-full w-full bg-muted rounded">
+                            <Icon className="h-20 w-20 text-muted-foreground" />
+                          </div>
                         </div>
                       </div>
                     </AnimatedElement>
                   );
                 })}
-              </div>
             </div>
-          </section>
-        )}
+          </div>
+        </section>
 
         <section className="py-16 bg-primary text-white">
           <div className="container">

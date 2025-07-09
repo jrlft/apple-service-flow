@@ -22,7 +22,7 @@ export function WhatsAppButton({
   return (
     <Button
       className={cn(
-        "bg-whatsapp text-whatsapp-foreground hover:bg-whatsapp/90 font-medium",
+        "bg-whatsapp text-white hover:bg-whatsapp/90 font-medium dark:text-white",
         className
       )}
       onClick={() => window.open(whatsappUrl, "_blank")}

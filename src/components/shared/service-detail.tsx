@@ -61,11 +61,11 @@ export function ServiceDetail({
             </AnimatedElement>
 
             <AnimatedElement direction="right">
-              <div className="bg-white rounded-lg shadow-md p-4 h-[300px] flex items-center justify-center overflow-hidden">
+              <div className="bg-card rounded-lg shadow-md p-4 h-[300px] flex items-center justify-center overflow-hidden border">
                 {image ? (
                   <img src={image} alt={title} className="max-w-full max-h-full object-contain" />
                 ) : (
-                  <div className="text-gray-400">{imagePlaceholder}</div>
+                  <div className="text-muted-foreground">{imagePlaceholder}</div>
                 )}
               </div>
             </AnimatedElement>
@@ -87,7 +87,7 @@ export function ServiceDetail({
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
             {features.map((feature, index) => (
               <AnimatedElement key={index} delay={index * 0.1}>
-                <div className="bg-white rounded-lg shadow-md p-6 h-full">
+                <div className="bg-card rounded-lg shadow-md p-6 h-full border">
                   <h3 className="text-xl font-bold mb-4">{feature.title}</h3>
                   <p className="text-muted-foreground">{feature.description}</p>
                 </div>
@@ -102,7 +102,7 @@ export function ServiceDetail({
         <div className="container">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <AnimatedElement direction="left">
-              <div className="bg-white rounded-lg shadow-md p-4 h-[300px] flex items-center justify-center overflow-hidden">
+              <div className="bg-card rounded-lg shadow-md p-4 h-[300px] flex items-center justify-center overflow-hidden border">
                 <img 
                   src="/lovable-uploads/5f8b9888-4c37-4c54-a48f-0f716cdfc0de.png" 
                   alt="Problemas Comuns" 

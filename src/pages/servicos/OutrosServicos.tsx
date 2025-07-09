@@ -74,7 +74,7 @@ const OutrosServicos = () => {
           <div className="container">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
               <AnimatedElement direction="left">
-                <div className="bg-white rounded-lg shadow-md p-8">
+                <div className="bg-card rounded-lg shadow-md p-8 border">
                   <div className="bg-primary bg-opacity-10 p-4 rounded-full w-fit mb-4 text-primary">
                     <Headphones className="h-12 w-12" />
                   </div>
@@ -99,7 +99,7 @@ const OutrosServicos = () => {
               </AnimatedElement>
 
               <AnimatedElement>
-                <div className="bg-white rounded-lg shadow-md p-8">
+                <div className="bg-card rounded-lg shadow-md p-8 border">
                   <div className="bg-primary bg-opacity-10 p-4 rounded-full w-fit mb-4 text-primary">
                     <Smartphone className="h-12 w-12" />
                   </div>
@@ -124,7 +124,7 @@ const OutrosServicos = () => {
               </AnimatedElement>
 
               <AnimatedElement direction="right">
-                <div className="bg-white rounded-lg shadow-md p-8">
+                <div className="bg-card rounded-lg shadow-md p-8 border">
                   <div className="bg-primary bg-opacity-10 p-4 rounded-full w-fit mb-4 text-primary">
                     <HardDrive className="h-12 w-12" />
                   </div>
@@ -151,7 +151,7 @@ const OutrosServicos = () => {
 
             {/* Tabela de Outros Serviços */}
             <AnimatedElement>
-              <div className="bg-white rounded-lg shadow-md p-8">
+              <div className="bg-card rounded-lg shadow-md p-8 border">
                 <h3 className="text-2xl font-bold mb-6 text-center">{t('otherServices.priceTable.title')}</h3>
                 <p className="text-muted-foreground text-center mb-8">
                   {t('otherServices.priceTable.description')}
@@ -161,20 +161,20 @@ const OutrosServicos = () => {
                   <div key={index} className="mb-8">
                     <h4 className="text-xl font-semibold mb-4 text-primary">{categoria.categoria}</h4>
                     <div className="overflow-x-auto">
-                      <table className="w-full border-collapse border border-gray-300">
+                      <table className="w-full border-collapse border border-border">
                         <thead>
-                          <tr className="bg-gray-50">
-                            <th className="border border-gray-300 px-4 py-3 text-left font-semibold">{t('otherServices.table.device')}</th>
-                            <th className="border border-gray-300 px-4 py-3 text-left font-semibold">{t('otherServices.table.price')}</th>
-                            <th className="border border-gray-300 px-4 py-3 text-left font-semibold">{t('otherServices.table.description')}</th>
+                          <tr className="bg-muted">
+                            <th className="border border-border px-4 py-3 text-left font-semibold">{t('otherServices.table.device')}</th>
+                            <th className="border border-border px-4 py-3 text-left font-semibold">{t('otherServices.table.price')}</th>
+                            <th className="border border-border px-4 py-3 text-left font-semibold">{t('otherServices.table.description')}</th>
                           </tr>
                         </thead>
                         <tbody>
                           {categoria.itens.map((item, itemIndex) => (
-                            <tr key={itemIndex} className="hover:bg-gray-50">
-                              <td className="border border-gray-300 px-4 py-3">{item.dispositivo}</td>
-                              <td className="border border-gray-300 px-4 py-3 font-semibold text-primary">{item.preco}</td>
-                              <td className="border border-gray-300 px-4 py-3 text-sm text-gray-600">{item.descricao}</td>
+                            <tr key={itemIndex} className="hover:bg-muted/50">
+                              <td className="border border-border px-4 py-3">{item.dispositivo}</td>
+                              <td className="border border-border px-4 py-3 font-semibold text-primary">{item.preco}</td>
+                              <td className="border border-border px-4 py-3 text-sm text-muted-foreground">{item.descricao}</td>
                             </tr>
                           ))}
                         </tbody>
@@ -183,8 +183,8 @@ const OutrosServicos = () => {
                   </div>
                 ))}
 
-                <div className="bg-yellow-50 p-4 rounded-lg mt-6">
-                  <p className="text-sm text-gray-700">
+                <div className="bg-amber-50 dark:bg-amber-900/20 p-4 rounded-lg mt-6 border border-amber-200 dark:border-amber-800">
+                  <p className="text-sm text-amber-800 dark:text-amber-200">
                     <strong>{language === 'en' ? 'Note:' : 'Observações:'}</strong> {t('otherServices.note')}
                   </p>
                 </div>

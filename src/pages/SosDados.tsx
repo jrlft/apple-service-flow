@@ -150,7 +150,7 @@ const SosDados = () => {
                         </Button>
                       </div>
                       
-                      <div className="flex items-center justify-center lg:justify-start text-sm text-gray-500 dark:text-gray-400">
+                      <div className="flex items-center justify-center lg:justify-start text-sm text-muted-foreground">
                         <Users className="h-4 w-4 mr-2" />
                         {t('sosData.hero.clients')}
                       </div>
@@ -257,8 +257,8 @@ const SosDados = () => {
                               <div className="hidden md:block absolute top-10 left-full w-full h-0.5 bg-red-200 dark:bg-red-800 -ml-10"></div>
                             )}
                           </div>
-                          <h3 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">{step.title}</h3>
-                          <p className="text-gray-600 dark:text-gray-400">{step.description}</p>
+                          <h3 className="text-xl font-semibold mb-3 text-foreground">{step.title}</h3>
+                          <p className="text-muted-foreground">{step.description}</p>
                         </div>
                       </AnimatedElement>
                     ))}
@@ -272,7 +272,7 @@ const SosDados = () => {
               <section className="py-20 px-4 bg-white dark:bg-gray-900">
                 <div className="container mx-auto">
                   <div className="text-center mb-16">
-                    <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 dark:text-white">
+                    <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
                       {t('sosData.featuresSection.title')}
                     </h2>
                   </div>
