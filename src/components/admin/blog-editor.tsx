@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowRight, Check, Upload, X } from "lucide-react";
-import { createBlogPost, updateBlogPost, uploadMedia } from "@/lib/strapi";
+
 import { useToast } from "@/components/ui/use-toast";
 import {
   Select,
@@ -65,38 +64,12 @@ export function BlogEditor({ token, blogPost, onSuccess }: BlogEditorProps) {
     setIsLoading(true);
 
     try {
-      // First upload image if provided
-      let imageId = null;
-      if (featuredImage) {
-        const uploadedMedia = await uploadMedia(featuredImage, token);
-        imageId = uploadedMedia[0].id;
-      }
-
-      // Prepare post data
-      const postData: any = {
-        title,
-        slug,
-        excerpt,
-        content,
-        category,
-      };
-
-      // Add image if we have one
-      if (imageId || blogPost?.attributes?.featuredImage?.data?.id) {
-        postData.featuredImage = imageId || blogPost?.attributes?.featuredImage?.data?.id;
-      }
-
-      // Create new post or update existing
-      let response;
-      if (blogPost) {
-        response = await updateBlogPost(blogPost.id, postData, token);
-      } else {
-        response = await createBlogPost(postData, token);
-      }
+      // Simulate saving (replace with actual API call)
+      await new Promise(resolve => setTimeout(resolve, 1000));
 
       toast({
-        title: blogPost ? "Post atualizado!" : "Post criado com sucesso!",
-        description: `"${title}" foi ${blogPost ? "atualizado" : "publicado"}.`,
+        title: "Funcionalidade em desenvolvimento",
+        description: "O sistema de blog será implementado em breve.",
       });
 
       if (onSuccess) {

@@ -74,7 +74,7 @@ const BLOG_POSTS = [
   },
 ];
 
-// AVISO: Esta página foi migrada para /blog/:slug (dinâmico via Strapi)
+
 // Remover ou redirecionar para evitar duplicidade.
 const BlogPost = () => {
   const { postId } = useParams<{ postId: string }>();

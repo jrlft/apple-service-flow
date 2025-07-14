@@ -83,7 +83,7 @@ const getBlogPostsForLanguage = (t: any) => [
   },
 ];
 
-// AVISO: Esta página foi migrada para /blog (dinâmico via Strapi)
+
 // Remover ou redirecionar para evitar duplicidade.
 const Blog = () => {
   const { t } = useLanguage();

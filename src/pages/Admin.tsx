@@ -9,7 +9,7 @@ import { Footer } from "@/components/layout/footer";
 import { DeploymentGuide } from "@/components/admin/deployment-guide";
 import { SiteEditingGuide } from "@/components/admin/site-editing-guide";
 import { BlogManager } from "@/components/admin/blog-manager";
-import { StrapiGuide } from "@/components/admin/strapi-guide";
+
 
 const Admin = () => {
   const [token, setToken] = useState<string | null>(null);
@@ -98,12 +98,6 @@ const Admin = () => {
                   Blog
                 </Button>
                 <Button 
-                  variant={activeTab === 'strapi' ? 'default' : 'outline'} 
-                  onClick={() => setActiveTab('strapi')}
-                >
-                  Guia do Strapi
-                </Button>
-                <Button 
                   variant={activeTab === 'deployment' ? 'default' : 'outline'} 
                   onClick={() => setActiveTab('deployment')}
                 >
@@ -136,9 +130,6 @@ const Admin = () => {
                   <BlogManager token={token} />
                 )}
                 
-                {activeTab === 'strapi' && (
-                  <StrapiGuide />
-                )}
                 
                 {activeTab === 'deployment' && (
                   <DeploymentGuide />

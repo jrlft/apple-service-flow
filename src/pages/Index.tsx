@@ -2,7 +2,7 @@
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { useEffect, useState } from "react";
-import { fetchPage, fetchMetadata, checkStrapiConnection } from "@/lib/strapi";
+
 import { HeroSection } from "@/components/home/hero-section";
 import { ServicesSection } from "@/components/home/services-section";
 import { AboutSection } from "@/components/home/about-section";
@@ -69,54 +69,8 @@ const DEFAULT_METADATA = {
 };
 
 const Index = () => {
-  const [page, setPage] = useState<any>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [metadata, setMetadata] = useState<any>(DEFAULT_METADATA);
-  const [useFallback, setUseFallback] = useState(false);
+  const metadata = DEFAULT_METADATA;
 
-  useEffect(() => {
-    const loadPage = async () => {
-      try {
-        setIsLoading(true);
-        
-        // First check if Strapi is available
-        const strapiAvailable = await checkStrapiConnection();
-        
-        if (strapiAvailable) {
-          try {
-            // Try to load page content from Strapi
-            const pageData = await fetchPage("home");
-            setPage(pageData);
-            
-            // Try to fetch SEO metadata
-            const metaData = await fetchMetadata("home");
-            if (metaData) {
-              setMetadata(metaData);
-            }
-            
-            setUseFallback(false);
-            setError(null);
-          } catch (err) {
-            console.error("Error loading home page from Strapi:", err);
-            setUseFallback(true);
-          }
-        } else {
-          console.warn("Strapi is not available, using fallback content.");
-          setUseFallback(true);
-        }
-      } catch (err) {
-        console.error("Error in page load process:", err);
-        setUseFallback(true);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    
-    loadPage();
-  }, []);
-
-  // Renderize os componentes estáticos se não conseguir conectar ao Strapi
   const renderStaticContent = () => {
     return (
       <>
@@ -137,9 +91,6 @@ const Index = () => {
         <meta name="description" content={metadata?.description || DEFAULT_METADATA.description} />
         <meta property="og:title" content={metadata?.ogTitle || metadata?.title || DEFAULT_METADATA.ogTitle} />
         <meta property="og:description" content={metadata?.ogDescription || metadata?.description || DEFAULT_METADATA.ogDescription} />
-        {metadata?.ogImage && metadata.ogImage.data?.attributes?.url && 
-          <meta property="og:image" content={metadata.ogImage.data?.attributes?.url} />
-        }
       </Helmet>
       
       {/* Facebook Pixel and Google Ads Tag */}
@@ -147,24 +98,7 @@ const Index = () => {
       
       <Navbar />
       <main className="flex-grow">
-        {isLoading && (
-          <div className="flex items-center justify-center py-24">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-primary"></div>
-          </div>
-        )}
-        
-        {!isLoading && !useFallback && page && page.attributes.sections && page.attributes.sections.map((section: any, idx: number) => {
-          const SectionComponent = sectionMap[section.__component];
-          return SectionComponent ? (
-            <SectionComponent key={idx} data={section} />
-          ) : (
-            <div key={idx} className="text-center py-4 text-muted-foreground">
-              Componente não encontrado: {section.__component}
-            </div>
-          );
-        })}
-
-        {!isLoading && useFallback && renderStaticContent()}
+        {renderStaticContent()}
       </main>
       <Footer />
     </div>

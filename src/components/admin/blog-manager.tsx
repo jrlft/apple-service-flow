@@ -1,9 +1,8 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { fetchBlogPosts, deleteBlogPost } from "@/lib/strapi";
+
 import { BlogEditor } from "./blog-editor";
 import { Edit, Plus, Trash2 } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
@@ -32,7 +31,7 @@ interface BlogManagerProps {
 export function BlogManager({ token }: BlogManagerProps) {
   const { toast } = useToast();
   const [posts, setPosts] = useState<any[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState("posts");
   const [editingPost, setEditingPost] = useState<any>(null);
@@ -40,21 +39,12 @@ export function BlogManager({ token }: BlogManagerProps) {
   const [deleteConfirmPost, setDeleteConfirmPost] = useState<any>(null);
 
   useEffect(() => {
-    loadPosts();
-  }, []);
-
-  const loadPosts = async () => {
-    try {
-      setIsLoading(true);
-      const data = await fetchBlogPosts();
-      setPosts(data);
-    } catch (err) {
-      console.error("Error loading blog posts:", err);
-      setError("Erro ao carregar os posts. Por favor, tente novamente.");
-    } finally {
+    // Simulate loading posts
+    setIsLoading(true);
+    setTimeout(() => {
       setIsLoading(false);
-    }
-  };
+    }, 1000);
+  }, []);
 
   const handleCreatePost = () => {
     setEditingPost(null);
@@ -70,7 +60,7 @@ export function BlogManager({ token }: BlogManagerProps) {
     if (!deleteConfirmPost) return;
     
     try {
-      await deleteBlogPost(deleteConfirmPost.id, token);
+      // Simulate delete
       setPosts(posts.filter((post) => post.id !== deleteConfirmPost.id));
       toast({
         title: "Post excluído",
@@ -89,7 +79,6 @@ export function BlogManager({ token }: BlogManagerProps) {
 
   const handleEditorSuccess = () => {
     setIsEditorOpen(false);
-    loadPosts();
   };
 
   return (
@@ -115,25 +104,18 @@ export function BlogManager({ token }: BlogManagerProps) {
           ) : error ? (
             <div className="text-center py-6">
               <p className="text-destructive">{error}</p>
-              <Button 
-                onClick={() => loadPosts()}
-                className="mt-4"
-                variant="outline"
-              >
-                Tentar novamente
-              </Button>
             </div>
           ) : posts.length === 0 ? (
             <Card>
               <CardHeader>
-                <CardTitle>Nenhum post encontrado</CardTitle>
+                <CardTitle>Sistema de Blog em Desenvolvimento</CardTitle>
                 <CardDescription>
-                  Comece a criar conteúdo para o seu blog.
+                  O sistema de blog será implementado em breve.
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <Button onClick={handleCreatePost}>
-                  <Plus className="h-4 w-4 mr-2" /> Criar primeiro post
+                <Button onClick={handleCreatePost} disabled>
+                  <Plus className="h-4 w-4 mr-2" /> Criar post (em breve)
                 </Button>
               </CardContent>
             </Card>

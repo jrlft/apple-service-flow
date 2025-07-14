@@ -95,6 +95,12 @@ const translations = {
     'services.airpods.title': 'AirPods',
     'services.airpods.description': 'Reparo especializado para AirPods, incluindo bateria, conectividade e limpeza profunda.',
     'services.learnMore': 'Saiba Mais',
+    'services.viewDetails': 'Ver Detalhes',
+    'services.cta.title': 'Precisa de assistência técnica?',
+    'services.cta.description': 'Entre em contato conosco hoje mesmo para um orçamento personalizado.',
+    'services.cta.contact': 'Entrar em Contato',
+    'services.cta.viewPrices': 'Ver Preços',
+    'services.description': 'Oferecemos serviços especializados para todos os dispositivos Apple com técnicos certificados e peças originais.',
     
     // About Section
     'about.title': 'Sobre Nossa Empresa',
@@ -493,6 +499,12 @@ const translations = {
     'services.airpods.title': 'AirPods',
     'services.airpods.description': 'Specialized AirPods repair, including battery, connectivity and deep cleaning.',
     'services.learnMore': 'Learn More',
+    'services.viewDetails': 'View Details',
+    'services.cta.title': 'Need technical assistance?',
+    'services.cta.description': 'Contact us today for a personalized quote.',
+    'services.cta.contact': 'Contact Us',
+    'services.cta.viewPrices': 'View Prices',
+    'services.description': 'We offer specialized services for all Apple devices with certified technicians and original parts.',
     
     // About Section
     'about.title': 'About Our Company',

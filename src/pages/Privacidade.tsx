@@ -5,11 +5,10 @@ import { AnimatedElement } from "@/components/animations/animated-element";
 import { SectionTitle } from "@/components/ui/section-title";
 
 import { useEffect, useState } from "react";
-import { fetchPage } from "@/lib/strapi";
+
 
 const Privacidade = () => {
-  const [page, setPage] = useState<any>(null);
-  useEffect(() => { fetchPage("privacidade").then(setPage); }, []);
+  const page = null;
 
   return (
     <div className="min-h-screen flex flex-col">

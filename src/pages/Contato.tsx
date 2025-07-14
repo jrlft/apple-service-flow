@@ -9,13 +9,12 @@ import { Phone, Mail, MapPin, Clock } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 import { useEffect, useState } from "react";
-import { fetchPage } from "@/lib/strapi";
+
 import { Helmet } from "react-helmet";
 
 const Contato = () => {
   const { t } = useLanguage();
-  const [contact, setContact] = useState<any>(null);
-  useEffect(() => { fetchPage("contato").then(setContact); }, []);
+  const contact = null;
 
   // Add Facebook Pixel and Google Ads Script
   const MarketingScripts = () => {

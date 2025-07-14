@@ -4,35 +4,14 @@ import { Footer } from "@/components/layout/footer";
 import { AnimatedElement } from "@/components/animations/animated-element";
 import { SectionTitle } from "@/components/ui/section-title";
 import { useEffect, useState } from "react";
-import { fetchPage, fetchMetadata } from "@/lib/strapi";
+
 import { Helmet } from "react-helmet";
 
 const Garantia = () => {
-  const [page, setPage] = useState<any>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [metadata, setMetadata] = useState<any>(null);
-
-  useEffect(() => { 
-    const loadPage = async () => {
-      try {
-        setIsLoading(true);
-        const pageData = await fetchPage("garantia");
-        setPage(pageData);
-        
-        // Fetch SEO metadata
-        const metaData = await fetchMetadata("garantia");
-        setMetadata(metaData);
-      } catch (err) {
-        console.error("Error loading garantia page:", err);
-        setError("Erro ao carregar a página de garantia. Por favor, tente novamente mais tarde.");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    
-    loadPage();
-  }, []);
+  const page = null;
+  const isLoading = false;
+  const error = null;
+  const metadata = null;
 
   return (
     <div className="min-h-screen flex flex-col">

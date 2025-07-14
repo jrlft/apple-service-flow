@@ -14,7 +14,7 @@ export default function InicianteConteudos() {
           Seu navegador não suporta vídeo.
         </video>
       </div>
-      {/* Adicione outros tópicos aqui, integrando com Strapi futuramente */}
+      
     </div>
   );
 }
