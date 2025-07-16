@@ -5,7 +5,7 @@ import { Footer } from "@/components/layout/footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Check, ExternalLink } from "lucide-react";
-import { fetchAppointmentPageContent, fetchMetadata } from "@/lib/strapi";
+
 import { Helmet } from "react-helmet";
 import { WhatsAppButton } from "@/components/ui/whatsapp-button";
 import { AnimatedElement } from "@/components/animations/animated-element";
@@ -14,31 +14,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 
 const Agendamento = () => {
   const { t } = useLanguage();
-  const [pageContent, setPageContent] = useState<any>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [metadata, setMetadata] = useState<any>(null);
-
-  useEffect(() => {
-    const loadPageContent = async () => {
-      try {
-        setIsLoading(true);
-        const content = await fetchAppointmentPageContent();
-        setPageContent(content);
-        
-        // Fetch SEO metadata
-        const metaData = await fetchMetadata("agendamento");
-        setMetadata(metaData);
-      } catch (err) {
-        console.error("Error loading agendamento page:", err);
-        setError(t('appointment.errorLoading'));
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    
-    loadPageContent();
-  }, []);
+  const [metadata] = useState<any>(null);
 
   // Default content if Strapi data is not available
   const defaultContent = {
@@ -75,8 +51,8 @@ const Agendamento = () => {
     ]
   };
 
-  // Use content from Strapi if available, otherwise use default
-  const content = pageContent?.attributes || defaultContent;
+  // Use default content
+  const content = defaultContent;
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -105,23 +81,8 @@ const Agendamento = () => {
         </section>
 
         <div className="container max-w-4xl">
-          {isLoading ? (
-            <div className="flex justify-center py-12">
-              <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-primary"></div>
-            </div>
-          ) : error ? (
-            <div className="text-center py-12">
-              <p className="text-destructive">{error}</p>
-              <button 
-                onClick={() => window.location.reload()}
-                className="mt-4 px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90"
-              >
-                {t('appointment.tryAgain')}
-              </button>
-            </div>
-          ) : (
-            <AnimatedElement>
-              <div className="bg-white rounded-lg shadow-md p-8 mb-12">
+          <AnimatedElement>
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 mb-12">
                 <p className="text-lg text-center mb-10 text-muted-foreground">
                   {content.introduction}
                 </p>
@@ -182,9 +143,8 @@ const Agendamento = () => {
                     ))}
                   </ul>
                 </section>
-              </div>
-            </AnimatedElement>
-          )}
+            </div>
+          </AnimatedElement>
         </div>
       </main>
       <Footer />

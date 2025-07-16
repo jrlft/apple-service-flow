@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { fetchPage } from "@/lib/strapi";
+
 import { SHEET_IDS } from "../constants";
 import { fetchSheetData } from "../utils/googleSheetsApi";
 import { processCSVData, processSheetData } from "../utils/dataProcessors";
@@ -62,21 +62,6 @@ export const usePriceData = () => {
     }
   };
 
-  // Load page data from Strapi when component mounts
-  useEffect(() => {
-    const loadPageData = async () => {
-      try {
-        const pageData = await fetchPage("precos");
-        if (pageData) {
-          setPage(pageData);
-        }
-      } catch (error) {
-        console.error("Error loading page data from Strapi:", error);
-      }
-    };
-    
-    loadPageData();
-  }, []);
 
   // Load initial sheet data
   useEffect(() => {
