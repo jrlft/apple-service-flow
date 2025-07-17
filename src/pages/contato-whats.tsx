@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Helmet } from "react-helmet";
 import logo from "@/assets/logo.png";
 import imagemServico from "@/assets/imagemservico.png";
 
@@ -6,6 +7,20 @@ const WHATSAPP_URL = "https://api.whatsapp.com/send?phone=556536216000&text=Ol%C
 
 export default function ContatoWhats() {
   useEffect(() => {
+    // Bloquear tracking do Google para esta página
+    if ((window as any).gtag) {
+      (window as any).gtag('config', 'AW-10888031582', {
+        send_page_view: false
+      });
+    }
+    
+    // Bloquear Facebook Pixel para esta página
+    if ((window as any).fbq) {
+      (window as any).fbq('init', '581961359233767', {}, {
+        agent: 'plausible'
+      });
+    }
+
     const timer = setTimeout(() => {
       window.location.href = WHATSAPP_URL;
     }, 4000);
@@ -13,7 +28,14 @@ export default function ContatoWhats() {
   }, []);
 
   return (
-    <div className="relative min-h-screen flex flex-col items-center justify-center bg-primary text-white">
+    <>
+      <Helmet>
+        <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
+        <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
+        <meta name="bingbot" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
+        <title>Redirecionamento - Link TI</title>
+      </Helmet>
+      <div className="relative min-h-screen flex flex-col items-center justify-center bg-primary text-white">
       {/* Imagem de fundo no topo */}
       <div
         className="absolute top-0 left-0 w-full h-52 md:h-72 bg-cover bg-center z-0"
@@ -37,6 +59,7 @@ export default function ContatoWhats() {
         {/* Logo triplicado no tamanho */}
         <img src={logo} alt="Logo" className="mt-8 w-96 h-auto" />
       </main>
-    </div>
+      </div>
+    </>
   );
 }
