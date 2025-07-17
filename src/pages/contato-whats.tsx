@@ -7,19 +7,14 @@ const WHATSAPP_URL = "https://api.whatsapp.com/send?phone=556536216000&text=Ol%C
 
 export default function ContatoWhats() {
   useEffect(() => {
-    // Bloquear tracking do Google para esta página
+    // Bloquear completamente o Google Ads/Analytics para esta página
     if ((window as any).gtag) {
-      (window as any).gtag('config', 'AW-10888031582', {
-        send_page_view: false
-      });
+      (window as any).gtag = () => {}; // Desabilita completamente o gtag
     }
     
-    // Bloquear Facebook Pixel para esta página
-    if ((window as any).fbq) {
-      (window as any).fbq('init', '581961359233767', {}, {
-        agent: 'plausible'
-      });
-    }
+    // Remover qualquer script do Google Ads se existir
+    const googleScripts = document.querySelectorAll('script[src*="googletagmanager"]');
+    googleScripts.forEach(script => script.remove());
 
     const timer = setTimeout(() => {
       window.location.href = WHATSAPP_URL;
