@@ -7,19 +7,41 @@ const WHATSAPP_URL = "https://api.whatsapp.com/send?phone=556536216000&text=Ol%C
 
 export default function ContatoWhats() {
   useEffect(() => {
-    // Bloquear completamente o Google Ads/Analytics para esta página
+    // Bloquear completamente todas as tags do Google para esta página
+    
+    // Desabilitar gtag globalmente para esta página
     if ((window as any).gtag) {
-      (window as any).gtag = () => {}; // Desabilita completamente o gtag
+      (window as any).gtag = () => {}; // Anula completamente o gtag
     }
     
-    // Remover qualquer script do Google Ads se existir
-    const googleScripts = document.querySelectorAll('script[src*="googletagmanager"]');
+    // Bloquear dataLayer do Google
+    if ((window as any).dataLayer) {
+      (window as any).dataLayer = [];
+    }
+    
+    // Remover scripts do Google se existirem
+    const googleScripts = document.querySelectorAll('script[src*="googletagmanager"], script[src*="google-analytics"], script[src*="gtag"]');
     googleScripts.forEach(script => script.remove());
+    
+    // Bloquear qualquer tentativa de carregar Google Ads
+    const originalFetch = window.fetch;
+    window.fetch = function(...args) {
+      const url = args[0] as string;
+      if (url && (url.includes('googletagmanager') || url.includes('google-analytics') || url.includes('gtag'))) {
+        return Promise.reject(new Error('Google tracking blocked on this page'));
+      }
+      return originalFetch.apply(this, args);
+    };
 
     const timer = setTimeout(() => {
       window.location.href = WHATSAPP_URL;
     }, 4000);
-    return () => clearTimeout(timer);
+    
+    return () => {
+      clearTimeout(timer);
+      // Restaurar fetch original ao sair da página
+      window.fetch = originalFetch;
+    };
   }, []);
 
   return (
