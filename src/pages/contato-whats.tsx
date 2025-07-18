@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { Helmet } from "react-helmet";
-import logo from "@/assets/logo.png";
 import imagemServico from "@/assets/imagemservico.png";
 
 const WHATSAPP_URL = "https://api.whatsapp.com/send?phone=556536216000&text=Ol%C3%A1,%20achei%20voc%C3%AAs%20no%20Google%20e%20gostaria%20de%20informa%C3%A7%C3%B5es%20da%20sua%20autorizada%20Apple";
@@ -60,7 +59,7 @@ export default function ContatoWhats() {
       ></div>
       <main className="relative z-10 flex flex-col items-center justify-center flex-grow w-full px-4">
         {/* Logomarca */}
-        <img src={logo} alt="Logo" className="mb-8 w-32 h-auto" />
+        <img src="/lovable-uploads/7f9b1c93-62c6-4d43-9a5d-58879b1a830c.png" alt="Link TI - Autorizada Apple" className="mb-8 w-48 h-auto bg-white rounded-lg p-2 shadow-lg" />
         <h1 className="text-4xl md:text-5xl font-bold mb-8 text-center">Bem vindo à Link TI!</h1>
         <p className="text-2xl md:text-3xl font-semibold mb-4 text-center max-w-2xl">
           Você está sendo redirecionado ao nosso Whatsapp.<br />
@@ -74,7 +73,7 @@ export default function ContatoWhats() {
           Caso não seja redirecionado automaticamente, <a href={WHATSAPP_URL} className="underline text-white font-bold">clique aqui</a>.
         </div>
         {/* Logo triplicado no tamanho */}
-        <img src={logo} alt="Logo" className="mt-8 w-96 h-auto" />
+        <img src="/lovable-uploads/7f9b1c93-62c6-4d43-9a5d-58879b1a830c.png" alt="Link TI - Autorizada Apple" className="mt-8 w-96 h-auto bg-white rounded-lg p-4 shadow-lg" />
       </main>
       </div>
     </>
